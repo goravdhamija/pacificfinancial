@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/pacificfinancial/static/css/main.f855e6bc.css",
-    "main.js": "/pacificfinancial/static/js/main.3e29d132.js",
+    "main.js": "/pacificfinancial/static/js/main.edd04f0b.js",
     "static/js/453.c72d0088.chunk.js": "/pacificfinancial/static/js/453.c72d0088.chunk.js",
-    "static/media/logo.svg": "/pacificfinancial/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "static/media/pacific-financial-logo.jpg": "/pacificfinancial/static/media/pacific-financial-logo.da66c770fd221abf7566.jpg",
     "index.html": "/pacificfinancial/index.html",
     "main.f855e6bc.css.map": "/pacificfinancial/static/css/main.f855e6bc.css.map",
-    "main.3e29d132.js.map": "/pacificfinancial/static/js/main.3e29d132.js.map",
+    "main.edd04f0b.js.map": "/pacificfinancial/static/js/main.edd04f0b.js.map",
     "453.c72d0088.chunk.js.map": "/pacificfinancial/static/js/453.c72d0088.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f855e6bc.css",
-    "static/js/main.3e29d132.js"
+    "static/js/main.edd04f0b.js"
   ]
 }
