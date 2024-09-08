@@ -1,7 +1,11 @@
 import React from 'react';
-
 import logo from './pacific-financial-logo.jpg';
 import './App.css';
+import { Button } from 'react-bootstrap';
+import Badge from 'react-bootstrap/Badge';
+ import './custom.scss';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import Button from 'react-bootstrap/Button';
 
 function App() {
   
@@ -12,6 +16,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <UserInputsComponentHeader />
         <UserInputsComponentForm />
+        <Example1/>
       </header>
     </div>
   );
@@ -71,5 +76,19 @@ function UserInputsComponentForm() {
         </form>
   );
 }
+
+function Example1() {
+  return (
+    <div>
+      <h1>
+        Example heading
+        <Badge bg="secondary" as={Button}>
+          New
+        </Badge>
+      </h1>
+    </div>
+  );
+}
+
 
 export default App;
