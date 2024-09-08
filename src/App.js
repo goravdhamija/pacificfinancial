@@ -50,6 +50,7 @@ function UserInputsComponentForm() {
             value={newPosition}
             onChange={(e) => setPosition(e.target.value)}
             label="Job Title"
+            placeholder="Job Title"
           />
           <input
             value={newLink}
