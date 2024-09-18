@@ -19,7 +19,7 @@ function App() {
     termYears: "i/o",
     interestRate: 8.50,
     NumberOfpaymentsMade: 120
-  }
+  } 
 ]
   
   const [loans,setLoans] = useState(loansArray)
