@@ -49,15 +49,22 @@ function UserInputsComponentForm() {
   
   function AllLoanComponents() {
 
-    const loans = useContext(PacificDataContext);
+    const loansObject = useContext(PacificDataContext);
+
+    console.log(loansObject.loans)
 
 
     return (
       <Container className="mt-5">
         <Row>
-          <LoanInputComponent cnt={0}/>
-          <LoanInputComponent cnt={1}/>
-          {/* <LoanInputComponent cnt={3}/> */}
+        {
+              loansObject.loans.map((item,index) => (
+              
+                <LoanInputComponent key={index} cnt={{item,index}}/>  
+                
+              ))
+        }
+
           
         </Row>
         </Container>
@@ -69,24 +76,28 @@ function UserInputsComponentForm() {
 
     const loans = useContext(PacificDataContext);
 
-    console.log(loans[0]);
-    console.log(props.cnt);
+       console.log(props.cnt.loanAmount);
+       console.log("END");
 
     return (
   
 
     <Col lg={4}>
-      <Form.Label className='form-control-lg' htmlFor="basic-url"><strong>Loan Details - {props.cnt}</strong></Form.Label>
+      <Form.Label className='form-control-lg' htmlFor="basic-url"><strong>Loan Details - {props.cnt.index + 1} </strong></Form.Label>
         <FloatingLabel controlId="loanamount1 " label="Loan Amount ($) " className="mb-3">
-          <Form.Control defaultValue={loans[props.cnt].loanAmount} type="number" step={0.01} placeholder="00.00" />
+          <Form.Control defaultValue={props.cnt.item.loanAmount} type="number" step={0.01} placeholder="00.00" />
+        </FloatingLabel>
+
+        <FloatingLabel controlId="termyears1" label="Term (Years)" className="mb-3">
+          <Form.Control defaultValue={props.cnt.item.termYears} type="number" step={0} placeholder="00" />
         </FloatingLabel>
 
         <FloatingLabel controlId="loaninterest1" label="Interest Rate (%)" className="mb-3">
-          <Form.Control type="number" step={0.01} placeholder="00.00" />
+          <Form.Control defaultValue={props.cnt.item.interestRate} type="number" step={0.01} placeholder="00.00" />
         </FloatingLabel>
 
         <FloatingLabel controlId="loanpayments1" label="Number Of Payments Made " className="mb-3">
-          <Form.Control type="number" step={1} placeholder="0" />
+          <Form.Control  defaultValue={props.cnt.item.NumberOfpaymentsMade} type="number" step={1} placeholder="0" />
         </FloatingLabel>
     </Col>
         

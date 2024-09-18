@@ -27,7 +27,7 @@ function App() {
  
   return (
     <div>
-    <PacificDataContext.Provider value={loans}>
+    <PacificDataContext.Provider value={{loans,setLoans}}>
       <HeaderComponent/>
       <AllLoanComponents/>
     </PacificDataContext.Provider>
