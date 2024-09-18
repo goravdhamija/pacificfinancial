@@ -67,17 +67,44 @@ function UserInputsComponentForm() {
 
           
         </Row>
+
+        <LoanCalculationButton items={loansObject.loans}/>
         </Container>
     );
   }
 
+  function LoanCalculationButton(props) {
+
+    const calculateLoanCurrentBalance = () => {
+      console.log(props)
+
+
+        return 40000;
+    }
+
+
+    return (
+      <div className="d-grid gap-2">
+        <Button onClick={calculateLoanCurrentBalance} variant="primary" size="lg" active>
+              Calculate Previous Loans
+        </Button>
+      </div>
+    )
+  }
+
+
   function LoanInputComponent(props) {
 
+    
+
+   
 
     const loans = useContext(PacificDataContext);
 
        console.log(props.cnt.loanAmount);
        console.log("END");
+
+     
 
     return (
   
@@ -106,7 +133,7 @@ function UserInputsComponentForm() {
           <strong>Current Balance : </strong>
         </Form.Label>
         <Col sm="6">
-          <Form.Control plaintext readOnly defaultValue="email@example.com" />
+          <Form.Control plaintext readOnly defaultValue={props.cnt.item.currentBalance} />
         </Col>
       </Form.Group>
 
@@ -115,7 +142,7 @@ function UserInputsComponentForm() {
         <strong>Current Payment (P&I) : </strong>
         </Form.Label>
         <Col sm="6">
-          <Form.Control plaintext readOnly defaultValue="email@example.com" />
+          <Form.Control plaintext readOnly defaultValue={props.cnt.item.currentPayment} />
         </Col>
       </Form.Group>
       

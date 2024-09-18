@@ -12,13 +12,17 @@ function App() {
     loanAmount: 335000,
     termYears: 30,
     interestRate: 2.750,
-    NumberOfpaymentsMade: 30
+    NumberOfpaymentsMade: 30,
+    currentBalance: 0,
+    currentPayment: 0
   },
   {
     loanAmount: 200000,
     termYears: "i/o",
     interestRate: 8.50,
-    NumberOfpaymentsMade: 120
+    NumberOfpaymentsMade: 120,
+    currentBalance: 0,
+    currentPayment: 0
   } 
 ]
   
