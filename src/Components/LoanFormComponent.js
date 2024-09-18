@@ -99,6 +99,27 @@ function UserInputsComponentForm() {
         <FloatingLabel controlId="loanpayments1" label="Number Of Payments Made " className="mb-3">
           <Form.Control  defaultValue={props.cnt.item.NumberOfpaymentsMade} type="number" step={1} placeholder="0" />
         </FloatingLabel>
+
+
+        <Form.Group as={Row} className="mb-3" controlId="currentbalanceloan">
+        <Form.Label column sm="6">
+          <strong>Current Balance : </strong>
+        </Form.Label>
+        <Col sm="6">
+          <Form.Control plaintext readOnly defaultValue="email@example.com" />
+        </Col>
+      </Form.Group>
+
+      <Form.Group as={Row} className="mb-3" controlId="currentpaymentloan">
+        <Form.Label column sm="6">
+        <strong>Current Payment (P&I) : </strong>
+        </Form.Label>
+        <Col sm="6">
+          <Form.Control plaintext readOnly defaultValue="email@example.com" />
+        </Col>
+      </Form.Group>
+      
+
     </Col>
         
 
