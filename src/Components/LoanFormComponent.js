@@ -1,8 +1,10 @@
-import React from 'react';
+import React,{useState, useContext} from 'react';
 import logo from '../pacific-financial-logo.jpg';
 import '../App.css';
 import '../custom.scss';
 import { Form,Row,Col,InputGroup,FloatingLabel,Button , Container, Badge,Stack,Card,CloseButton,Table,Tab,Tabs,Toast} from 'react-bootstrap';
+import { PacificDataContext } from './PacificDataContext';
+
 
 function UserInputsComponentForm() {
     const [newCompany, setCompany] = React.useState("");
@@ -46,12 +48,16 @@ function UserInputsComponentForm() {
   }
   
   function AllLoanComponents() {
+
+    const loans = useContext(PacificDataContext);
+
+
     return (
       <Container className="mt-5">
         <Row>
-          <LoanInputComponent cnt="1"/>
-          <LoanInputComponent cnt="2"/>
-          <LoanInputComponent cnt="3"/>
+          <LoanInputComponent cnt={0}/>
+          <LoanInputComponent cnt={1}/>
+          {/* <LoanInputComponent cnt={3}/> */}
           
         </Row>
         </Container>
@@ -59,13 +65,20 @@ function UserInputsComponentForm() {
   }
 
   function LoanInputComponent(props) {
+
+
+    const loans = useContext(PacificDataContext);
+
+    console.log(loans[0]);
+    console.log(props.cnt);
+
     return (
   
 
     <Col lg={4}>
       <Form.Label className='form-control-lg' htmlFor="basic-url"><strong>Loan Details - {props.cnt}</strong></Form.Label>
-        <FloatingLabel controlId="loanamount1" label="Loan Amount ($)" className="mb-3">
-          <Form.Control type="number" step={0.01} placeholder="00.00" />
+        <FloatingLabel controlId="loanamount1 " label="Loan Amount ($) " className="mb-3">
+          <Form.Control defaultValue={loans[props.cnt].loanAmount} type="number" step={0.01} placeholder="00.00" />
         </FloatingLabel>
 
         <FloatingLabel controlId="loaninterest1" label="Interest Rate (%)" className="mb-3">
