@@ -5,77 +5,75 @@ import '../custom.scss';
 import { Form,Row,Col,InputGroup,FloatingLabel,Button , Container, Badge,Stack,Card,CloseButton,Table,Tab,Tabs,Toast} from 'react-bootstrap';
 import { PacificDataContext } from './PacificDataContext';
 import { pv,fv, pmt } from 'financial'
-
-
+import {PV, CUMIPMT } from '@formulajs/formulajs'
   
   function AllLoanComponents() {
-
-     const {loans,setLoans} = useContext(PacificDataContext);
-
-
+    const {loans,setLoans} = useContext(PacificDataContext);
     return (
-      <Container className="mt-5">
+      <Container stripe="3n" className="mt-5">
         <Row>
-
         {
               loans.map((item,index) => (
-
-                // console.log(item.loanid)
                 <LoanInputComponent key={item.loanid} id={item.loanid} cnt={{item,index}}/>  
-                
               ))
-        }
-
-          
+        }  
         </Row>
 
-        {/* <LoanCalculationButton/> */}
+       
         </Container>
     );
   }
 
-  function LoanCalculationButton() {
-    const {loans,setLoans} = useContext(PacificDataContext);
-
-    
-
-    return (
-      <div className="d-grid gap-2">
-        <Button onClick={() => {calculateLoanCurrentBalance(loans,setLoans)}} variant="primary" size="lg" active>
-              Calculate Previous Loans
-        </Button>
-      </div>
-    )
-  }
-
+  
 
 
   const calculateLoanCurrentBalance = (loans,setLoans) => {
      
+    console.log("4")
+           console.log(loans)
+           console.log("4 Ends")
+
     let newLoans = loans.map((loan) =>
          {
 
           let rate = (loan.interestRate / 100) / 12; // 4% rate 
           let nper = loan.termYears * 12; //30 years in months
+          let per = loan.termYears * 12;
 
           const pmtx = Math.ceil(pmt(rate, nper, loan.loanAmount)*-1)
-          const pvx = Math.ceil(pv(rate, nper-loan.numberOfpaymentsMade, pmtx)*-1)
-          return {
-            loanid:loan.loanid,
-            loanAmount: loan.loanAmount,
-            termYears: loan.termYears,
-            interestRate: loan.interestRate,
-            numberOfpaymentsMade: loan.numberOfpaymentsMade,
-            currentBalance: pvx,
-            currentPayment: pmtx 
+           const pvx = Math.ceil(pv(rate, nper-loan.numberOfpaymentsMade, pmtx)*-1)
+          
+          const Pvx = Math.ceil(PV(rate, nper-loan.numberOfpaymentsMade, pmtx)*-1)
+          const cumipmt = Math.ceil(CUMIPMT(rate, nper ,loan.loanAmount, 1 , per,0 )*-1)
+          const cumipmtPaid = Math.ceil(CUMIPMT(rate, nper ,loan.loanAmount, 1 , loan.numberOfpaymentsMade,0 )*-1)
+          const remainingInterest = cumipmt - cumipmtPaid
+          const yearsLeft = loan.termYears - (loan.numberOfpaymentsMade)/12
+          const deductible = Math.ceil((pvx*loan.interestRate/100*loan.deductible/100)/12)
 
-                }
+           return  {...loan,
+            currentPayment: pmtx,
+            currentBalance: pvx, 
+            totalInterest:cumipmt, 
+            interestPaid: cumipmtPaid, 
+            remainingInterest:remainingInterest,
+            remainingPrincipal:Pvx,
+            yearsLeft:yearsLeft,
+            deductibleCost:deductible
+          
+          }
+
+                
            } )
+           
         
       setLoans(newLoans)
      
-
- 
+console.log("5")
+           console.log(loans)
+           console.log("5 Ends")
+           console.log("6")
+           console.log(newLoans)
+           console.log("6 Ends")
       return ;
   }
 
@@ -90,13 +88,13 @@ import { pv,fv, pmt } from 'financial'
   
     function handleUpdate(e) {
      // e.preventDefault();
-      const { name, value,id } = e.target;
+      const { name, value, id } = e.target;
       const idselected = id.split('-');
 
-      console.log({[name]: value})
-      console.log("2")
-      console.log(`You changed value. : ${e.target.id}`);
-      console.log(`Selected ID. : ${idselected[3]}`);
+      // console.log({[name]: value})
+      // console.log("2")
+      // console.log(`You changed value. : ${e.target.id}`);
+      // console.log(`Selected ID. : ${idselected[3]}`);
       
       let new_loan_data = loans.map((loan) => {
 
@@ -109,11 +107,11 @@ import { pv,fv, pmt } from 'financial'
                                           return loan;
                                       });
 
-       calculateLoanCurrentBalance(new_loan_data,setLoans)
-      
-     
+        calculateLoanCurrentBalance(new_loan_data,setLoans)
 
-  
+
+     
+      
     }
     
 
@@ -160,7 +158,69 @@ import { pv,fv, pmt } from 'financial'
         </Col>
       </Form.Group>
 
+      <Form.Group as={Row} className="mb-3" >
+        <Form.Label column sm="6">
+          <strong>Total Interest : </strong>
+        </Form.Label>
+        <Col sm="6">
+        <div> {props.cnt.item.totalInterest}</div>
+        </Col>
+      </Form.Group>
+
+
+      <Form.Group as={Row} className="mb-3" >
+        <Form.Label column sm="6">
+          <strong>Interest Paid : </strong>
+        </Form.Label>
+        <Col sm="6">
+        <div> {props.cnt.item.interestPaid}</div>
+        </Col>
+      </Form.Group>
+
+
+      <Form.Group as={Row} className="mb-3" >
+        <Form.Label column sm="6">
+          <strong>Remaining Interest : </strong>
+        </Form.Label>
+        <Col sm="6">
+        <div> {props.cnt.item.remainingInterest}</div>
+        </Col>
+      </Form.Group>
+
+
+      <Form.Group as={Row} className="mb-3" >
+        <Form.Label column sm="6">
+          <strong>Remaining Principal : </strong>
+        </Form.Label>
+        <Col sm="6">
+        <div> {props.cnt.item.remainingPrincipal}</div>
+        </Col>
+      </Form.Group>
+
+
+      <Form.Group as={Row} className="mb-3" >
+        <Form.Label column sm="6">
+          <strong>Years Left : </strong>
+        </Form.Label>
+        <Col sm="6">
+        <div> {props.cnt.item.yearsLeft}</div>
+        </Col>
+      </Form.Group>
+
+
+      <FloatingLabel controlId="loanpayments1" label="Deductible (%) " className="mb-3">
+          <Form.Control  defaultValue={props.cnt.item.deductible} name='deductible' onChange={handleUpdate} id={`loanitem-numberOfpaymentsMade-${props.cnt.index}-${props.id}`} type="number" step={1} placeholder="0" />
+        </FloatingLabel>
       
+
+        <Form.Group as={Row} className="mb-3" >
+        <Form.Label column sm="6">
+          <strong>Deductible Cost ($) : </strong>
+        </Form.Label>
+        <Col sm="6">
+        <div> {props.cnt.item.deductibleCost}</div>
+        </Col>
+      </Form.Group>
       
 
     </Col>
