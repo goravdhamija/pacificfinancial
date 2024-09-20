@@ -58,8 +58,35 @@ function App() {
     deductibleCost:0
   }
 ]
+
+
   
   let [loans,setLoans] = useState(loansArray)
+
+
+  let liabilitiesArray = [{
+    liabilityid:109,
+    liabilityName:Card,
+    balanceAmount: 200000,
+    monthlyPayment: 0,
+    interestRate: 0.000,
+    interest: 0,
+    payoffYears: 0,
+    
+  },
+  {
+    liabilityid:199,
+    liabilityName:Card,
+    balanceAmount: 0,
+    monthlyPayment: 200,
+    interestRate: 19.990,
+    interest: 0,
+    payoffYears: 0,
+    
+  }
+]
+
+  let [liabilities,setLiabilities] = useState(liabilitiesArray)
 
   // let loanObj = {
   //   loanAmount: 335000,
@@ -89,10 +116,10 @@ function App() {
   
  
 
-  
+
   return (
     <div>
-    <PacificDataContext.Provider value={{loans,setLoans}}>
+    <PacificDataContext.Provider value={{loans,setLoans,liabilities,setLiabilities}}>
       <HeaderComponent/>
       <AllLoanComponents/>
     </PacificDataContext.Provider>

@@ -6,15 +6,24 @@ import { Form,Row,Col,InputGroup,FloatingLabel,Button , Container, Badge,Stack,C
 import { PacificDataContext } from './PacificDataContext';
 import { pv,fv, pmt } from 'financial'
 import {PV, CUMIPMT } from '@formulajs/formulajs'
+import { LiabilityInputComponent } from './LiabilitiesFormComponents';
   
   function AllLoanComponents() {
-    const {loans,setLoans} = useContext(PacificDataContext);
+    const {loans,setLoans,liabilities,setLiabilities} = useContext(PacificDataContext);
     return (
-      <Container stripe="3n" className="mt-5">
+      <Container className="mt-5">
         <Row>
         {
               loans.map((item,index) => (
                 <LoanInputComponent key={item.loanid} id={item.loanid} cnt={{item,index}}/>  
+              ))
+        }  
+        </Row>
+
+        <Row className="mt-5">
+        {
+              liabilities.map((item,index) => (
+                <LiabilityInputComponent key={item.liabilityid} id={item.liabilityid} cnt={{item,index}}/>  
               ))
         }  
         </Row>
@@ -71,7 +80,7 @@ import {PV, CUMIPMT } from '@formulajs/formulajs'
 
   function LoanInputComponent(props) {
 
-    const {loans,setLoans} = useContext(PacificDataContext);
+    const {loans,setLoans,liabilities,setLiabilities} = useContext(PacificDataContext);
 
     useEffect(() => {
       calculateLoanCurrentBalance(loans,setLoans)
