@@ -1,66 +1,32 @@
-import React,{useState, useContext} from 'react';
+import React,{useState,useEffect, useContext} from 'react';
 import logo from '../pacific-financial-logo.jpg';
 import '../App.css';
 import '../custom.scss';
 import { Form,Row,Col,InputGroup,FloatingLabel,Button , Container, Badge,Stack,Card,CloseButton,Table,Tab,Tabs,Toast} from 'react-bootstrap';
 import { PacificDataContext } from './PacificDataContext';
+import { pv,fv, pmt } from 'financial'
 
 
-function UserInputsComponentForm() {
-    const [newCompany, setCompany] = React.useState("");
-    const [newPosition, setPosition] = React.useState("");
-    const [newLink, setNewLink] = React.useState("");
-    const [newDate, setNewDate] = React.useState("");
-    const [newNote, setNewNote] = React.useState("");
-  
-    return (
-          <form>
-            <input
-              value={newCompany}
-              onChange={(e) => setCompany(e.target.value)}
-              label="Company"
-              placeholder="Company"
-            />
-            <input
-              value={newPosition}
-              onChange={(e) => setPosition(e.target.value)}
-              label="Job Title"
-              placeholder="Job Title"
-            />
-            <input
-              value={newLink}
-              onChange={(e) => setNewLink(e.target.value)}
-              label="Job Link"
-            />
-            <input
-              type="date"
-              value={newDate}
-              onChange={(e) => setNewDate(e.target.value)}
-            />
-            <input
-              value={newNote}
-              onChange={(e) => setNewNote(e.target.value)}
-              label="Note"
-            />
-            <button type="submit"> Submit </button>
-          </form>
-    );
-  }
   
   function AllLoanComponents() {
 
-    const loansObject = useContext(PacificDataContext);
+   // const loansObject = useContext(PacificDataContext);
+     const {loans,setLoans} = useContext(PacificDataContext);
 
-    console.log(loansObject.loans)
+   // console.log(loansObject.loans)
 
-
+  //  this.forceUpdate();
     return (
       <Container className="mt-5">
         <Row>
+
+    {/* <div>{JSON.stringify(loans)}
+                    </div> */}
+
         {
-              loansObject.loans.map((item,index) => (
-              
-                <LoanInputComponent key={index} cnt={{item,index}}/>  
+              loans.map((item,index) => (
+                
+                <LoanInputComponent key={Math.random()} cnt={{item,index}}/>  
                 
               ))
         }
@@ -68,19 +34,48 @@ function UserInputsComponentForm() {
           
         </Row>
 
-        <LoanCalculationButton items={loansObject.loans}/>
+        <LoanCalculationButton/>
         </Container>
     );
   }
 
-  function LoanCalculationButton(props) {
+  function LoanCalculationButton() {
+    const {loans,setLoans} = useContext(PacificDataContext);
+    
+    useEffect(() => {
+      calculateLoanCurrentBalance()
+    }, []);
 
     const calculateLoanCurrentBalance = () => {
-      console.log(props)
+     
+      let newLoans = loans.map((loan) =>
+           {
 
+            let rate = (loan.interestRate / 100) / 12; // 4% rate 
+            let nper = loan.termYears * 12; //30 years in months
 
-        return 40000;
+            const pmtx = Math.ceil(pmt(rate, nper, loan.loanAmount)*-1)
+            const pvx = Math.ceil(pv(rate, nper-loan.NumberOfpaymentsMade, pmtx)*-1)
+            return {
+              
+              loanAmount: loan.loanAmount,
+              termYears: loan.termYears,
+              interestRate: loan.interestRate,
+              NumberOfpaymentsMade: loan.NumberOfpaymentsMade,
+              currentBalance: pvx,
+              currentPayment: pmtx 
+
+                  }
+             } )
+          
+        setLoans(newLoans)
+       
+
+   
+        return ;
     }
+
+    // calculateLoanCurrentBalance();
 
 
     return (
@@ -97,21 +92,12 @@ function UserInputsComponentForm() {
 
     
 
-   
-
-    const loans = useContext(PacificDataContext);
-
-       console.log(props.cnt.loanAmount);
-       console.log("END");
-
-     
-
     return (
   
-
     <Col lg={4}>
+
       <Form.Label className='form-control-lg' htmlFor="basic-url"><strong>Loan Details - {props.cnt.index + 1} </strong></Form.Label>
-        <FloatingLabel controlId="loanamount1 " label="Loan Amount ($) " className="mb-3">
+        <FloatingLabel controlId="loanamount1 " label="Total Loan Amount / Principal Amount ($) " className="mb-3">
           <Form.Control defaultValue={props.cnt.item.loanAmount} type="number" step={0.01} placeholder="00.00" />
         </FloatingLabel>
 
@@ -119,13 +105,22 @@ function UserInputsComponentForm() {
           <Form.Control defaultValue={props.cnt.item.termYears} type="number" step={0} placeholder="00" />
         </FloatingLabel>
 
-        <FloatingLabel controlId="loaninterest1" label="Interest Rate (%)" className="mb-3">
+        <FloatingLabel controlId="loaninterest1" label="Interest Rate Per Annum (%)" className="mb-3">
           <Form.Control defaultValue={props.cnt.item.interestRate} type="number" step={0.01} placeholder="00.00" />
         </FloatingLabel>
 
         <FloatingLabel controlId="loanpayments1" label="Number Of Payments Made " className="mb-3">
           <Form.Control  defaultValue={props.cnt.item.NumberOfpaymentsMade} type="number" step={1} placeholder="0" />
         </FloatingLabel>
+
+        <Form.Group as={Row} className="mb-3" controlId="currentpaymentloan">
+        <Form.Label column sm="6">
+        <strong> Payment Per Period : </strong>
+        </Form.Label>
+        <Col sm="6">
+          <Form.Control plaintext readOnly defaultValue={props.cnt.item.currentPayment} />
+        </Col>
+      </Form.Group>
 
 
         <Form.Group as={Row} className="mb-3" controlId="currentbalanceloan">
@@ -137,14 +132,7 @@ function UserInputsComponentForm() {
         </Col>
       </Form.Group>
 
-      <Form.Group as={Row} className="mb-3" controlId="currentpaymentloan">
-        <Form.Label column sm="6">
-        <strong>Current Payment (P&I) : </strong>
-        </Form.Label>
-        <Col sm="6">
-          <Form.Control plaintext readOnly defaultValue={props.cnt.item.currentPayment} />
-        </Col>
-      </Form.Group>
+      
       
 
     </Col>
@@ -153,8 +141,14 @@ function UserInputsComponentForm() {
     );
   }
 
+
+
+
+
+  
+
   export {
-    UserInputsComponentForm,
+  
     AllLoanComponents,
     LoanInputComponent
   }
