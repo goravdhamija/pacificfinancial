@@ -86,14 +86,11 @@ console.log("5")
     }, []);
   
     function handleUpdate(e) {
-     // e.preventDefault();
+     e.preventDefault();
       const { name, value, id } = e.target;
       const idselected = id.split('-');
 
-      // console.log({[name]: value})
-      // console.log("2")
-      // console.log(`You changed value. : ${e.target.id}`);
-      // console.log(`Selected ID. : ${idselected[3]}`);
+     
       
       let new_loan_data = loans.map((loan) => {
 
