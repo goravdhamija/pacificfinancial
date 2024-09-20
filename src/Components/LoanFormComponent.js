@@ -136,7 +136,7 @@ console.log("5")
           <Form.Control  defaultValue={props.cnt.item.numberOfpaymentsMade} name='numberOfpaymentsMade' onChange={handleUpdate} id={`loanitem-numberOfpaymentsMade-${props.cnt.index}-${props.id}`} type="number" step={1} placeholder="0" />
         </FloatingLabel>
 
-        <Form.Group as={Row} className="mb-3" controlId="currentpaymentloan">
+        <Form.Group as={Row} className="mb-1" controlId="currentpaymentloan">
         <Form.Label column sm="6">
         <strong> Payment Per Period : </strong>
         </Form.Label>
@@ -147,7 +147,7 @@ console.log("5")
       </Form.Group>
 
 
-        <Form.Group as={Row} className="mb-3" controlId="currentbalanceloan">
+        <Form.Group as={Row} className="mb-1" controlId="currentbalanceloan">
         <Form.Label column sm="6">
           <strong>Current Balance : </strong>
         </Form.Label>
@@ -157,7 +157,7 @@ console.log("5")
         </Col>
       </Form.Group>
 
-      <Form.Group as={Row} className="mb-3" >
+      <Form.Group as={Row} className="mb-1" >
         <Form.Label column sm="6">
           <strong>Total Interest : </strong>
         </Form.Label>
@@ -167,7 +167,7 @@ console.log("5")
       </Form.Group>
 
 
-      <Form.Group as={Row} className="mb-3" >
+      <Form.Group as={Row} className="mb-1" >
         <Form.Label column sm="6">
           <strong>Interest Paid : </strong>
         </Form.Label>
@@ -177,7 +177,7 @@ console.log("5")
       </Form.Group>
 
 
-      <Form.Group as={Row} className="mb-3" >
+      <Form.Group as={Row} className="mb-1" >
         <Form.Label column sm="6">
           <strong>Remaining Interest : </strong>
         </Form.Label>
@@ -187,7 +187,7 @@ console.log("5")
       </Form.Group>
 
 
-      <Form.Group as={Row} className="mb-3" >
+      <Form.Group as={Row} className="mb-1" >
         <Form.Label column sm="6">
           <strong>Remaining Principal : </strong>
         </Form.Label>
@@ -197,7 +197,7 @@ console.log("5")
       </Form.Group>
 
 
-      <Form.Group as={Row} className="mb-3" >
+      <Form.Group as={Row} className="mb-1" >
         <Form.Label column sm="6">
           <strong>Years Left : </strong>
         </Form.Label>
@@ -207,12 +207,12 @@ console.log("5")
       </Form.Group>
 
 
-      <FloatingLabel controlId="loanpayments1" label="Deductible (%) " className="mb-3">
+      <FloatingLabel controlId="loanpayments1" label="Deductible (%) " className="mb-1">
           <Form.Control  defaultValue={props.cnt.item.deductible} name='deductible' onChange={handleUpdate} id={`loanitem-numberOfpaymentsMade-${props.cnt.index}-${props.id}`} type="number" step={1} placeholder="0" />
         </FloatingLabel>
       
 
-        <Form.Group as={Row} className="mb-3" >
+        <Form.Group as={Row} className="mb-1" >
         <Form.Label column sm="6">
           <strong>Deductible Cost ($) : </strong>
         </Form.Label>

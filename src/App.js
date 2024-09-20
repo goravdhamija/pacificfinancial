@@ -40,7 +40,23 @@ function App() {
     yearsLeft:0,
     deductible:35,
     deductibleCost:0
-  } 
+  },
+  {
+    loanid:189,
+    loanAmount: 335000,
+    termYears: 30,
+    interestRate: 2.750,
+    numberOfpaymentsMade: 36,
+    currentBalance: 0,
+    currentPayment: 0,
+    totalInterest:0,
+    interestPaid:0,
+    remainingInterest:0,
+    remainingPrincipal:0,
+    yearsLeft:0,
+    deductible:35,
+    deductibleCost:0
+  }
 ]
   
   let [loans,setLoans] = useState(loansArray)
