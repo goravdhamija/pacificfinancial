@@ -9,18 +9,20 @@ import { PacificDataContext } from "./Components/PacificDataContext.js";
 function App() {
 
   let loansArray = [{
+    loanid:189,
     loanAmount: 335000,
     termYears: 30,
     interestRate: 2.750,
-    NumberOfpaymentsMade: 36,
+    numberOfpaymentsMade: 36,
     currentBalance: 0,
     currentPayment: 0
   },
   {
+    loanid:230,
     loanAmount: 200000,
     termYears: 10,
     interestRate: 8.50,
-    NumberOfpaymentsMade: 12,
+    numberOfpaymentsMade: 12,
     currentBalance: 0,
     currentPayment: 0
   } 
