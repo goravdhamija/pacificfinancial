@@ -88,6 +88,8 @@ function App() {
   // let [loans,setLoans] = useState(loansArray)
   
  
+
+  
   return (
     <div>
     <PacificDataContext.Provider value={{loans,setLoans}}>

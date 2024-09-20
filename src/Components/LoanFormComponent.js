@@ -29,10 +29,7 @@ import {PV, CUMIPMT } from '@formulajs/formulajs'
 
   const calculateLoanCurrentBalance = (loans,setLoans) => {
      
-    console.log("4")
-           console.log(loans)
-           console.log("4 Ends")
-
+  
     let newLoans = loans.map((loan) =>
          {
 
@@ -67,12 +64,7 @@ import {PV, CUMIPMT } from '@formulajs/formulajs'
         
       setLoans(newLoans)
      
-console.log("5")
-           console.log(loans)
-           console.log("5 Ends")
-           console.log("6")
-           console.log(newLoans)
-           console.log("6 Ends")
+
       return ;
   }
 
