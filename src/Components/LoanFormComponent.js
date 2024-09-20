@@ -41,7 +41,7 @@ import { pv,fv, pmt } from 'financial'
 
   function LoanCalculationButton() {
     const {loans,setLoans} = useContext(PacificDataContext);
-    
+
     useEffect(() => {
       calculateLoanCurrentBalance()
     }, []);
@@ -94,7 +94,7 @@ import { pv,fv, pmt } from 'financial'
 
     return (
   
-    <Col lg={4}>
+    <Col lg={4}> 
 
       <Form.Label className='form-control-lg' htmlFor="basic-url"><strong>Loan Details - {props.cnt.index + 1} </strong></Form.Label>
         <FloatingLabel controlId="loanamount1 " label="Total Loan Amount / Principal Amount ($) " className="mb-3">
