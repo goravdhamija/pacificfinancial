@@ -7,9 +7,10 @@ import { PacificDataContext } from './PacificDataContext';
 import { pv,fv, pmt } from 'financial'
 import {PV, CUMIPMT } from '@formulajs/formulajs'
 import { LiabilityInputComponent } from './LiabilitiesFormComponents';
+import { NewLoanProposalComponent } from './NewLoanProposal';
   
   function AllLoanComponents() {
-    const {loans,setLoans,liabilities,setLiabilities} = useContext(PacificDataContext);
+    const {loans,setLoans,liabilities,setLiabilities,proposals,setProposals} = useContext(PacificDataContext);
     return (
       <Container className="mt-5">
         <Row>
@@ -24,6 +25,16 @@ import { LiabilityInputComponent } from './LiabilitiesFormComponents';
         {
               liabilities.map((item,index) => (
                 <LiabilityInputComponent key={item.liabilityid} id={item.liabilityid} cnt={{item,index}}/>  
+              ))
+        }  
+        </Row>
+
+
+        <Row className="mt-5">
+        {
+              proposals.map((item,index) => (
+                
+                <NewLoanProposalComponent key={item.proposalid} id={item.proposalid} cnt={{item,index}}/>  
               ))
         }  
         </Row>
@@ -80,7 +91,7 @@ import { LiabilityInputComponent } from './LiabilitiesFormComponents';
 
   function LoanInputComponent(props) {
 
-    const {loans,setLoans,liabilities,setLiabilities} = useContext(PacificDataContext);
+    const {loans,setLoans,liabilities,setLiabilities,proposals,setProposals} = useContext(PacificDataContext);
 
     useEffect(() => {
       calculateLoanCurrentBalance(loans,setLoans)

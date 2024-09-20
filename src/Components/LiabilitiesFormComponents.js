@@ -29,14 +29,6 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
 
             payoffYears:nper,
             interest:cumipmt
-            // currentPayment: pmtx,
-            // currentBalance: pvx, 
-            // totalInterest:cumipmt, 
-            // interestPaid: cumipmtPaid, 
-            // remainingInterest:remainingInterest,
-            // remainingPrincipal:Pvx,
-            // yearsLeft:yearsLeft,
-            // deductibleCost:deductible
           
           }
 
@@ -53,7 +45,7 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
 
   function LiabilityInputComponent(props) {
 
-    const {loans,setLoans,liabilities,setLiabilities} = useContext(PacificDataContext);
+    const {loans,setLoans,liabilities,setLiabilities,proposals,setProposals} = useContext(PacificDataContext);
 
     useEffect(() => {
         calculateLiabilityCurrentBalance(liabilities,setLiabilities)
@@ -88,7 +80,7 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
 
     return (
   
-    <Col id={`liabilityitem-${props.cnt.index}-${props.id}`} lg={4}> 
+    <Col id={`liabilityitem-${props.cnt.index}-${props.id}`} lg={2}> 
 
 
 

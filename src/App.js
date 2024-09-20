@@ -59,9 +59,7 @@ function App() {
   }
 ]
 
-
-  
-  let [loans,setLoans] = useState(loansArray)
+let [loans,setLoans] = useState(loansArray)
 
 
   let liabilitiesArray = [{
@@ -86,7 +84,113 @@ function App() {
   }
 ]
 
-  let [liabilities,setLiabilities] = useState(liabilitiesArray)
+let [liabilities,setLiabilities] = useState(liabilitiesArray)
+
+
+
+let proposalArray = [{
+  proposalid:300,
+  proposalTerm:5,
+  proposalInterestRate:5,
+  proposalOriginationFeesRate:1,
+  proposalOriginationFees: 0,
+  proposalDiscountFeesRate:0,
+  proposalDiscountFees:0,
+  proposalMiscFeesRate:0,
+  proposalMiscFees:0,
+  proposalLenderCreditRate:0,
+  proposalLenderCredit:0,
+  total:0,
+  totalPayOff:0,
+  inCC:true,
+  newProposalLoanAmount:0,
+  newPayment:0,
+  apr:0,
+  netSavingsPM:0,
+  termReduction:0,
+  totalNewInterest:0,
+  interestSavedLost:0,
+  taxBenefitBracket:35,
+  taxBenefitNew:0,
+  taxBenefitPrevious:0,
+  investCashoutCheck:true,
+  rateOnInvest:5,
+  investMonthlyCheck:true,
+  investMonthlyAmount:0,
+  benefitAfter1Year:0,
+  benefitAfter3Year:0,
+  benefitAfter5Year:0
+},
+{
+  proposalid:400,
+  proposalTerm:10,
+  proposalInterestRate:5,
+  proposalOriginationFeesRate:1,
+  proposalOriginationFees: 0,
+  proposalDiscountFeesRate:0,
+  proposalDiscountFees:0,
+  proposalMiscFeesRate:0,
+  proposalMiscFees:0,
+  proposalLenderCreditRate:0,
+  proposalLenderCredit:0,
+  total:0,
+  totalPayOff:0,
+  inCC:0,
+  newProposalLoanAmount:0,
+  newPayment:0,
+  apr:0,
+  netSavingsPM:0,
+  termReduction:0,
+  totalNewInterest:0,
+  interestSavedLost:0,
+  taxBenefitBracket:35,
+  taxBenefitNew:0,
+  taxBenefitPrevious:0,
+  investCashoutCheck:true,
+  rateOnInvest:5,
+  investMonthlyCheck:true,
+  investMonthlyAmount:0,
+  benefitAfter1Year:0,
+  benefitAfter3Year:0,
+  benefitAfter5Year:0
+},
+{
+  proposalid:500,
+  proposalTerm:15,
+  proposalInterestRate:2,
+  proposalOriginationFeesRate:1,
+  proposalOriginationFees: 0,
+  proposalDiscountFeesRate:0,
+  proposalDiscountFees:0,
+  proposalMiscFeesRate:0,
+  proposalMiscFees:0,
+  proposalLenderCreditRate:0,
+  proposalLenderCredit:0,
+  total:0,
+  totalPayOff:0,
+  inCC:0,
+  newProposalLoanAmount:0,
+  newPayment:0,
+  apr:0,
+  netSavingsPM:0,
+  termReduction:0,
+  totalNewInterest:0,
+  interestSavedLost:0,
+  taxBenefitBracket:35,
+  taxBenefitNew:0,
+  taxBenefitPrevious:0,
+  investCashoutCheck:true,
+  rateOnInvest:5,
+  investMonthlyCheck:true,
+  investMonthlyAmount:0,
+  benefitAfter1Year:0,
+  benefitAfter3Year:0,
+  benefitAfter5Year:0
+  
+}
+]
+
+let [proposals,setProposals] = useState(proposalArray)
 
   // let loanObj = {
   //   loanAmount: 335000,
@@ -119,7 +223,7 @@ function App() {
 
   return (
     <div>
-    <PacificDataContext.Provider value={{loans,setLoans,liabilities,setLiabilities}}>
+    <PacificDataContext.Provider value={{loans,setLoans,liabilities,setLiabilities,proposals,setProposals}}>
       <HeaderComponent/>
       <AllLoanComponents/>
     </PacificDataContext.Provider>
