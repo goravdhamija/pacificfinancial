@@ -41,8 +41,7 @@ import {PV, CUMIPMT } from '@formulajs/formulajs'
           let per = loan.termYears * 12;
 
           const pmtx = Math.ceil(pmt(rate, nper, loan.loanAmount)*-1)
-           const pvx = Math.ceil(pv(rate, nper-loan.numberOfpaymentsMade, pmtx)*-1)
-          
+          const pvx = Math.ceil(pv(rate, nper-loan.numberOfpaymentsMade, pmtx)*-1)
           const Pvx = Math.ceil(PV(rate, nper-loan.numberOfpaymentsMade, pmtx)*-1)
           const cumipmt = Math.ceil(CUMIPMT(rate, nper ,loan.loanAmount, 1 , per,0 )*-1)
           const cumipmtPaid = Math.ceil(CUMIPMT(rate, nper ,loan.loanAmount, 1 , loan.numberOfpaymentsMade,0 )*-1)
