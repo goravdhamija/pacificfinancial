@@ -2,7 +2,7 @@ import React,{useState,useEffect, useContext} from 'react';
 import logo from '../pacific-financial-logo.jpg';
 import '../App.css';
 import '../custom.scss';
-import { Form,Row,Col,InputGroup,FloatingLabel,Button , Container, Badge,Stack,Card,CloseButton,Table,Tab,Tabs,Toast} from 'react-bootstrap';
+import { Form,Row,Col,InputGroup,FloatingLabel,Button,ListGroup , Container, Badge,Stack,Card,CloseButton,Table,Tab,Tabs,Toast} from 'react-bootstrap';
 import { PacificDataContext } from './PacificDataContext';
 import { pv,fv, pmt } from 'financial'
 import {PV, CUMIPMT } from '@formulajs/formulajs'
@@ -127,24 +127,36 @@ import { NewLoanProposalComponent } from './NewLoanProposal';
     return (
   
     <Col id={`loanitem-${props.cnt.index}-${props.id}`} lg={4}> 
-
-      <Form.Label className='form-control-lg' htmlFor="basic-url"><strong>Loan Details - {props.cnt.index + 1} </strong></Form.Label>
+<ListGroup sm={4}>
+      
+      <ListGroup.Item as="li" active><strong>Loan Details - {props.cnt.index + 1} </strong></ListGroup.Item>
+      <ListGroup.Item>
         <FloatingLabel controlId="loanamount1 " label="Total Loan Amount / Principal Amount ($) " className="mb-3">
           <Form.Control defaultValue={props.cnt.item.loanAmount} name='loanAmount' onChange={handleUpdate} id={`loanitem-loanamount-${props.cnt.index}-${props.id}`} type="number" step={0.01} placeholder="00.00" />
         </FloatingLabel>
+        </ListGroup.Item>
 
+        <ListGroup.Item>
         <FloatingLabel controlId="termyears1" label="Term (Years)" className="mb-3">
           <Form.Control defaultValue={props.cnt.item.termYears} name='termYears' onChange={handleUpdate} id={`loanitem-termYears-${props.cnt.index}-${props.id}`} type="number" step={0} placeholder="00" />
         </FloatingLabel>
+        </ListGroup.Item>
 
+        <ListGroup.Item>
         <FloatingLabel controlId="loaninterest1" label="Interest Rate Per Annum (%)" className="mb-3">
           <Form.Control defaultValue={props.cnt.item.interestRate} name='interestRate' onChange={handleUpdate} id={`loanitem-interestRate-${props.cnt.index}-${props.id}`} type="number" step={0.01} placeholder="00.00" />
         </FloatingLabel>
+        </ListGroup.Item>
 
+
+        <ListGroup.Item>
         <FloatingLabel controlId="loanpayments1" label="Number Of Payments Made " className="mb-3">
           <Form.Control  defaultValue={props.cnt.item.numberOfpaymentsMade} name='numberOfpaymentsMade' onChange={handleUpdate} id={`loanitem-numberOfpaymentsMade-${props.cnt.index}-${props.id}`} type="number" step={1} placeholder="0" />
         </FloatingLabel>
+        </ListGroup.Item>
 
+
+        <ListGroup.Item>
         <Form.Group as={Row} className="mb-1" controlId="currentpaymentloan">
         <Form.Label column sm="6">
         <strong> Payment Per Period : </strong>
@@ -154,8 +166,10 @@ import { NewLoanProposalComponent } from './NewLoanProposal';
           {/* <Form.Control plaintext readOnly defaultValue={props.cnt.item.currentPayment} /> */}
         </Col>
       </Form.Group>
+      </ListGroup.Item>
 
 
+      <ListGroup.Item>
         <Form.Group as={Row} className="mb-1" controlId="currentbalanceloan">
         <Form.Label column sm="6">
           <strong>Current Balance : </strong>
@@ -165,7 +179,10 @@ import { NewLoanProposalComponent } from './NewLoanProposal';
           {/* <Form.Control plaintext readOnly defaultValue={props.cnt.item.currentBalance} /> */}
         </Col>
       </Form.Group>
+      </ListGroup.Item>
 
+
+      <ListGroup.Item>
       <Form.Group as={Row} className="mb-1" >
         <Form.Label column sm="6">
           <strong>Total Interest : </strong>
@@ -174,8 +191,10 @@ import { NewLoanProposalComponent } from './NewLoanProposal';
         <div> {props.cnt.item.totalInterest}</div>
         </Col>
       </Form.Group>
+      </ListGroup.Item>
 
 
+      <ListGroup.Item>
       <Form.Group as={Row} className="mb-1" >
         <Form.Label column sm="6">
           <strong>Interest Paid : </strong>
@@ -184,8 +203,10 @@ import { NewLoanProposalComponent } from './NewLoanProposal';
         <div> {props.cnt.item.interestPaid}</div>
         </Col>
       </Form.Group>
+      </ListGroup.Item>
 
 
+      <ListGroup.Item>
       <Form.Group as={Row} className="mb-1" >
         <Form.Label column sm="6">
           <strong>Remaining Interest : </strong>
@@ -194,8 +215,9 @@ import { NewLoanProposalComponent } from './NewLoanProposal';
         <div> {props.cnt.item.remainingInterest}</div>
         </Col>
       </Form.Group>
+      </ListGroup.Item>
 
-
+      <ListGroup.Item>
       <Form.Group as={Row} className="mb-1" >
         <Form.Label column sm="6">
           <strong>Remaining Principal : </strong>
@@ -204,8 +226,10 @@ import { NewLoanProposalComponent } from './NewLoanProposal';
         <div> {props.cnt.item.remainingPrincipal}</div>
         </Col>
       </Form.Group>
+      </ListGroup.Item>
 
 
+      <ListGroup.Item>
       <Form.Group as={Row} className="mb-1" >
         <Form.Label column sm="6">
           <strong>Years Left : </strong>
@@ -214,13 +238,16 @@ import { NewLoanProposalComponent } from './NewLoanProposal';
         <div> {props.cnt.item.yearsLeft}</div>
         </Col>
       </Form.Group>
+      </ListGroup.Item>
 
 
+      <ListGroup.Item>
       <FloatingLabel controlId="loanpayments1" label="Deductible (%) " className="mb-1">
           <Form.Control  defaultValue={props.cnt.item.deductible} name='deductible' onChange={handleUpdate} id={`loanitem-numberOfpaymentsMade-${props.cnt.index}-${props.id}`} type="number" step={1} placeholder="0" />
         </FloatingLabel>
+        </ListGroup.Item>
       
-
+        <ListGroup.Item>
         <Form.Group as={Row} className="mb-1" >
         <Form.Label column sm="6">
           <strong>Deductible Cost ($) : </strong>
@@ -229,8 +256,9 @@ import { NewLoanProposalComponent } from './NewLoanProposal';
         <div> {props.cnt.item.deductibleCost}</div>
         </Col>
       </Form.Group>
+      </ListGroup.Item>
       
-
+      </ListGroup>
     </Col>
         
 
