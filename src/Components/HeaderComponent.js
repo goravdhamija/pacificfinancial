@@ -23,10 +23,14 @@ import { Form,Button , Container, Badge,Stack,Card,CloseButton,Table,Tab,Tabs,To
    
     return (
       <div >
-            
+            <u className='text-primary'>
               <h1 style={{"font-family": "'lucida grande', tahoma, verdana, arial, sans-serif"}} className='text-success'>
-                <strong className='text-primary'>PACIFIC FINANCIAL </strong>
-                 MORTGAGE CALCULATOR </h1>
+                
+                  <strong className='text-primary'>PACIFIC FINANCIAL </strong>
+                 MORTGAGE CALCULATOR 
+                 
+                 </h1>
+                 </u>
       
       </div>
     );
