@@ -81,9 +81,13 @@ function AlertFooterPage() {
           Mortgage Calculator !
         </p>
         <div className="d-flex justify-content-end">
-          <Button variant="dark">
+        <Button  className='m-3' variant="dark">
             Download PDF
           </Button>
+        <Button  className='m-3' variant="dark">
+            Print Document
+          </Button>
+          
         </div>
         <hr />
        
