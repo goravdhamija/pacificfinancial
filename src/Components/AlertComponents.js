@@ -59,11 +59,28 @@ function AlertHeaderProposals() {
     )
 }
 
+function AlertFooterPage() {
+
+    return (
+        
+        <Alert show={true} variant="dark">
+        <Alert.Heading>Pacific Financial</Alert.Heading>
+        <p>
+          Mortgage Calculator !
+        </p>
+        <hr />
+        
+      </Alert>
+      
+    )
+}
+
 
 
 export {
   
     AlertHeaderLoans,
     AlertHeaderLiabilities,
-    AlertHeaderProposals
+    AlertHeaderProposals,
+    AlertFooterPage
   }

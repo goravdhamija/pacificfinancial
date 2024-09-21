@@ -8,7 +8,7 @@ import { pv,fv, pmt } from 'financial'
 import {PV, CUMIPMT } from '@formulajs/formulajs'
 import { LiabilityInputComponent } from './LiabilitiesFormComponents';
 import { NewLoanProposalComponent } from './NewLoanProposal';
-import { AlertHeaderLoans,AlertHeaderLiabilities,AlertHeaderProposals } from './AlertComponents';
+import { AlertHeaderLoans,AlertHeaderLiabilities,AlertHeaderProposals,AlertFooterPage } from './AlertComponents';
   
   function AllLoanComponents() {
     const {loans,setLoans,liabilities,setLiabilities,proposals,setProposals} = useContext(PacificDataContext);
@@ -60,6 +60,12 @@ import { AlertHeaderLoans,AlertHeaderLiabilities,AlertHeaderProposals } from './
                 <NewLoanProposalComponent key={item.proposalid} id={item.proposalid} cnt={{item,index}}/>  
               ))
         }  
+        </Row>
+
+        <Row>
+        <Col lg={12}> 
+        <AlertFooterPage/>
+        </Col>
         </Row>
 
        
