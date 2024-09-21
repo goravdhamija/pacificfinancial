@@ -2,17 +2,26 @@ import React,{useState,useEffect, useContext} from 'react';
 import logo from '../pacific-financial-logo.jpg';
 import '../App.css';
 import '../custom.scss';
-import { Form,Row,Col,InputGroup,FloatingLabel,Button,ListGroup ,Modal, Container, Badge,Stack,Card,CloseButton,Table,Tab,Tabs,Toast} from 'react-bootstrap';
+import { Alert,Form,Row,Col,InputGroup,FloatingLabel,Button,ListGroup ,Modal, Container, Badge,Stack,Card,CloseButton,Table,Tab,Tabs,Toast} from 'react-bootstrap';
 import { PacificDataContext } from './PacificDataContext';
 import { pv,fv, pmt } from 'financial'
 import {PV, CUMIPMT } from '@formulajs/formulajs'
 import { LiabilityInputComponent } from './LiabilitiesFormComponents';
 import { NewLoanProposalComponent } from './NewLoanProposal';
+import { AlertHeaderLoans,AlertHeaderLiabilities,AlertHeaderProposals } from './AlertComponents';
   
   function AllLoanComponents() {
     const {loans,setLoans,liabilities,setLiabilities,proposals,setProposals} = useContext(PacificDataContext);
     return (
       <Container className="mt-5">
+
+        <Row>
+        <Col lg={12}> 
+        <AlertHeaderLoans/>
+        </Col>
+        </Row>
+
+
         <Row>
         {
               loans.map((item,index) => (
@@ -21,7 +30,14 @@ import { NewLoanProposalComponent } from './NewLoanProposal';
         }  
         </Row>
 
-        <Row className="mt-5">
+
+        <Row>
+        <Col lg={12}> 
+        <AlertHeaderLiabilities/>
+        </Col>
+        </Row>
+
+        <Row >
         {
               liabilities.map((item,index) => (
                 <LiabilityInputComponent key={item.liabilityid} id={item.liabilityid} cnt={{item,index}}/>  
@@ -30,7 +46,14 @@ import { NewLoanProposalComponent } from './NewLoanProposal';
         </Row>
 
 
-        <Row className="mt-5">
+        <Row>
+        <Col lg={12}> 
+        <AlertHeaderProposals/>
+        </Col>
+        </Row>
+
+
+        <Row>
         {
               proposals.map((item,index) => (
                 
@@ -127,6 +150,7 @@ import { NewLoanProposalComponent } from './NewLoanProposal';
     return (
   
     <Col id={`loanitem-${props.cnt.index}-${props.id}`} lg={4}> 
+
 
 
 

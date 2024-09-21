@@ -96,8 +96,6 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
 
 <ListGroup >
       
-    
-      
       <ListGroup.Item>
       <Form.Select aria-label="Default select example" className="mb-3">
       <option selected value="1">Card</option>
