@@ -9,9 +9,9 @@ import { Form,Button , Container, Badge,Stack,Card,CloseButton,Table,Tab,Tabs,To
     return (
         <header>
          <Container>
-            <Row>
-              <Col className='text-center mt-4' md={4}><img src={logo} className="App-logo" alt="logo" /></Col>
-              <Col className='text-center mt-5' md={8}><UserInputsComponentHeader/></Col>
+            <Row >
+              <Col className='text-center mt-4' md={3}><img src={logo} className="App-logo" alt="logo" /></Col>
+              <Col className='text-center mt-5' md={9}><UserInputsComponentHeader/></Col>
             </Row>
          </Container>
             
@@ -20,11 +20,13 @@ import { Form,Button , Container, Badge,Stack,Card,CloseButton,Table,Tab,Tabs,To
   }
 
   function UserInputsComponentHeader() {
-    const [personName,setPersonName] = React.useState('');
+   
     return (
       <div >
-           
-              <h1 className='text-success'><strong className='text-primary'>Pacific Financial</strong> Mortgage Calculator {personName}</h1>
+            
+              <h1 style={{"font-family": "'lucida grande', tahoma, verdana, arial, sans-serif"}} className='text-success'>
+                <strong className='text-primary'>PACIFIC FINANCIAL </strong>
+                 MORTGAGE CALCULATOR </h1>
       
       </div>
     );
