@@ -10,8 +10,8 @@ import { Form,Button , Container, Badge,Stack,Card,CloseButton,Table,Tab,Tabs,To
         <header>
          <Container>
             <Row>
-              <Col className='text-center mt-3' md={4}><img src={logo} className="App-logo" alt="logo" /></Col>
-              <Col className='text-center mt-3' md={8}><UserInputsComponentHeader/></Col>
+              <Col className='text-center mt-4' md={4}><img src={logo} className="App-logo" alt="logo" /></Col>
+              <Col className='text-center mt-5' md={8}><UserInputsComponentHeader/></Col>
             </Row>
          </Container>
             
@@ -24,7 +24,7 @@ import { Form,Button , Container, Badge,Stack,Card,CloseButton,Table,Tab,Tabs,To
     return (
       <div >
            
-              <h1 className='text-primary'>Pacific Financial Mortgage Calculator {personName}</h1>
+              <h1 className='text-success'><strong className='text-primary'>Pacific Financial</strong> Mortgage Calculator {personName}</h1>
       
       </div>
     );
