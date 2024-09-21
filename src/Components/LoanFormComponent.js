@@ -136,10 +136,10 @@ import { NewLoanProposalComponent } from './NewLoanProposal';
       sm={4}
     >
       <Modal.Dialog>
-        <Modal.Header size="lg" style={{ background: 'cyan' }} closeButton>
+        <Modal.Header size="lg" style={{ background: '#f0f8ff' }} closeButton>
           <Modal.Title>Loan Details - {props.cnt.index + 1}</Modal.Title>
         </Modal.Header>
-        <Modal.Body style={{ background: 'cyan' }} >
+        <Modal.Body style={{ background:  '#f0f8ff' }} >
           
     <ListGroup >
 
