@@ -20,7 +20,11 @@ function AlertHeaderLoans() {
           Blocks Contains Multiple Loans Details of a User !
         </p>
         <hr />
-        
+        <div className="d-flex justify-content-end">
+          <Button variant="outline-dark">
+            Add New Loan 
+          </Button>
+        </div>
       </Alert>
       
     )
@@ -36,7 +40,11 @@ function AlertHeaderLiabilities() {
           Blocks Contains Multiple Liabilities Details of a User !
         </p>
         <hr />
-        
+        <div className="d-flex justify-content-end">
+          <Button variant="outline-danger">
+            Add New Liability 
+          </Button>
+        </div>
       </Alert>
       
     )
@@ -53,7 +61,11 @@ function AlertHeaderProposals() {
           Blocks Contains Multiple Loan Proposed Plans Calculated According to the Data Provided !
         </p>
         <hr />
-        
+        <div className="d-flex justify-content-end">
+          <Button variant="outline-primary">
+            Add New Proposal 
+          </Button>
+        </div>
       </Alert>
       
     )
@@ -68,8 +80,13 @@ function AlertFooterPage() {
         <p>
           Mortgage Calculator !
         </p>
+        <div className="d-flex justify-content-end">
+          <Button variant="dark">
+            Download PDF
+          </Button>
+        </div>
         <hr />
-        
+       
       </Alert>
       
     )
