@@ -8,6 +8,11 @@ import { pv,fv, pmt } from 'financial'
 import {PV, CUMIPMT } from '@formulajs/formulajs'
 import { LiabilityInputComponent } from './LiabilitiesFormComponents';
 import { NewLoanProposalComponent } from './NewLoanProposal';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import PdfDownloadComponent from './PdfDownloadComponent';
+
+
 
 
 function AlertHeaderLoans() {
@@ -172,6 +177,9 @@ function AlertHeaderProposals() {
 
 function AlertFooterPage() {
 
+  
+
+
     return (
         
         <Alert show={true} variant="dark">
@@ -180,9 +188,12 @@ function AlertFooterPage() {
           Mortgage Calculator !
         </p>
         <div className="d-flex justify-content-end">
-        <Button  className='m-3' variant="dark">
+
+        {/* <PdfDownloadComponent /> */}
+
+        {/* <Button  onClick={downloadPDF}  className='m-3' variant="dark">
             Download PDF
-          </Button>
+          </Button> */}
         <Button  className='m-3' variant="dark">
             Print Document
           </Button>

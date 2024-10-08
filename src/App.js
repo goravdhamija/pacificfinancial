@@ -271,7 +271,7 @@ let [proposals,setProposals] = useState(proposalArray)
     <div>
     <PacificDataContext.Provider value={{loans,setLoans,liabilities,setLiabilities,proposals,setProposals}}>
       <HeaderComponent/>
-      <AllLoanComponents/>
+      <AllLoanComponents   />
     </PacificDataContext.Provider>
     </div>
   );
