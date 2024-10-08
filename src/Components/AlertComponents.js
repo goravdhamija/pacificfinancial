@@ -11,6 +11,7 @@ import { NewLoanProposalComponent } from './NewLoanProposal';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import PdfDownloadComponent from './PdfDownloadComponent';
+import DownloadPDFXXX from './downloadPDF';
 
 
 
@@ -177,8 +178,19 @@ function AlertHeaderProposals() {
 
 function AlertFooterPage() {
 
-  
+  const [show, setShow] = useState(false);
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  function downloadPDF() {
+    
+}
+  
+  function handlePrint() {
+    window.print()
+
+}
 
     return (
         
@@ -189,12 +201,13 @@ function AlertFooterPage() {
         </p>
         <div className="d-flex justify-content-end">
 
-        {/* <PdfDownloadComponent /> */}
+       
 
-        {/* <Button  onClick={downloadPDF}  className='m-3' variant="dark">
+        {/* <Button  onClick={handleShow}  className='m-3' variant="dark">
             Download PDF
           </Button> */}
-        <Button  className='m-3' variant="dark">
+          <DownloadPDFXXX />
+        <Button  onClick={handlePrint}  className='m-3' variant="dark">
             Print Document
           </Button>
           
