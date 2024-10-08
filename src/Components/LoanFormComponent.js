@@ -5,13 +5,15 @@ import '../custom.scss';
 import { Alert,Form,Row,Col,InputGroup,FloatingLabel,Button,ListGroup ,Modal, Container, Badge,Stack,Card,CloseButton,Table,Tab,Tabs,Toast} from 'react-bootstrap';
 import { PacificDataContext } from './PacificDataContext';
 import { pv,fv, pmt } from 'financial'
-import {PV, CUMIPMT } from '@formulajs/formulajs'
+import { PV, CUMIPMT } from '@formulajs/formulajs'
 import { LiabilityInputComponent } from './LiabilitiesFormComponents';
 import { NewLoanProposalComponent } from './NewLoanProposal';
 import { AlertHeaderLoans,AlertHeaderLiabilities,AlertHeaderProposals,AlertFooterPage } from './AlertComponents';
   
   function AllLoanComponents() {
+
     const {loans,setLoans,liabilities,setLiabilities,proposals,setProposals} = useContext(PacificDataContext);
+
     return (
       <Container className="mt-5">
 
@@ -76,7 +78,7 @@ import { AlertHeaderLoans,AlertHeaderLiabilities,AlertHeaderProposals,AlertFoote
   
 
 
-  const calculateLoanCurrentBalance = (loans,setLoans) => {
+  const calculateLoanCurrentBalance = (loans,setLoans,liabilities,setLiabilities,proposals,setProposals) => {
      
   
     let newLoans = loans.map((loan) =>
@@ -123,7 +125,7 @@ import { AlertHeaderLoans,AlertHeaderLiabilities,AlertHeaderProposals,AlertFoote
     const {loans,setLoans,liabilities,setLiabilities,proposals,setProposals} = useContext(PacificDataContext);
 
     useEffect(() => {
-      calculateLoanCurrentBalance(loans,setLoans)
+      calculateLoanCurrentBalance(loans,setLoans,liabilities,setLiabilities,proposals,setProposals)
     }, []);
   
     function handleUpdate(e) {
@@ -144,7 +146,7 @@ import { AlertHeaderLoans,AlertHeaderLiabilities,AlertHeaderProposals,AlertFoote
                                           return loan;
                                       });
 
-        calculateLoanCurrentBalance(new_loan_data,setLoans)
+        calculateLoanCurrentBalance(loans,setLoans,liabilities,setLiabilities,proposals,setProposals)
 
 
      

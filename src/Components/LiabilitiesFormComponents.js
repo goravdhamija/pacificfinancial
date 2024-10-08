@@ -11,7 +11,7 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
   
 
 
-  const calculateLiabilityCurrentBalance = (liabilities,setLiabilities) => {
+  const calculateLiabilityCurrentBalance = (loans,setLoans,liabilities,setLiabilities,proposals,setProposals) => {
      
   
     let newLoans = liabilities.map((liability) =>
@@ -48,7 +48,7 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
     const {loans,setLoans,liabilities,setLiabilities,proposals,setProposals} = useContext(PacificDataContext);
 
     useEffect(() => {
-        calculateLiabilityCurrentBalance(liabilities,setLiabilities)
+        calculateLiabilityCurrentBalance(loans,setLoans,liabilities,setLiabilities,proposals,setProposals)
     }, []);
   
     function handleUpdate(e) {
@@ -69,7 +69,7 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
                                           return liability;
                                       });
 
-        calculateLiabilityCurrentBalance(new_liability_data,setLiabilities)
+        calculateLiabilityCurrentBalance(loans,setLoans,liabilities,setLiabilities,proposals,setProposals)
 
 
      
