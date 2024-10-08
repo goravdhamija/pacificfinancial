@@ -2,21 +2,72 @@ import React,{useState,useEffect, useContext} from 'react';
 import logo from '../pacific-financial-logo.jpg';
 import '../App.css';
 import '../custom.scss';
-import { Form,Row,Col,InputGroup,FloatingLabel,Button , Container, Badge,Stack,Card,CloseButton,Table,Tab,Tabs,Toast} from 'react-bootstrap';
+import { Alert,Form,Row,Col,InputGroup,FloatingLabel,Button,ListGroup ,Modal, Container, Badge,Stack,Card,CloseButton,Table,Tab,Tabs,Toast} from 'react-bootstrap';
 import { PacificDataContext } from './PacificDataContext';
 import { pv,fv, pmt } from 'financial'
-import {PV, CUMIPMT } from '@formulajs/formulajs'
+import { PV, CUMIPMT } from '@formulajs/formulajs'
+import { LiabilityInputComponent } from './LiabilitiesFormComponents';
+import { NewLoanProposalComponent } from './NewLoanProposal';
+import { AlertHeaderLoans,AlertHeaderLiabilities,AlertHeaderProposals,AlertFooterPage } from './AlertComponents';
   
   function AllLoanComponents() {
-    const {loans,setLoans} = useContext(PacificDataContext);
+
+    const {loans,setLoans,liabilities,setLiabilities,proposals,setProposals} = useContext(PacificDataContext);
+
     return (
-      <Container stripe="3n" className="mt-5">
+      <Container className="mt-5">
+
+        <Row>
+        <Col lg={12}> 
+        <AlertHeaderLoans/>
+        </Col>
+        </Row>
+
+
         <Row>
         {
               loans.map((item,index) => (
                 <LoanInputComponent key={item.loanid} id={item.loanid} cnt={{item,index}}/>  
               ))
         }  
+        </Row>
+
+
+        <Row>
+        <Col lg={12}> 
+        <AlertHeaderLiabilities/>
+        </Col>
+        </Row>
+
+        <Row >
+        {
+              liabilities.map((item,index) => (
+                <LiabilityInputComponent key={item.liabilityid} id={item.liabilityid} cnt={{item,index}}/>  
+              ))
+        }  
+        </Row>
+
+
+        <Row>
+        <Col lg={12}> 
+        <AlertHeaderProposals/>
+        </Col>
+        </Row>
+
+
+        <Row>
+        {
+              proposals.map((item,index) => (
+                
+                <NewLoanProposalComponent key={item.proposalid} id={item.proposalid} cnt={{item,index}}/>  
+              ))
+        }  
+        </Row>
+
+        <Row>
+        <Col lg={12}> 
+        <AlertFooterPage/>
+        </Col>
         </Row>
 
        
@@ -29,10 +80,7 @@ import {PV, CUMIPMT } from '@formulajs/formulajs'
 
   const calculateLoanCurrentBalance = (loans,setLoans) => {
      
-    console.log("4")
-           console.log(loans)
-           console.log("4 Ends")
-
+  
     let newLoans = loans.map((loan) =>
          {
 
@@ -67,33 +115,26 @@ import {PV, CUMIPMT } from '@formulajs/formulajs'
         
       setLoans(newLoans)
      
-console.log("5")
-           console.log(loans)
-           console.log("5 Ends")
-           console.log("6")
-           console.log(newLoans)
-           console.log("6 Ends")
+
       return ;
   }
 
 
   function LoanInputComponent(props) {
 
-    const {loans,setLoans} = useContext(PacificDataContext);
+    const {loans,setLoans,liabilities,setLiabilities,proposals,setProposals} = useContext(PacificDataContext);
+    
 
     useEffect(() => {
       calculateLoanCurrentBalance(loans,setLoans)
     }, []);
   
     function handleUpdate(e) {
-     // e.preventDefault();
+    //  e.preventDefault();
       const { name, value, id } = e.target;
       const idselected = id.split('-');
 
-      // console.log({[name]: value})
-      // console.log("2")
-      // console.log(`You changed value. : ${e.target.id}`);
-      // console.log(`Selected ID. : ${idselected[3]}`);
+     
       
       let new_loan_data = loans.map((loan) => {
 
@@ -112,6 +153,13 @@ console.log("5")
      
       
     }
+
+    function handleCloseLoan(e) {
+      const { name, value, id } = e.target;
+      const idselected = id.split('-');
+      setLoans(loans.filter((loan) => { if (loan.loanid != parseInt(idselected[2])) return true; }));
+     
+    }
     
 
 
@@ -119,108 +167,159 @@ console.log("5")
   
     <Col id={`loanitem-${props.cnt.index}-${props.id}`} lg={4}> 
 
-      <Form.Label className='form-control-lg' htmlFor="basic-url"><strong>Loan Details - {props.cnt.index + 1} </strong></Form.Label>
-        <FloatingLabel controlId="loanamount1 " label="Total Loan Amount / Principal Amount ($) " className="mb-3">
-          <Form.Control defaultValue={props.cnt.item.loanAmount} name='loanAmount' onChange={handleUpdate} id={`loanitem-loanamount-${props.cnt.index}-${props.id}`} type="number" step={0.01} placeholder="00.00" />
-        </FloatingLabel>
-
-        <FloatingLabel controlId="termyears1" label="Term (Years)" className="mb-3">
-          <Form.Control defaultValue={props.cnt.item.termYears} name='termYears' onChange={handleUpdate} id={`loanitem-termYears-${props.cnt.index}-${props.id}`} type="number" step={0} placeholder="00" />
-        </FloatingLabel>
-
-        <FloatingLabel controlId="loaninterest1" label="Interest Rate Per Annum (%)" className="mb-3">
-          <Form.Control defaultValue={props.cnt.item.interestRate} name='interestRate' onChange={handleUpdate} id={`loanitem-interestRate-${props.cnt.index}-${props.id}`} type="number" step={0.01} placeholder="00.00" />
-        </FloatingLabel>
-
-        <FloatingLabel controlId="loanpayments1" label="Number Of Payments Made " className="mb-3">
-          <Form.Control  defaultValue={props.cnt.item.numberOfpaymentsMade} name='numberOfpaymentsMade' onChange={handleUpdate} id={`loanitem-numberOfpaymentsMade-${props.cnt.index}-${props.id}`} type="number" step={1} placeholder="0" />
-        </FloatingLabel>
-
-        <Form.Group as={Row} className="mb-3" controlId="currentpaymentloan">
-        <Form.Label column sm="6">
-        <strong> Payment Per Period : </strong>
-        </Form.Label>
-        <Col sm="6">
-        <div> {props.cnt.item.currentPayment}</div>
-          {/* <Form.Control plaintext readOnly defaultValue={props.cnt.item.currentPayment} /> */}
-        </Col>
-      </Form.Group>
 
 
-        <Form.Group as={Row} className="mb-3" controlId="currentbalanceloan">
-        <Form.Label column sm="6">
-          <strong>Current Balance : </strong>
-        </Form.Label>
-        <Col sm="6">
-        <div> {props.cnt.item.currentBalance}</div>
-          {/* <Form.Control plaintext readOnly defaultValue={props.cnt.item.currentBalance} /> */}
-        </Col>
-      </Form.Group>
 
-      <Form.Group as={Row} className="mb-3" >
-        <Form.Label column sm="6">
-          <strong>Total Interest : </strong>
-        </Form.Label>
-        <Col sm="6">
-        <div> {props.cnt.item.totalInterest}</div>
-        </Col>
-      </Form.Group>
+<div
+      className="modal show"
+      style={{ display: 'block', position: 'initial' }}
+      sm={4}
+    >
+      
+      <Modal.Dialog>
+        <Modal.Header size="lg" style={{ background: '#f0f8ff' }}  >
+          <Modal.Title>Loan Details - {props.cnt.index + 1}</Modal.Title>
+          <CloseButton id={`loanitem-${props.cnt.index}-${props.id}`} onClick={handleCloseLoan} />
+        </Modal.Header>
+        <Modal.Body style={{ background:  '#f0f8ff' }} >
+          
+    <ListGroup >
 
-
-      <Form.Group as={Row} className="mb-3" >
-        <Form.Label column sm="6">
-          <strong>Interest Paid : </strong>
-        </Form.Label>
-        <Col sm="6">
-        <div> {props.cnt.item.interestPaid}</div>
-        </Col>
-      </Form.Group>
+        <ListGroup.Item>
+        <InputGroup className="justify-content-end">
+        <InputGroup.Text>Loan Amount </InputGroup.Text>
+        <InputGroup.Text>$</InputGroup.Text>
+        <Form.Control defaultValue={props.cnt.item.loanAmount} name='loanAmount' onChange={handleUpdate} id={`loanitem-loanamount-${props.cnt.index}-${props.id}`} type="number" step={0.01} placeholder="00.00" />
+        </InputGroup>
+        </ListGroup.Item>
 
 
-      <Form.Group as={Row} className="mb-3" >
-        <Form.Label column sm="6">
-          <strong>Remaining Interest : </strong>
-        </Form.Label>
-        <Col sm="6">
-        <div> {props.cnt.item.remainingInterest}</div>
-        </Col>
-      </Form.Group>
+        <ListGroup.Item>
+        <InputGroup className="justify-content-end">
+        <InputGroup.Text>Term  </InputGroup.Text>
+        <Form.Control defaultValue={props.cnt.item.termYears} name='termYears' onChange={handleUpdate} id={`loanitem-termYears-${props.cnt.index}-${props.id}`} type="number" step={0} placeholder="00" />
+        <InputGroup.Text>Years</InputGroup.Text>
+        </InputGroup>
+        </ListGroup.Item>
+
+        
+
+        <ListGroup.Item>
+        <InputGroup className="justify-content-end">
+        <InputGroup.Text>Interest Rate Per Annum</InputGroup.Text>
+        <Form.Control defaultValue={props.cnt.item.interestRate} name='interestRate' onChange={handleUpdate} id={`loanitem-interestRate-${props.cnt.index}-${props.id}`} type="number" step={0.01} placeholder="00.00" />
+        <InputGroup.Text>%</InputGroup.Text>
+        </InputGroup>
+        </ListGroup.Item>
 
 
-      <Form.Group as={Row} className="mb-3" >
-        <Form.Label column sm="6">
-          <strong>Remaining Principal : </strong>
-        </Form.Label>
-        <Col sm="6">
-        <div> {props.cnt.item.remainingPrincipal}</div>
-        </Col>
-      </Form.Group>
+
+        <ListGroup.Item>
+        <InputGroup className="justify-content-end">
+        <InputGroup.Text>Number Of Payments Made</InputGroup.Text>
+        <Form.Control  defaultValue={props.cnt.item.numberOfpaymentsMade} name='numberOfpaymentsMade' onChange={handleUpdate} id={`loanitem-numberOfpaymentsMade-${props.cnt.index}-${props.id}`} type="number" step={1} placeholder="0" />
+        </InputGroup>
+        </ListGroup.Item>
 
 
-      <Form.Group as={Row} className="mb-3" >
-        <Form.Label column sm="6">
-          <strong>Years Left : </strong>
-        </Form.Label>
-        <Col sm="6">
-        <div> {props.cnt.item.yearsLeft}</div>
-        </Col>
-      </Form.Group>
+        
 
 
-      <FloatingLabel controlId="loanpayments1" label="Deductible (%) " className="mb-3">
-          <Form.Control  defaultValue={props.cnt.item.deductible} name='deductible' onChange={handleUpdate} id={`loanitem-numberOfpaymentsMade-${props.cnt.index}-${props.id}`} type="number" step={1} placeholder="0" />
-        </FloatingLabel>
+      <ListGroup.Item>
+        <InputGroup className="justify-content-end">
+        <InputGroup.Text><strong> Payment Per Period : </strong></InputGroup.Text>
+        <InputGroup.Text>$</InputGroup.Text>
+        <InputGroup.Text><div> {props.cnt.item.currentPayment}</div></InputGroup.Text>
+        </InputGroup>
+      </ListGroup.Item>
+
+
+      <ListGroup.Item>
+        <InputGroup className="justify-content-end">
+        <InputGroup.Text><strong>Current Balance : </strong></InputGroup.Text>
+        <InputGroup.Text>$</InputGroup.Text>
+        <InputGroup.Text><div> {props.cnt.item.currentBalance}</div></InputGroup.Text>
+        </InputGroup>
+      </ListGroup.Item>
+
+     
+
+      <ListGroup.Item>
+        <InputGroup className="justify-content-end">
+        <InputGroup.Text><strong>Total Interest : </strong></InputGroup.Text>
+        <InputGroup.Text>$</InputGroup.Text>
+        <InputGroup.Text><div> {props.cnt.item.totalInterest}</div></InputGroup.Text>
+        </InputGroup>
+      </ListGroup.Item>
+
+
+      <ListGroup.Item>
+        <InputGroup className="justify-content-end">
+        <InputGroup.Text><strong>Interest Paid : </strong></InputGroup.Text>
+        <InputGroup.Text>$</InputGroup.Text>
+        <InputGroup.Text><div> {props.cnt.item.interestPaid}</div></InputGroup.Text>
+        </InputGroup>
+      </ListGroup.Item>
+
+
+     
+      <ListGroup.Item>
+        <InputGroup className="justify-content-end">
+        <InputGroup.Text><strong>Remaining Interest : </strong></InputGroup.Text>
+        <InputGroup.Text>$</InputGroup.Text>
+        <InputGroup.Text><div> {props.cnt.item.remainingInterest}</div></InputGroup.Text>
+        </InputGroup>
+      </ListGroup.Item>
+
       
 
-        <Form.Group as={Row} className="mb-3" >
-        <Form.Label column sm="6">
-          <strong>Deductible Cost ($) : </strong>
-        </Form.Label>
-        <Col sm="6">
-        <div> {props.cnt.item.deductibleCost}</div>
-        </Col>
-      </Form.Group>
+      <ListGroup.Item>
+        <InputGroup className="justify-content-end">
+        <InputGroup.Text><strong>Remaining Principal : </strong></InputGroup.Text>
+        <InputGroup.Text>$</InputGroup.Text>
+        <InputGroup.Text><div> {props.cnt.item.remainingPrincipal}</div></InputGroup.Text>
+        </InputGroup>
+      </ListGroup.Item>
+
+
+      <ListGroup.Item>
+        <InputGroup className="justify-content-end">
+        <InputGroup.Text><strong>Number of Years Left : </strong></InputGroup.Text>
+        <InputGroup.Text><div> {props.cnt.item.yearsLeft}</div></InputGroup.Text>
+        <InputGroup.Text>Years</InputGroup.Text>
+        </InputGroup>
+      </ListGroup.Item>
+
+
+
+        <ListGroup.Item>
+        <InputGroup >
+        <InputGroup.Text><strong>Deductible : </strong></InputGroup.Text>
+        <Form.Control  defaultValue={props.cnt.item.deductible} name='deductible' onChange={handleUpdate} id={`loanitem-numberOfpaymentsMade-${props.cnt.index}-${props.id}`} type="number" step={1} placeholder="0" />
+        <InputGroup.Text>%</InputGroup.Text>
+        </InputGroup>
+      </ListGroup.Item>
       
+       
+
+      <ListGroup.Item>
+        <InputGroup className="justify-content-end">
+        <InputGroup.Text><strong>Deductible Cost : </strong></InputGroup.Text>
+        <InputGroup.Text>$</InputGroup.Text>
+        <InputGroup.Text><div> {props.cnt.item.deductibleCost}</div></InputGroup.Text>
+       
+        </InputGroup>
+      </ListGroup.Item>
+      
+      </ListGroup>
+
+
+      </Modal.Body> 
+      </Modal.Dialog>
+      
+    </div>
+
+
 
     </Col>
         
