@@ -11,7 +11,7 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
   
 
 
-  const calculateLiabilityCurrentBalance = (loans,setLoans,liabilities,setLiabilities,proposals,setProposals) => {
+  const calculateLiabilityCurrentBalance = (liabilities,setLiabilities) => {
      
   
     let newLoans = liabilities.map((liability) =>
@@ -48,7 +48,7 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
     const {loans,setLoans,liabilities,setLiabilities,proposals,setProposals} = useContext(PacificDataContext);
 
     useEffect(() => {
-        calculateLiabilityCurrentBalance(loans,setLoans,liabilities,setLiabilities,proposals,setProposals)
+        calculateLiabilityCurrentBalance(liabilities,setLiabilities)
     }, []);
   
     function handleUpdate(e) {
@@ -69,11 +69,18 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
                                           return liability;
                                       });
 
-        calculateLiabilityCurrentBalance(loans,setLoans,liabilities,setLiabilities,proposals,setProposals)
+        calculateLiabilityCurrentBalance(new_liability_data,setLiabilities)
 
 
      
       
+    }
+
+    function handleCloseLiability(e) {
+      const { name, value, id } = e.target;
+      const idselected = id.split('-');
+      setLiabilities(liabilities.filter((liability) => { if (liability.liabilityid != parseInt(idselected[2])) return true; }));
+     
     }
     
 
@@ -89,8 +96,9 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
       sm={4}
     >
       <Modal.Dialog>
-        <Modal.Header size="lg" style={{ background: '#e6e6fa' }} closeButton>
+        <Modal.Header size="lg" style={{ background: '#e6e6fa' }} >
           <Modal.Title>Liability - {props.cnt.index + 1} </Modal.Title>
+          <CloseButton id={`liabilityitem-${props.cnt.index}-${props.id}`} onClick={handleCloseLiability} />
         </Modal.Header>
         <Modal.Body style={{ background:  '#e6e6fa' }} >
 

@@ -174,13 +174,22 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
                                           }
                                           return proposal;
                                       });
-                                      console.log(new_proposal_data)
+                                      // console.log(new_proposal_data)
         calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,setProposals)
 
 
      
       
     }
+
+    function handleCloseProposal(e) {
+      const { name, value, id } = e.target;
+      const idselected = id.split('-');
+      setProposals(proposals.filter((proposal) => { if (proposal.proposalid != parseInt(idselected[2])) return true; }));
+     
+    }
+
+
     
     var conditionInCC = true;
     if (props.cnt.item.inCC === 0){
@@ -210,10 +219,13 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
 
     return (
   
-    <Col id={`liabilityitem-${props.cnt.index}-${props.id}`} lg={4} className="mb-5 p-3"> 
+    <Col id={`proposalitem-${props.cnt.index}-${props.id}`} lg={4} className="mb-5 p-3"> 
 
 <ListGroup sm={4}>
-      <ListGroup.Item as="li" active><strong>New Loan Proposal - {props.cnt.index + 1} </strong></ListGroup.Item>
+      <ListGroup.Item as="li" active>
+        <strong>New Loan Proposal - {props.cnt.index + 1} </strong>
+        <CloseButton style={{position: 'absolute', top: 5, right: 5}} id={`proposalitem-${props.cnt.index}-${props.id}`} onClick={handleCloseProposal} />
+      </ListGroup.Item>
       <ListGroup.Item>
       <Form.Select defaultValue={props.cnt.item.proposalTerm} id={`proposalitem-proposalTerm-${props.cnt.index}-${props.id}`} name='proposalTerm' onChange={handleUpdate} aria-label="Default select example" className="mb-3">
       <option value="5">5 Years</option>

@@ -78,7 +78,7 @@ import { AlertHeaderLoans,AlertHeaderLiabilities,AlertHeaderProposals,AlertFoote
   
 
 
-  const calculateLoanCurrentBalance = (loans,setLoans,liabilities,setLiabilities,proposals,setProposals) => {
+  const calculateLoanCurrentBalance = (loans,setLoans) => {
      
   
     let newLoans = loans.map((loan) =>
@@ -123,13 +123,14 @@ import { AlertHeaderLoans,AlertHeaderLiabilities,AlertHeaderProposals,AlertFoote
   function LoanInputComponent(props) {
 
     const {loans,setLoans,liabilities,setLiabilities,proposals,setProposals} = useContext(PacificDataContext);
+    
 
     useEffect(() => {
-      calculateLoanCurrentBalance(loans,setLoans,liabilities,setLiabilities,proposals,setProposals)
+      calculateLoanCurrentBalance(loans,setLoans)
     }, []);
   
     function handleUpdate(e) {
-     e.preventDefault();
+    //  e.preventDefault();
       const { name, value, id } = e.target;
       const idselected = id.split('-');
 
@@ -146,11 +147,18 @@ import { AlertHeaderLoans,AlertHeaderLiabilities,AlertHeaderProposals,AlertFoote
                                           return loan;
                                       });
 
-        calculateLoanCurrentBalance(loans,setLoans,liabilities,setLiabilities,proposals,setProposals)
+        calculateLoanCurrentBalance(new_loan_data,setLoans)
 
 
      
       
+    }
+
+    function handleCloseLoan(e) {
+      const { name, value, id } = e.target;
+      const idselected = id.split('-');
+      setLoans(loans.filter((loan) => { if (loan.loanid != parseInt(idselected[2])) return true; }));
+     
     }
     
 
@@ -167,9 +175,11 @@ import { AlertHeaderLoans,AlertHeaderLiabilities,AlertHeaderProposals,AlertFoote
       style={{ display: 'block', position: 'initial' }}
       sm={4}
     >
+      
       <Modal.Dialog>
-        <Modal.Header size="lg" style={{ background: '#f0f8ff' }} closeButton>
+        <Modal.Header size="lg" style={{ background: '#f0f8ff' }}  >
           <Modal.Title>Loan Details - {props.cnt.index + 1}</Modal.Title>
+          <CloseButton id={`loanitem-${props.cnt.index}-${props.id}`} onClick={handleCloseLoan} />
         </Modal.Header>
         <Modal.Body style={{ background:  '#f0f8ff' }} >
           
@@ -306,6 +316,7 @@ import { AlertHeaderLoans,AlertHeaderLiabilities,AlertHeaderProposals,AlertFoote
 
       </Modal.Body> 
       </Modal.Dialog>
+      
     </div>
 
 
