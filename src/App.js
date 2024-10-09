@@ -91,36 +91,6 @@ let [loans,setLoans] = useState(loansArray)
     interest: 0,
     payoffYears: 0,
     
-  },
-  {
-    liabilityid:139,
-    liabilityName:Card,
-    balanceAmount: 0,
-    monthlyPayment: 200,
-    interestRate: 19.990,
-    interest: 0,
-    payoffYears: 0,
-    
-  },
-  {
-    liabilityid:149,
-    liabilityName:Card,
-    balanceAmount: 0,
-    monthlyPayment: 200,
-    interestRate: 19.990,
-    interest: 0,
-    payoffYears: 0,
-    
-  },
-  {
-    liabilityid:159,
-    liabilityName:Card,
-    balanceAmount: 0,
-    monthlyPayment: 200,
-    interestRate: 19.990,
-    interest: 0,
-    payoffYears: 0,
-    
   }
 ]
 
