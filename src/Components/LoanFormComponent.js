@@ -9,6 +9,8 @@ import { PV, CUMIPMT } from '@formulajs/formulajs'
 import { LiabilityInputComponent } from './LiabilitiesFormComponents';
 import { NewLoanProposalComponent } from './NewLoanProposal';
 import { AlertHeaderLoans,AlertHeaderLiabilities,AlertHeaderProposals,AlertFooterPage } from './AlertComponents';
+import ReactPDF from '@react-pdf/renderer';
+import PDFReportView from './PDFReportView';
   
   function AllLoanComponents() {
 
@@ -70,8 +72,17 @@ import { AlertHeaderLoans,AlertHeaderLiabilities,AlertHeaderProposals,AlertFoote
         </Col>
         </Row>
 
+
+        {/* <Row>
+        <Col lg={12}> 
+       
+        <PDFReportView/>
+        </Col>
+        </Row> */}
        
         </Container>
+
+
     );
   }
 
@@ -134,8 +145,6 @@ import { AlertHeaderLoans,AlertHeaderLiabilities,AlertHeaderProposals,AlertFoote
       const { name, value, id } = e.target;
       const idselected = id.split('-');
 
-     
-      
       let new_loan_data = loans.map((loan) => {
 
                                           if (loan.loanid === parseInt(idselected[3])) {
@@ -149,9 +158,6 @@ import { AlertHeaderLoans,AlertHeaderLiabilities,AlertHeaderProposals,AlertFoote
 
         calculateLoanCurrentBalance(new_loan_data,setLoans)
 
-
-     
-      
     }
 
     function handleCloseLoan(e) {

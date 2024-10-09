@@ -8,9 +8,8 @@ import { pv,fv, pmt } from 'financial'
 import {PV, CUMIPMT } from '@formulajs/formulajs'
 import { LiabilityInputComponent } from './LiabilitiesFormComponents';
 import { NewLoanProposalComponent } from './NewLoanProposal';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
-import PdfDownloadComponent from './PdfDownloadComponent';
+import { AlertHeaderLoans,AlertHeaderLiabilities,AlertHeaderProposals,AlertFooterPage } from './AlertComponents';
+import PDFReportView from './PDFReportView';
 
 
 function DownloadPDFXXX() {
@@ -25,21 +24,35 @@ function DownloadPDFXXX() {
       {/* <Button variant="primary" onClick={handleShow}>
         Download PDF
       </Button> */}
-      <Button  onClick={handleShow}  className='m-3' variant="dark">
-            Download PDF
+      <Button  onClick={handleShow}  className='m-3 btn text-nowrap' variant="dark">
+            View Report
           </Button>
 
-      <Modal
+      <Modal 
+      
         show={show}
         onHide={handleClose}
-        backdrop="static"
+        fullscreen={true}
+        centered = {true}
+        backdrop = {true}
+        autoFocus = {true}
         keyboard={false}
+        scrollable = {false}
+        dialogClassName="modal-90w"
+        aria-labelledby="example-custom-modal-styling-title"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Download PDF </Modal.Title>
+          <Modal.Title id="example-custom-modal-styling-title">Pacific Financial Mortgage Report </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          PDF Download Feature Coming Soon...
+        <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh'
+        }}>
+          <PDFReportView/>
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

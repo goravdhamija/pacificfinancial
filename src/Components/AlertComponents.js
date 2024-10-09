@@ -8,12 +8,10 @@ import { pv,fv, pmt } from 'financial'
 import {PV, CUMIPMT } from '@formulajs/formulajs'
 import { LiabilityInputComponent } from './LiabilitiesFormComponents';
 import { NewLoanProposalComponent } from './NewLoanProposal';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
-import PdfDownloadComponent from './PdfDownloadComponent';
 import DownloadPDFXXX from './downloadPDF';
-
-
+import ReportDownloadable from './ReportDownloadable';
+import { PDFDownloadLink,BlobProvider, Document, Page,pdf } from '@react-pdf/renderer';
+import { saveAs } from "file-saver";
 
 
 function AlertHeaderLoans() {
@@ -192,6 +190,11 @@ function AlertFooterPage() {
 
 }
 
+const handleShare = async (blob) => {
+  await saveAs(blob, `../DownloadReports/invoice.pdf`);
+  window.location.href = `mailto:?subject=${encodeURIComponent(`Invoice`)}&body=${encodeURIComponent(`Kindly find attached invoice`)} target="_blank"`;
+}
+
     return (
         
         <Alert show={true} variant="dark">
@@ -199,19 +202,53 @@ function AlertFooterPage() {
         <p>
           Mortgage Calculator !
         </p>
-        <div className="d-flex justify-content-end">
+        <Container className="d-flex justify-content-end" >
 
-       
-
-        {/* <Button  onClick={handleShow}  className='m-3' variant="dark">
-            Download PDF
-          </Button> */}
-          <DownloadPDFXXX />
-        <Button  onClick={handlePrint}  className='m-3' variant="dark">
-            Print Document
-          </Button>
+          <Row>
+          <Col lg={3}> 
+           <DownloadPDFXXX />
+           </Col>
           
-        </div>
+           <Col lg={3}> 
+          <BlobProvider  document={<ReportDownloadable />}>
+            {({ url, blob }) => (
+              <Button onClick={() => handleShare(url, blob)} lg={12} className='m-3 btn text-nowrap' variant="dark">
+             
+                  <span>Share / Email</span>
+                  </Button>
+            )}
+          </BlobProvider>
+          </Col>
+          
+
+          <Col lg={3}> 
+            <PDFDownloadLink document={<ReportDownloadable />} fileName="PacificFinancialReport.pdf">
+              {({ blob, url, loading, error }) =>
+                <Button className='m-3 btn text-nowrap' variant="dark" >
+                  {loading ? 'Loading document...' : 'Download PDF'}
+                  </Button>
+              }
+            </PDFDownloadLink>
+            </Col>
+          
+            <Col lg={3}> 
+            <BlobProvider  document={<ReportDownloadable />}>
+              {({ blob, url, loading, error }) => (
+                <a href={url} target="_blank" >
+                  <Button className='m-3 btn text-nowrap' variant="dark">
+                      <span>Print Report</span>
+                      </Button>
+                </a>
+              )}
+            </BlobProvider>
+         
+            </Col>
+  
+          
+     
+
+        </Row>
+          </Container>
         <hr />
        
       </Alert>
