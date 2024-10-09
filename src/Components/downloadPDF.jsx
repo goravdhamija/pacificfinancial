@@ -28,7 +28,7 @@ function DownloadPDFXXX() {
             View Report
           </Button>
 
-      <Modal
+      <Modal 
       
         show={show}
         onHide={handleClose}
