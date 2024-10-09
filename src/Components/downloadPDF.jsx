@@ -24,7 +24,7 @@ function DownloadPDFXXX() {
       {/* <Button variant="primary" onClick={handleShow}>
         Download PDF
       </Button> */}
-      <Button  onClick={handleShow}  className='m-3' variant="dark">
+      <Button  onClick={handleShow}  className='m-3 btn text-nowrap' variant="dark">
             View Report
           </Button>
 

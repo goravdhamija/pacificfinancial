@@ -202,7 +202,7 @@ const handleShare = async (blob) => {
         <p>
           Mortgage Calculator !
         </p>
-        <Container className="mt-5 d-flex justify-content-end">
+        <Container className="d-flex justify-content-end" >
 
           <Row>
           <Col lg={3}> 
@@ -212,7 +212,7 @@ const handleShare = async (blob) => {
            <Col lg={3}> 
           <BlobProvider  document={<ReportDownloadable />}>
             {({ url, blob }) => (
-              <Button onClick={() => handleShare(url, blob)} lg={12} className='m-3' variant="dark">
+              <Button onClick={() => handleShare(url, blob)} lg={12} className='m-3 btn text-nowrap' variant="dark">
              
                   <span>Share / Email</span>
                   </Button>
@@ -224,7 +224,7 @@ const handleShare = async (blob) => {
           <Col lg={3}> 
             <PDFDownloadLink document={<ReportDownloadable />} fileName="PacificFinancialReport.pdf">
               {({ blob, url, loading, error }) =>
-                <Button className='m-3' variant="dark">
+                <Button className='m-3 btn text-nowrap' variant="dark" >
                   {loading ? 'Loading document...' : 'Download PDF'}
                   </Button>
               }
@@ -235,7 +235,7 @@ const handleShare = async (blob) => {
             <BlobProvider  document={<ReportDownloadable />}>
               {({ blob, url, loading, error }) => (
                 <a href={url} target="_blank" >
-                  <Button className='m-3' variant="dark">
+                  <Button className='m-3 btn text-nowrap' variant="dark">
                       <span>Print Report</span>
                       </Button>
                 </a>
