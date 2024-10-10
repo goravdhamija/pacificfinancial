@@ -164,7 +164,6 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
       <ListGroup.Item>
         <InputGroup className="justify-content-end">
         <InputGroup.Text><strong>PayOff Years : </strong></InputGroup.Text>
-        <InputGroup.Text>$</InputGroup.Text>
         <InputGroup.Text>{props.cnt.item.payoffYears}</InputGroup.Text>
         </InputGroup>
         </ListGroup.Item>
