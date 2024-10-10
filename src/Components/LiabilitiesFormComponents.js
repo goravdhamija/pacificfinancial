@@ -79,6 +79,25 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
     function handleCloseLiability(e) {
       const { name, value, id } = e.target;
       const idselected = id.split('-');
+
+      let new_proposals = proposals.map((proposal) => {
+
+       
+        var internProposalLiabilityArrayNew = proposal.payoffLiabilities.filter(
+           (liabilityid) => { 
+             if (parseInt(liabilityid) != parseInt(idselected[2])) return true; 
+           })
+
+         return {
+                 ...proposal,
+                 payoffLiabilities:internProposalLiabilityArrayNew
+                 
+             };
+    
+      });
+
+      setProposals(new_proposals)
+
       setLiabilities(liabilities.filter((liability) => { if (liability.liabilityid != parseInt(idselected[2])) return true; }));
      
     }

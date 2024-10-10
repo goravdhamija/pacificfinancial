@@ -6,7 +6,7 @@ import { Form,Row,Col,InputGroup,ListGroup,FloatingLabel,Button , Container, Bad
 import { PacificDataContext } from './PacificDataContext';
 import { pv,fv, pmt,rate } from 'financial'
 import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
-
+import { NumericFormat } from 'react-number-format';
  
   
 
@@ -25,24 +25,36 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
           liabilities.forEach(liability => sumLiabilityBalance += liability.balanceAmount);
           var totalBalanace = sumLoanBalance + sumLiabilityBalance
 
-          const proposalOriginationFees = Math.ceil((proposal.proposalOriginationFeesRate / 100) * totalBalanace);
-        
-          const proposalDiscountFees = Math.ceil((proposal.proposalDiscountFeesRate / 100) * totalBalanace);
+          var totalPayOff = 0;
+          proposal.payoffLoans.forEach((proposalLoanID, index) => {
+            var getMatchedLoan = loans.filter(loan => loan.loanid == proposalLoanID);
+            totalPayOff += getMatchedLoan[0].currentBalance;
+          });
+          proposal.payoffLiabilities.forEach((proposalLiabilityID, index) => {
+            var getMatchedLoan = liabilities.filter(liability => liability.liabilityid == proposalLiabilityID);
+            totalPayOff += getMatchedLoan[0].balanceAmount;
+          });
 
-          const proposalLenderCredit = Math.ceil((proposal.proposalLenderCreditRate / 100) * totalBalanace) * -1;
+          const proposalOriginationFees = Math.ceil((proposal.proposalOriginationFeesRate / 100) * totalPayOff);
+        
+          const proposalDiscountFees = Math.ceil((proposal.proposalDiscountFeesRate / 100) * totalPayOff);
+
+          const proposalLenderCredit = Math.ceil((proposal.proposalLenderCreditRate / 100) * totalPayOff) * -1;
 
           const total = proposalOriginationFees + proposalDiscountFees + proposal.proposalMiscFees + proposalLenderCredit;
 
+          
+
           var newProposalLoanAmount = 0 ;
           if (proposal.inCC) {
-          newProposalLoanAmount = total + totalBalanace;
+          newProposalLoanAmount = total + totalPayOff;
           }else{
-            newProposalLoanAmount = totalBalanace;
+            newProposalLoanAmount = totalPayOff;
           }
 
           const newPayment = Math.ceil(pmt(rate, proposal.proposalTerm*12, newProposalLoanAmount)*-1);
 
-          const apr = (RATE(proposal.proposalTerm*12,newPayment*-1,totalBalanace-total)*12).toFixed(4);
+          const apr = (RATE(proposal.proposalTerm*12,newPayment*-1,totalPayOff-total)*12).toFixed(4);
 
           var sumLoanCurrentPayments = 0;
           var sumLiabilityMonthlyPayments = 0;
@@ -51,9 +63,9 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
 
           var netSavingsPM = sumLoanCurrentPayments + sumLiabilityMonthlyPayments - newPayment;
 
-          var termReduction = Math.ceil(NPER(rate,newPayment+netSavingsPM,totalBalanace,0,0)/12)
+          var termReduction = Math.ceil(NPER(rate,newPayment+netSavingsPM,totalPayOff,0,0)/12)
 
-          var totalNewInterest = Math.ceil(CUMIPMT(rate, proposal.proposalTerm*12 ,totalBalanace, 1 , proposal.proposalTerm*12,0 )*-1)
+          var totalNewInterest = Math.ceil(CUMIPMT(rate, proposal.proposalTerm*12 ,totalPayOff, 1 , proposal.proposalTerm*12,0 )*-1)
 
           
           var sumLoanRemainingInterest = 0;
@@ -63,7 +75,7 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
           var sumOverallInterest = Math.ceil(sumLoanRemainingInterest) + Math.ceil(sumLiabilityInterest)
           var interestSavedLost = Math.ceil(sumOverallInterest) - Math.ceil(totalNewInterest)
 
-          var taxBenefitNew = Math.ceil(proposal.taxBenefitBracket * totalBalanace * proposal.proposalInterestRate / 120000);
+          var taxBenefitNew = Math.ceil(proposal.taxBenefitBracket * totalPayOff * proposal.proposalInterestRate / 120000);
 
           var taxBenefitPrevious = 0
           loans.forEach(loan => taxBenefitPrevious += loan.deductibleCost)
@@ -102,6 +114,7 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
             proposalDiscountFees: proposalDiscountFees,
             proposalLenderCredit: proposalLenderCredit,
             total: total,
+            totalPayOff:totalPayOff,
             newProposalLoanAmount: newProposalLoanAmount,
             newPayment: newPayment,
             apr: apr,
@@ -124,8 +137,9 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
            } )
            
         
-           setProposals(newproposals)
-     
+           setProposals(newproposals);
+
+           console.log(newproposals);
 
       return ;
   }
@@ -189,6 +203,121 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
      
     }
 
+    function handleUpdateLoanPayoff(e) {
+
+      const { name, value, id } = e.target;
+      const idselected = id.split('-');
+      const proposalIdSelected = idselected[3];
+      const loanIdSelected = idselected[5];
+      console.log("Proposal ID: "+proposalIdSelected);
+      console.log("Loan ID: "+loanIdSelected);
+      console.log("Switch Position: "+e.target.checked);
+
+      if(e.target.checked){
+
+          let new_proposal_data = proposals.map((proposal) => {
+
+            var internProposalLoanArrayNew = [...proposal.payoffLoans,parseInt(loanIdSelected)];
+                  if (proposal.proposalid === parseInt(proposalIdSelected)) {
+                      return {
+                          ...proposal,
+                          payoffLoans:internProposalLoanArrayNew
+                          
+                      };
+                  }
+                  return proposal;
+              });
+
+        calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,setProposals)
+
+      }
+
+      if(!e.target.checked){
+
+        let new_proposal_data = proposals.map((proposal) => {
+
+          if (proposal.proposalid === parseInt(proposalIdSelected)) {
+             var internProposalLoanArrayNew = proposal.payoffLoans.filter(
+                (loanid) => { 
+                  if (parseInt(loanid) != parseInt(loanIdSelected)) return true; 
+                })
+           return {
+                  ...proposal,
+                  payoffLoans:internProposalLoanArrayNew
+                  
+              };
+          }
+          return proposal;
+        });
+
+        calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,setProposals)
+
+      }
+
+
+
+     
+    }
+
+
+    function handleUpdateLiabilityPayoff(e) {
+
+      const { name, value, id } = e.target;
+      const idselected = id.split('-');
+      const proposalIdSelected = idselected[3];
+      const liabilityIdSelected = idselected[5];
+      console.log("Proposal ID: "+proposalIdSelected);
+      console.log("Loan ID: "+liabilityIdSelected);
+      console.log("Switch Position: "+e.target.checked);
+
+
+      if(e.target.checked){
+
+        let new_proposal_data = proposals.map((proposal) => {
+
+          var internProposalLiabilityArrayNew = [...proposal.payoffLiabilities,parseInt(liabilityIdSelected)];
+                if (proposal.proposalid === parseInt(proposalIdSelected)) {
+                    return {
+                        ...proposal,
+                        payoffLiabilities:internProposalLiabilityArrayNew
+                        
+                    };
+                }
+                return proposal;
+            });
+
+      calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,setProposals)
+
+    }
+
+    if(!e.target.checked){
+
+      let new_proposal_data = proposals.map((proposal) => {
+
+        if (proposal.proposalid === parseInt(proposalIdSelected)) {
+           var internProposalLiabilityArrayNew = proposal.payoffLiabilities.filter(
+              (liabilityid) => { 
+                if (parseInt(liabilityid) != parseInt(liabilityIdSelected)) return true; 
+              })
+         return {
+                ...proposal,
+                payoffLiabilities:internProposalLiabilityArrayNew
+                
+            };
+        }
+        return proposal;
+      });
+
+      calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,setProposals)
+
+    }
+
+
+     
+    }
+
+    
+
 
     
     var conditionInCC = true;
@@ -246,13 +375,87 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
           </InputGroup>
         </ListGroup.Item>
 
-        <ListGroup.Item style={{backgroundColor: "#CCCCFF"}}  >
+        <ListGroup.Item style={{backgroundColor: "#8D6EC7"}}  >
         <InputGroup className="justify-content-end">
-        <InputGroup.Text>Total Previous Loan Balance</InputGroup.Text>
+        <InputGroup.Text>Total Previous Balance (Loans & Liabilities)</InputGroup.Text>
         <InputGroup.Text>$</InputGroup.Text>
         <InputGroup.Text><div> {props.cnt.item.totalPreviousLoanBalance}</div></InputGroup.Text>
         </InputGroup>
-      </ListGroup.Item>
+        </ListGroup.Item>
+
+
+
+      {loans.map((loan, index) => (
+        
+          <ListGroup.Item   style={{backgroundColor: "#B19CD9"}} >
+          <InputGroup className="justify-content-end">
+          <InputGroup.Text >Loan ({index+1}) Balance</InputGroup.Text>
+            
+            <InputGroup.Text>$</InputGroup.Text>
+            <InputGroup.Text><div> {loan.currentBalance}</div></InputGroup.Text>
+            <InputGroup.Text><Form sm={3}>
+            
+                    <Form.Check // prettier-ignore
+                        reverse
+                        type="switch"
+                        id={`proposalitem-loanpayoff-${props.cnt.index}-${props.id}-${index}-${loan.loanid}`}
+                        label={``}
+                        defaultChecked={props.cnt.item.payoffLoans.includes(loan.loanid) ? true : false}
+                        name ='payoffLoan' 
+                        onChange={handleUpdateLoanPayoff}
+                    />
+                    
+                    </Form>
+
+                         
+                  
+              </InputGroup.Text>
+            </InputGroup>
+            </ListGroup.Item>
+
+        ))}
+
+
+
+
+      {liabilities.map((liabilty, index) => (
+        
+        <ListGroup.Item   style={{backgroundColor: "#CCCCFF"}} >
+        <InputGroup className="justify-content-end">
+        <InputGroup.Text >Liability ({index+1}) Balance</InputGroup.Text>
+          
+          <InputGroup.Text>$</InputGroup.Text>
+          <InputGroup.Text><div> {liabilty.balanceAmount}</div></InputGroup.Text>
+          
+          <InputGroup.Text><Form sm={3}>
+                  <Form.Check // prettier-ignore
+                   reverse
+                      type="switch"
+                      id={`proposalitem-liabilitypayoff-${props.cnt.index}-${props.id}-${index}-${liabilty.liabilityid}`}
+                      label={``}
+                      defaultChecked={props.cnt.item.payoffLiabilities.includes(liabilty.liabilityid) ? true : false}
+                      name ='payoffLiability' 
+                      onChange={handleUpdateLiabilityPayoff}
+                  />
+                  
+                  </Form>
+            </InputGroup.Text>
+            </InputGroup>
+          </ListGroup.Item>
+  
+          ))}
+
+
+
+        <ListGroup.Item style={{backgroundColor: "#BF90EE"}}  >
+        <InputGroup className="justify-content-end">
+        <InputGroup.Text>Total Payoff Selected Balance</InputGroup.Text>
+        <InputGroup.Text>$</InputGroup.Text>
+        <InputGroup.Text><div> {props.cnt.item.totalPayOff}</div></InputGroup.Text>
+        </InputGroup>
+        </ListGroup.Item>
+
+
 
         <ListGroup.Item style={{backgroundColor: "#C7F6C7"}} >
         <InputGroup>
