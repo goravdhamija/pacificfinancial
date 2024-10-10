@@ -124,7 +124,7 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
 <ListGroup >
       
       <ListGroup.Item>
-      <Form.Select  id={`liabilityitem-liabilityType-${props.cnt.index}-${props.id}`} name='liabilityType' onChange={handleUpdate}  aria-label="Default select example" className="mb-3">
+      <Form.Select defaultValue={props.cnt.item.liabilityType} id={`liabilityitem-liabilityType-${props.cnt.index}-${props.id}`} name='liabilityType' onChange={handleUpdate}  aria-label="Default select example" className="mb-3">
       <option selected value="1">Card</option>
       <option value="2">Auto</option>
       <option value="3">Cash Out</option>
