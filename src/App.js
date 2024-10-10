@@ -151,7 +151,7 @@ let proposalArray = [{
  ,
  {
   proposalid:301,
-  proposalTerm:30,
+  proposalTerm:10,
   proposalInterestRate:5,
   proposalOriginationFeesRate:1,
   proposalOriginationFees: 0,
