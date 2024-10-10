@@ -79,8 +79,16 @@ import { NumericFormat } from 'react-number-format';
 
           var taxBenefitPrevious = 0
           loans.forEach(loan => taxBenefitPrevious += loan.deductibleCost)
+
+          var investCashoutAmount = 0
+          liabilities.forEach((liability) =>  { 
+                if(liability.liabilityType === 3) {
+                  investCashoutAmount += liability.balanceAmount;
+                }  
+            
+            })
           
-          var investCashoutAmount =  sumLiabilityBalance 
+        
 
           var investMonthlyAmount =  0 
           if (netSavingsPM <= 0) {
@@ -153,8 +161,6 @@ import { NumericFormat } from 'react-number-format';
         calculateProposals(loans,setLoans,liabilities,setLiabilities,proposals,setProposals)
     }, [loans,liabilities]);
 
-
-   
   
     function handleUpdate(e) {
       
@@ -191,8 +197,6 @@ import { NumericFormat } from 'react-number-format';
                                       // console.log(new_proposal_data)
         calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,setProposals)
 
-
-     
       
     }
 

@@ -65,6 +65,7 @@ let [loans,setLoans] = useState(loansArray)
   let liabilitiesArray = [{
     liabilityid:109,
     liabilityName:Card,
+    liabilityType:1,
     balanceAmount: 700.00,
     monthlyPayment: 0,
     interestRate: 0.000,

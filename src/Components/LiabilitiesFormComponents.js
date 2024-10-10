@@ -56,7 +56,7 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
       const { name, value, id } = e.target;
       const idselected = id.split('-');
 
-     
+      console.log(value)
       
       let new_liability_data = liabilities.map((liability) => {
 
@@ -71,8 +71,6 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
 
         calculateLiabilityCurrentBalance(new_liability_data,setLiabilities)
 
-
-     
       
     }
 
@@ -99,6 +97,8 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
       setProposals(new_proposals)
 
       setLiabilities(liabilities.filter((liability) => { if (liability.liabilityid != parseInt(idselected[2])) return true; }));
+
+     
      
     }
     
@@ -124,7 +124,7 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
 <ListGroup >
       
       <ListGroup.Item>
-      <Form.Select aria-label="Default select example" className="mb-3">
+      <Form.Select  id={`liabilityitem-liabilityType-${props.cnt.index}-${props.id}`} name='liabilityType' onChange={handleUpdate}  aria-label="Default select example" className="mb-3">
       <option selected value="1">Card</option>
       <option value="2">Auto</option>
       <option value="3">Cash Out</option>
