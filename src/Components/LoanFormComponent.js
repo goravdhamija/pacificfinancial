@@ -163,6 +163,25 @@ import PDFReportView from './PDFReportView';
     function handleCloseLoan(e) {
       const { name, value, id } = e.target;
       const idselected = id.split('-');
+
+      let new_proposals = proposals.map((proposal) => {
+
+       
+           var internProposalLoanArrayNew = proposal.payoffLoans.filter(
+              (loanid) => { 
+                if (parseInt(loanid) != parseInt(idselected[2])) return true; 
+              })
+
+            return {
+                    ...proposal,
+                    payoffLoans:internProposalLoanArrayNew
+                    
+                };
+       
+      });
+
+      setProposals(new_proposals)
+      
       setLoans(loans.filter((loan) => { if (loan.loanid != parseInt(idselected[2])) return true; }));
      
     }

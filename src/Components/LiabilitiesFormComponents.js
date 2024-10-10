@@ -56,7 +56,7 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
       const { name, value, id } = e.target;
       const idselected = id.split('-');
 
-     
+      console.log(value)
       
       let new_liability_data = liabilities.map((liability) => {
 
@@ -71,15 +71,34 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
 
         calculateLiabilityCurrentBalance(new_liability_data,setLiabilities)
 
-
-     
       
     }
 
     function handleCloseLiability(e) {
       const { name, value, id } = e.target;
       const idselected = id.split('-');
+
+      let new_proposals = proposals.map((proposal) => {
+
+       
+        var internProposalLiabilityArrayNew = proposal.payoffLiabilities.filter(
+           (liabilityid) => { 
+             if (parseInt(liabilityid) != parseInt(idselected[2])) return true; 
+           })
+
+         return {
+                 ...proposal,
+                 payoffLiabilities:internProposalLiabilityArrayNew
+                 
+             };
+    
+      });
+
+      setProposals(new_proposals)
+
       setLiabilities(liabilities.filter((liability) => { if (liability.liabilityid != parseInt(idselected[2])) return true; }));
+
+     
      
     }
     
@@ -105,7 +124,7 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
 <ListGroup >
       
       <ListGroup.Item>
-      <Form.Select aria-label="Default select example" className="mb-3">
+      <Form.Select defaultValue={props.cnt.item.liabilityType} id={`liabilityitem-liabilityType-${props.cnt.index}-${props.id}`} name='liabilityType' onChange={handleUpdate}  aria-label="Default select example" className="mb-3">
       <option selected value="1">Card</option>
       <option value="2">Auto</option>
       <option value="3">Cash Out</option>
@@ -145,7 +164,6 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
       <ListGroup.Item>
         <InputGroup className="justify-content-end">
         <InputGroup.Text><strong>PayOff Years : </strong></InputGroup.Text>
-        <InputGroup.Text>$</InputGroup.Text>
         <InputGroup.Text>{props.cnt.item.payoffYears}</InputGroup.Text>
         </InputGroup>
         </ListGroup.Item>

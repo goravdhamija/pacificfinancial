@@ -41,6 +41,20 @@ function AlertHeaderLoans() {
     console.log(val);
     
     var loanBunk = {...loanBlankItem,loanid:val}
+
+    let new_proposals = proposals.map((proposal) => {
+
+      var internProposalLoanArrayNew = [...proposal.payoffLoans,parseInt(val)];
+           
+                return {
+                    ...proposal,
+                    payoffLoans:internProposalLoanArrayNew
+                    
+                };
+            
+        });
+
+    setProposals(new_proposals)
     setLoans([...loans,loanBunk]);
 
   }
@@ -68,10 +82,10 @@ function AlertHeaderLiabilities() {
 
   var liabilityBlankItem = {
  
-    liabilityName:Card,
-    balanceAmount: 0.00,
-    monthlyPayment: 0.00,
-    interestRate: 0.000,
+    liabilityType:1,
+    balanceAmount: 2000.00,
+    monthlyPayment: 400.00,
+    interestRate: 9.000,
     interest: 0,
     payoffYears: 0,
     
@@ -82,6 +96,19 @@ function AlertHeaderLiabilities() {
     console.log(val);
     
     var liabilityBunk = {...liabilityBlankItem,liabilityid:val}
+    let new_proposals = proposals.map((proposal) => {
+
+      var internProposalLiabilityArrayNew = [...proposal.payoffLiabilities,parseInt(val)];
+           
+                return {
+                    ...proposal,
+                    payoffLiabilities:internProposalLiabilityArrayNew
+                    
+                };
+            
+        });
+
+    setProposals(new_proposals)
     setLiabilities([...liabilities,liabilityBunk]);
 
   }
@@ -124,6 +151,8 @@ function AlertHeaderProposals() {
     proposalLenderCreditRate:0,
     proposalLenderCredit:0,
     total:0,
+    payoffLoans:[],
+    payoffLiabilities:[],
     totalPayOff:0,
     inCC:1,
     newProposalLoanAmount:0,
@@ -151,7 +180,10 @@ function AlertHeaderProposals() {
     var val = Math.floor(1000 + Math.random() * 9000);
     console.log(val);
     
-    var proposalBunk = {...proposalsBlankItem,proposalid:val}
+    var proposalBunk = {...proposalsBlankItem,proposalid:val};
+    proposalBunk.payoffLoans = loans.map((loan) => loan.loanid);
+    proposalBunk.payoffLiabilities = liabilities.map((liability) => liability.liabilityid);
+    
     setProposals([...proposals,proposalBunk]);
 
   }
