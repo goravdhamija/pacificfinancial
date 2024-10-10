@@ -219,14 +219,14 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
 
     return (
   
-    <Col id={`proposalitem-${props.cnt.index}-${props.id}`} lg={4} className="mb-5 p-3"> 
+    <Col id={`proposalitem-${props.cnt.index}-${props.id}`} lg={6} className="mb-5 p-3"> 
 
 <ListGroup sm={4}>
       <ListGroup.Item as="li" active>
         <strong>New Loan Proposal - {props.cnt.index + 1} </strong>
         <CloseButton style={{position: 'absolute', top: 5, right: 5}} id={`proposalitem-${props.cnt.index}-${props.id}`} onClick={handleCloseProposal} />
       </ListGroup.Item>
-      <ListGroup.Item>
+      <ListGroup.Item style={{backgroundColor: "#3399FF"}} >
       <Form.Select defaultValue={props.cnt.item.proposalTerm} id={`proposalitem-proposalTerm-${props.cnt.index}-${props.id}`} name='proposalTerm' onChange={handleUpdate} aria-label="Default select example" className="mb-3">
       <option value="5">5 Years</option>
       <option value="10">10 Years</option>
@@ -237,7 +237,7 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
       </Form.Select>
       </ListGroup.Item>
 
-      <ListGroup.Item>
+      <ListGroup.Item style={{backgroundColor: "#3399FF"}} >
         
         <InputGroup>
         <InputGroup.Text>Proposed Interest Rate</InputGroup.Text>
@@ -246,15 +246,15 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
           </InputGroup>
         </ListGroup.Item>
 
-        <ListGroup.Item>
-        <InputGroup>
+        <ListGroup.Item style={{backgroundColor: "#CCCCFF"}}  >
+        <InputGroup className="justify-content-end">
         <InputGroup.Text>Total Previous Loan Balance</InputGroup.Text>
         <InputGroup.Text>$</InputGroup.Text>
         <InputGroup.Text><div> {props.cnt.item.totalPreviousLoanBalance}</div></InputGroup.Text>
         </InputGroup>
       </ListGroup.Item>
 
-        <ListGroup.Item>
+        <ListGroup.Item style={{backgroundColor: "#C7F6C7"}} >
         <InputGroup>
         <InputGroup.Text>Origination Fees %</InputGroup.Text>
           <Form.Control defaultValue={props.cnt.item.proposalOriginationFeesRate} name='proposalOriginationFeesRate' onChange={handleUpdate} id={`proposalitem-proposalOriginationFeesRate-${props.cnt.index}-${props.id}`} type="number" step={0.001} placeholder="000.000" />
@@ -263,7 +263,7 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
         </InputGroup>
       </ListGroup.Item>
 
-      <ListGroup.Item>
+      <ListGroup.Item  style={{backgroundColor: "#C7F6C7"}} >
         <InputGroup>
         <InputGroup.Text>Discount Fees %</InputGroup.Text>
           <Form.Control defaultValue={props.cnt.item.proposalDiscountFeesRate} name='proposalDiscountFeesRate' onChange={handleUpdate} id={`proposalitem-proposalDiscountFeesRate-${props.cnt.index}-${props.id}`} type="number" step={0.001} placeholder="000.000" />
@@ -272,15 +272,15 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
         </InputGroup>
       </ListGroup.Item>
 
-      <ListGroup.Item>
-        <InputGroup>
+      <ListGroup.Item  style={{backgroundColor: "#C7F6C7"}} >
+        <InputGroup >
         <InputGroup.Text>Escrow/Misc. Fees</InputGroup.Text>
         <InputGroup.Text>$</InputGroup.Text>
         <Form.Control defaultValue={props.cnt.item.proposalMiscFees} name='proposalMiscFees' onChange={handleUpdate} id={`proposalitem-proposalMiscFeesRate-${props.cnt.index}-${props.id}`} type="number" step={0.001} placeholder="000.000" />
         </InputGroup>
       </ListGroup.Item>
 
-      <ListGroup.Item>
+      <ListGroup.Item  style={{backgroundColor: "#C7F6C7"}} >
         <InputGroup className="mb-3">
         <InputGroup.Text>Lender Credit %</InputGroup.Text>
           <Form.Control defaultValue={props.cnt.item.proposalLenderCreditRate} name='proposalLenderCreditRate' onChange={handleUpdate} id={`proposalitem-proposalLenderCreditRate-${props.cnt.index}-${props.id}`} type="number" step={0.001} placeholder="000.000" />
@@ -290,9 +290,9 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
       </ListGroup.Item>
 
 
-      <ListGroup.Item>
+      <ListGroup.Item  style={{backgroundColor: "#C7F6C7"}} >
         <InputGroup className="justify-content-end">
-        <InputGroup.Text>Total</InputGroup.Text>
+        <InputGroup.Text>Total Fees</InputGroup.Text>
         <InputGroup.Text>$</InputGroup.Text>
         <InputGroup.Text><div> {props.cnt.item.total}</div></InputGroup.Text>
         </InputGroup>
@@ -306,14 +306,16 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
         </InputGroup>
       </ListGroup.Item> */}
 
-      <ListGroup.Item>
+      <ListGroup.Item   style={{backgroundColor: "#19A519"}} >
+      
       <InputGroup className="justify-content-end">
+      <InputGroup.Text >Proposed New Loan Amount</InputGroup.Text>
         <InputGroup.Text><Form sm={3}>
                 <Form.Check // prettier-ignore
                  reverse
                     type="switch"
                     id={`proposalitem-inCC-${props.cnt.index}-${props.id}`}
-                    label={`In CC`}
+                    label={`Include Closing Cost`}
                     defaultChecked={conditionInCC}
                     value = {conditionInCC}
                     name='inCC' 
@@ -328,16 +330,16 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
       </ListGroup.Item>
 
 
-      <ListGroup.Item>
+      <ListGroup.Item  style={{backgroundColor: "#008080"}} >
         <InputGroup className="justify-content-end">
-        <InputGroup.Text>New Payment</InputGroup.Text>
+        <InputGroup.Text>New Monthly Payment</InputGroup.Text>
         <InputGroup.Text>$</InputGroup.Text>
         <InputGroup.Text><div> {props.cnt.item.newPayment}</div></InputGroup.Text>
         </InputGroup>
       </ListGroup.Item>
 
 
-      <ListGroup.Item>
+      <ListGroup.Item  style={{backgroundColor: "#E6E6FA"}} >
         <InputGroup className="justify-content-end">
         <InputGroup.Text>APR</InputGroup.Text>
         <InputGroup.Text><div> {props.cnt.item.apr}</div></InputGroup.Text>
@@ -346,7 +348,7 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
       </ListGroup.Item>
 
 
-      <ListGroup.Item>
+      <ListGroup.Item style={{backgroundColor: "#E6E6FA"}} >
         <InputGroup className="justify-content-end">
         <InputGroup.Text>Net Savings (Per Month)</InputGroup.Text>
         <InputGroup.Text>$</InputGroup.Text>
@@ -355,7 +357,7 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
       </ListGroup.Item>
 
 
-      <ListGroup.Item>
+      <ListGroup.Item style={{backgroundColor: "#E6E6FA"}} >
         <InputGroup className="justify-content-end">
         <InputGroup.Text>Term Reduction</InputGroup.Text>
         {/* <InputGroup.Text>$</InputGroup.Text> */}
@@ -364,7 +366,7 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
       </ListGroup.Item>
 
 
-      <ListGroup.Item>
+      <ListGroup.Item style={{backgroundColor: "#E6E6FA"}} >
         <InputGroup className="justify-content-end">
         <InputGroup.Text>Total Interest On New Loan</InputGroup.Text>
         <InputGroup.Text>$</InputGroup.Text>
@@ -372,7 +374,7 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
         </InputGroup>
       </ListGroup.Item>
 
-      <ListGroup.Item>
+      <ListGroup.Item style={{backgroundColor: "#E6E6FA"}} >
         <InputGroup className="justify-content-end">
         <InputGroup.Text>Interest Saved/Lost</InputGroup.Text>
         <InputGroup.Text>$</InputGroup.Text>
@@ -380,7 +382,7 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
         </InputGroup>
       </ListGroup.Item>
 
-      <ListGroup.Item>
+      <ListGroup.Item style={{backgroundColor: "#D8BFD8"}} >
         <InputGroup className="justify-content-end">
         <InputGroup.Text>Tax Benefit - Bracket</InputGroup.Text>
         <Form.Control defaultValue={props.cnt.item.taxBenefitBracket} name='taxBenefitBracket' onChange={handleUpdate} id={`proposalitem-taxBenefitBracket-${props.cnt.index}-${props.id}`} type="number" step={0.001} placeholder="000.000" />
@@ -389,7 +391,7 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
       </ListGroup.Item>
       
 
-      <ListGroup.Item>
+      <ListGroup.Item style={{backgroundColor: "#D8BFD8"}} >
         <InputGroup className="justify-content-end">
         <InputGroup.Text>Tax Benefit New</InputGroup.Text>
         <InputGroup.Text>$</InputGroup.Text>
@@ -397,7 +399,7 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
         </InputGroup>
       </ListGroup.Item>
 
-      <ListGroup.Item>
+      <ListGroup.Item style={{backgroundColor: "#D8BFD8"}} >
         <InputGroup variant="success"  className="justify-content-end">
         <InputGroup.Text >Tax Benefit Previous</InputGroup.Text>
         <InputGroup.Text>$</InputGroup.Text>
@@ -412,7 +414,7 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
     
       <ListGroup  sm={3}>
       <ListGroup.Item as="li"  active>Asset Accumulation</ListGroup.Item>
-      <ListGroup.Item sm={3} >
+      <ListGroup.Item sm={3}  style={{backgroundColor: "#87CEFA"}}  >
         <Stack className="justify-content-center" direction="horizontal" gap={2}>
             <Form sm={3}>
                 <Form.Check // prettier-ignore
@@ -431,7 +433,7 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
 
 
 
-      <ListGroup.Item>
+      <ListGroup.Item style={{backgroundColor: "#87CEFA"}} >
         <InputGroup className="justify-content-center">
         <InputGroup.Text>Rate Of Interest On Invest</InputGroup.Text>
         <Form.Control defaultValue={props.cnt.item.rateOnInvest} name='rateOnInvest' onChange={handleUpdate} id={`proposalitem-rateOnInvest-${props.cnt.index}-${props.id}`} type="number" step={0.001} placeholder="000.000" />
@@ -441,7 +443,7 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
 
 
 
-      <ListGroup.Item  >
+      <ListGroup.Item  style={{backgroundColor: "#87CEFA"}}  >
       <Stack direction="horizontal"  className="justify-content-center" gap={2}>
       <Form  sm={3}>
         <Form.Check // prettier-ignore
@@ -459,10 +461,10 @@ import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
       </ListGroup.Item>
 
 
-      <ListGroup.Item>
+      <ListGroup.Item style={{backgroundColor: "#87CEFA"}} >
       <Stack direction="vertical" gap={2}>
       <Badge bg="dark">Benefit After</Badge>
-      <Badge bg="info">1 Year : ${props.cnt.item.benefitAfter1Year}</Badge>
+      <Badge bg="secondary" >1 Year : ${props.cnt.item.benefitAfter1Year}</Badge>
       <Badge bg="success">3 Year : ${props.cnt.item.benefitAfter3Year}</Badge>
       <Badge bg="primary">5 Year : ${props.cnt.item.benefitAfter5Year}</Badge>
       </Stack>

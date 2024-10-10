@@ -69,8 +69,8 @@ function AlertHeaderLiabilities() {
   var liabilityBlankItem = {
  
     liabilityName:Card,
-    balanceAmount: 900000,
-    monthlyPayment: 0,
+    balanceAmount: 0.00,
+    monthlyPayment: 0.00,
     interestRate: 0.000,
     interest: 0,
     payoffYears: 0,
