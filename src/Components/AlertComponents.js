@@ -84,8 +84,8 @@ function AlertHeaderLiabilities() {
  
     liabilityType:1,
     balanceAmount: 2000.00,
-    monthlyPayment: 0.00,
-    interestRate: 0.000,
+    monthlyPayment: 400.00,
+    interestRate: 9.000,
     interest: 0,
     payoffYears: 0,
     
