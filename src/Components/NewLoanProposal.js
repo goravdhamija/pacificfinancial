@@ -139,7 +139,7 @@ import { NumericFormat } from 'react-number-format';
         
            setProposals(newproposals);
 
-           console.log(newproposals);
+          
 
       return ;
   }
@@ -209,9 +209,7 @@ import { NumericFormat } from 'react-number-format';
       const idselected = id.split('-');
       const proposalIdSelected = idselected[3];
       const loanIdSelected = idselected[5];
-      console.log("Proposal ID: "+proposalIdSelected);
-      console.log("Loan ID: "+loanIdSelected);
-      console.log("Switch Position: "+e.target.checked);
+     
 
       if(e.target.checked){
 
@@ -266,9 +264,7 @@ import { NumericFormat } from 'react-number-format';
       const idselected = id.split('-');
       const proposalIdSelected = idselected[3];
       const liabilityIdSelected = idselected[5];
-      console.log("Proposal ID: "+proposalIdSelected);
-      console.log("Loan ID: "+liabilityIdSelected);
-      console.log("Switch Position: "+e.target.checked);
+    
 
 
       if(e.target.checked){
