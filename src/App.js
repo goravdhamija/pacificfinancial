@@ -26,7 +26,7 @@ function App() {
     deductibleCost:0 }
     ,
     {loanid:190,
-    loanAmount: 335000,
+    loanAmount: 435000,
     termYears: 30,
     interestRate: 2.750,
     numberOfpaymentsMade: 36,
@@ -42,7 +42,7 @@ function App() {
   ,
   {
     loanid:191,
-    loanAmount: 335000,
+    loanAmount: 535000,
     termYears: 30,
     interestRate: 2.750,
     numberOfpaymentsMade: 36,
