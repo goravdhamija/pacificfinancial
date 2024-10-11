@@ -22,7 +22,7 @@ import { NumericFormat } from 'react-number-format';
           var sumLoanBalance = 0;
           var sumLiabilityBalance = 0;
           loans.forEach(loan => sumLoanBalance += loan.currentBalance);
-          liabilities.forEach(liability => sumLiabilityBalance += liability.balanceAmount);
+          liabilities.forEach(liability => {if(liability.liabilityType != 3 ){return sumLiabilityBalance += liability.balanceAmount}});
           var totalBalanace = sumLoanBalance + sumLiabilityBalance
 
           var totalPayOff = 0;
@@ -32,7 +32,9 @@ import { NumericFormat } from 'react-number-format';
           });
           proposal.payoffLiabilities.forEach((proposalLiabilityID, index) => {
             var getMatchedLoan = liabilities.filter(liability => liability.liabilityid == proposalLiabilityID);
+            if(getMatchedLoan[0].liabilityType != 3){
             totalPayOff += getMatchedLoan[0].balanceAmount;
+            }
           });
 
           const proposalOriginationFees = Math.ceil((proposal.proposalOriginationFeesRate / 100) * totalPayOff);
@@ -59,7 +61,7 @@ import { NumericFormat } from 'react-number-format';
           var sumLoanCurrentPayments = 0;
           var sumLiabilityMonthlyPayments = 0;
           loans.forEach(loan => sumLoanCurrentPayments += loan.currentPayment);
-          liabilities.forEach(liability => sumLiabilityMonthlyPayments += liability.monthlyPayment);
+          liabilities.forEach((liability) => {if(liability.liabilityType != 3 ){sumLiabilityMonthlyPayments += liability.monthlyPayment}});
 
           var netSavingsPM = sumLoanCurrentPayments + sumLiabilityMonthlyPayments - newPayment;
 
@@ -386,6 +388,7 @@ import { NumericFormat } from 'react-number-format';
 
       {loans.map((loan, index) => (
         
+        
           <ListGroup.Item   style={{backgroundColor: "#B19CD9"}} >
           <InputGroup className="justify-content-end">
           <InputGroup.Text >Loan ({index+1}) Balance</InputGroup.Text>
@@ -415,30 +418,41 @@ import { NumericFormat } from 'react-number-format';
 
 
 
-      {liabilities.map((liabilty, index) => (
-        
-        <ListGroup.Item   style={{backgroundColor: "#CCCCFF"}} >
-        <InputGroup className="justify-content-end">
-        <InputGroup.Text >Liability ({index+1}) Balance</InputGroup.Text>
-          
-          <InputGroup.Text><div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(liabilty.balanceAmount)}</div></InputGroup.Text>
-          
-          <InputGroup.Text><Form sm={3}>
-                  <Form.Check // prettier-ignore
-                   reverse
-                      type="switch"
-                      id={`proposalitem-liabilitypayoff-${props.cnt.index}-${props.id}-${index}-${liabilty.liabilityid}`}
-                      label={``}
-                      defaultChecked={props.cnt.item.payoffLiabilities.includes(liabilty.liabilityid) ? true : false}
-                      name ='payoffLiability' 
-                      onChange={handleUpdateLiabilityPayoff}
-                  />
-                  
-                  </Form>
-            </InputGroup.Text>
-            </InputGroup>
-          </ListGroup.Item>
-  
+      { liabilities.map((liabilty, index) => (
+
+
+                 (liabilty.liabilityType != 3) ?
+                        
+                  (
+                        <div>
+                        <ListGroup.Item   style={{backgroundColor: "#CCCCFF"}} >
+                        <InputGroup className="justify-content-end">
+                        <InputGroup.Text >Liability ({index+1}) Balance</InputGroup.Text>
+                          
+                          <InputGroup.Text><div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(liabilty.balanceAmount)}</div></InputGroup.Text>
+                          
+                          <InputGroup.Text><Form sm={3}>
+                                  <Form.Check // prettier-ignore
+                                  reverse
+                                      type="switch"
+                                      id={`proposalitem-liabilitypayoff-${props.cnt.index}-${props.id}-${index}-${liabilty.liabilityid}`}
+                                      label={``}
+                                      defaultChecked={props.cnt.item.payoffLiabilities.includes(liabilty.liabilityid) ? true : false}
+                                      name ='payoffLiability' 
+                                      onChange={handleUpdateLiabilityPayoff}
+                                  />
+                                  
+                                  </Form>
+                            </InputGroup.Text>
+                            </InputGroup>
+                          </ListGroup.Item>
+
+                          </div>
+                  ):(
+                    <div>
+                    </div>
+                  )
+                
           ))}
 
 
