@@ -22,7 +22,7 @@ import { NumericFormat } from 'react-number-format';
           var sumLoanBalance = 0;
           var sumLiabilityBalance = 0;
           loans.forEach(loan => sumLoanBalance += loan.currentBalance);
-          liabilities.forEach(liability => sumLiabilityBalance += liability.balanceAmount);
+          liabilities.forEach(liability => {if(liability.liabilityType != 3 ){return sumLiabilityBalance += liability.balanceAmount}});
           var totalBalanace = sumLoanBalance + sumLiabilityBalance
 
           var totalPayOff = 0;
