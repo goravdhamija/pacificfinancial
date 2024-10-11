@@ -12,7 +12,7 @@ import { AlertHeaderLoans,AlertHeaderLiabilities,AlertHeaderProposals,AlertFoote
 import ReactPDF from '@react-pdf/renderer';
 import PDFReportView from './PDFReportView';
 import { NumericFormat } from 'react-number-format';
-        {/* <NumericFormat value={props.cnt.item.currentPayment} allowLeadingZeros thousandSeparator="," />; */}
+       
 
   
   function AllLoanComponents() {

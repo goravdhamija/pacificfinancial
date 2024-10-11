@@ -19,13 +19,19 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
 
           let rate = (liability.interestRate / 100) / 12; // 4% rate 
           
-          const nper = (NPER(rate,-liability.monthlyPayment,liability.balanceAmount)/12)
-          const cumipmt = (CUMIPMT(rate, nper*12 ,liability.balanceAmount, 1 , nper*12,0 )*-1)
+          var nper = NPER(rate,-liability.monthlyPayment,liability.balanceAmount)/12
+          var cumipmt = CUMIPMT(rate, nper*12 ,liability.balanceAmount, 1 , nper*12,0 )*-1
+
+          var payoffYearsPrint = parseFloat((nper).toFixed(3));
+
+          if (isNaN(cumipmt)) {
+            cumipmt = 0;
+          }
 
            return  {...liability,
 
-            payoffYears:nper,
-            interest:cumipmt
+            payoffYears: payoffYearsPrint,
+            interest: cumipmt
           
           }
 

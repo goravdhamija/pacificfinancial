@@ -22,7 +22,9 @@ import { NumericFormat } from 'react-number-format';
           var sumLoanBalance = 0;
           var sumLiabilityBalance = 0;
           loans.forEach(loan => sumLoanBalance += loan.currentBalance);
-          liabilities.forEach(liability => {if(liability.liabilityType != 3 ){return sumLiabilityBalance += liability.balanceAmount}});
+        //  liabilities.forEach(liability => {if(liability.liabilityType != 3 ){return sumLiabilityBalance += liability.balanceAmount}});
+          liabilities.forEach(liability => sumLiabilityBalance += liability.balanceAmount);
+
           var totalBalanace = sumLoanBalance + sumLiabilityBalance
 
           var totalPayOff = 0;
@@ -32,9 +34,9 @@ import { NumericFormat } from 'react-number-format';
           });
           proposal.payoffLiabilities.forEach((proposalLiabilityID, index) => {
             var getMatchedLoan = liabilities.filter(liability => liability.liabilityid == proposalLiabilityID);
-            if(getMatchedLoan[0].liabilityType != 3){
+           // if(getMatchedLoan[0].liabilityType != 3){
             totalPayOff += getMatchedLoan[0].balanceAmount;
-            }
+           // }
           });
 
           const proposalOriginationFees = ((proposal.proposalOriginationFeesRate / 100) * totalPayOff);
@@ -54,24 +56,33 @@ import { NumericFormat } from 'react-number-format';
 
           const newPayment = (pmt(rate, proposal.proposalTerm*12, newProposalLoanAmount)*-1);
 
-          const apr = RATE(proposal.proposalTerm*12,newPayment*-1,totalPayOff-total)*12;
+          var apr = RATE(proposal.proposalTerm*12,newPayment*-1,totalPayOff-total)*12;
+          var aprPrint = parseFloat((apr * 100).toFixed(3));
 
           var sumLoanCurrentPayments = 0;
           var sumLiabilityMonthlyPayments = 0;
           loans.forEach(loan => sumLoanCurrentPayments += loan.currentPayment);
-          liabilities.forEach((liability) => {if(liability.liabilityType != 3 ){sumLiabilityMonthlyPayments += liability.monthlyPayment}});
+         // liabilities.forEach((liability) => {if(liability.liabilityType != 3 ){sumLiabilityMonthlyPayments += liability.monthlyPayment}});
+          liabilities.forEach(liability => sumLiabilityMonthlyPayments += liability.monthlyPayment);
 
           var netSavingsPM = sumLoanCurrentPayments + sumLiabilityMonthlyPayments - newPayment;
 
-          var termReduction = NPER(rate,newPayment+netSavingsPM,totalPayOff,0,0)/12
+          var termReduction = NPER(rate,-(newPayment+netSavingsPM),totalPayOff,0,0)/12
+          var termReductionPrint = parseFloat((termReduction).toFixed(1));
 
           var totalNewInterest = CUMIPMT(rate, proposal.proposalTerm*12 ,totalPayOff, 1 , proposal.proposalTerm*12,0 )*-1
+
+         
 
           
           var sumLoanRemainingInterest = 0;
           var sumLiabilityInterest = 0;
           loans.forEach(loan => sumLoanRemainingInterest += loan.remainingInterest);
-          liabilities.forEach(liability => sumLiabilityInterest += liability.interest);
+          liabilities.forEach((liability) => {
+            if (!isNaN(liability.interest)) {
+              sumLiabilityInterest += liability.interest;
+            }
+          });
           var sumOverallInterest = sumLoanRemainingInterest + sumLiabilityInterest
           var interestSavedLost = sumOverallInterest - totalNewInterest
 
@@ -125,9 +136,9 @@ import { NumericFormat } from 'react-number-format';
             totalPayOff:totalPayOff,
             newProposalLoanAmount: newProposalLoanAmount,
             newPayment: newPayment,
-            apr: apr,
+            apr: aprPrint,
             netSavingsPM: netSavingsPM,
-            termReduction: termReduction,
+            termReduction: termReductionPrint,
             totalNewInterest: totalNewInterest,
             interestSavedLost: interestSavedLost,
             taxBenefitNew:taxBenefitNew,
@@ -419,9 +430,9 @@ import { NumericFormat } from 'react-number-format';
       { liabilities.map((liabilty, index) => (
 
 
-                 (liabilty.liabilityType != 3) ?
+                //  (liabilty.liabilityType != 3) ?
                         
-                  (
+                //   (
                         <div>
                         <ListGroup.Item   style={{backgroundColor: "#CCCCFF"}} >
                         <InputGroup className="justify-content-end">
@@ -446,10 +457,10 @@ import { NumericFormat } from 'react-number-format';
                           </ListGroup.Item>
 
                           </div>
-                  ):(
-                    <div>
-                    </div>
-                  )
+                  // ):(
+                  //   <div>
+                  //   </div>
+                  // )
                 
           ))}
 
