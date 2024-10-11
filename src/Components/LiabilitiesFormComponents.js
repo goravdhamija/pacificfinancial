@@ -19,8 +19,8 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
 
           let rate = (liability.interestRate / 100) / 12; // 4% rate 
           
-          const nper = Math.ceil(NPER(rate,-liability.monthlyPayment,liability.balanceAmount)/12)
-          const cumipmt = Math.ceil(CUMIPMT(rate, nper*12 ,liability.balanceAmount, 1 , nper*12,0 )*-1)
+          const nper = (NPER(rate,-liability.monthlyPayment,liability.balanceAmount)/12).toFixed(3)
+          const cumipmt = (CUMIPMT(rate, nper*12 ,liability.balanceAmount, 1 , nper*12,0 )*-1).toFixed(2)
 
            return  {...liability,
 
@@ -151,7 +151,7 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
         <ListGroup.Item>
         <InputGroup className="justify-content-end">
         <InputGroup.Text>Interest Rate</InputGroup.Text>
-        <Form.Control defaultValue={props.cnt.item.interestRate} name='interestRate' onChange={handleUpdate} id={`liabilityitem-interestRate-${props.cnt.index}-${props.id}`} type="number" step={0.01} placeholder="00.00" />
+        <Form.Control defaultValue={props.cnt.item.interestRate} name='interestRate' onChange={handleUpdate} id={`liabilityitem-interestRate-${props.cnt.index}-${props.id}`} type="number" step={0.001} placeholder="00.000" />
         <InputGroup.Text>%</InputGroup.Text>
         </InputGroup>
         </ListGroup.Item>
@@ -161,7 +161,7 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
         <InputGroup className="justify-content-end">
         <InputGroup.Text>Monthly Payment</InputGroup.Text>
         <InputGroup.Text>$</InputGroup.Text>
-        <Form.Control defaultValue={props.cnt.item.monthlyPayment} name='monthlyPayment' onChange={handleUpdate} id={`liabilityitem-monthlyPayment-${props.cnt.index}-${props.id}`} type="number" step={0} placeholder="00" />
+        <Form.Control defaultValue={props.cnt.item.monthlyPayment} name='monthlyPayment' onChange={handleUpdate} id={`liabilityitem-monthlyPayment-${props.cnt.index}-${props.id}`} type="number" step={0.01} placeholder="00.00" />
         </InputGroup>
         </ListGroup.Item>
 

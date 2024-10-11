@@ -45,8 +45,6 @@ import { NumericFormat } from 'react-number-format';
 
           const total = proposalOriginationFees + proposalDiscountFees + proposal.proposalMiscFees + proposalLenderCredit;
 
-          
-
           var newProposalLoanAmount = 0 ;
           if (proposal.inCC) {
           newProposalLoanAmount = total + totalPayOff;
