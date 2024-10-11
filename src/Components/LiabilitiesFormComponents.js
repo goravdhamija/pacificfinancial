@@ -22,9 +22,6 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
           const nper = Math.ceil(NPER(rate,-liability.monthlyPayment,liability.balanceAmount)/12)
           const cumipmt = Math.ceil(CUMIPMT(rate, nper*12 ,liability.balanceAmount, 1 , nper*12,0 )*-1)
 
-          
-          
-
            return  {...liability,
 
             payoffYears:nper,
@@ -134,6 +131,14 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
 
         
 
+       
+
+
+{ props.cnt.item.liabilityType != 3 ?
+        
+      (
+        <div>
+
         <ListGroup.Item>
         <InputGroup className="justify-content-end">
         <InputGroup.Text>Balance Amount</InputGroup.Text>
@@ -142,7 +147,7 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
         </InputGroup>
         </ListGroup.Item>
 
-        
+
         <ListGroup.Item>
         <InputGroup className="justify-content-end">
         <InputGroup.Text>Interest Rate</InputGroup.Text>
@@ -175,8 +180,23 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
         <InputGroup.Text>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.interest)}</InputGroup.Text>
         </InputGroup>
         </ListGroup.Item>
+        </div>
+      ):(
+        <div>
+        <ListGroup.Item>
+        <InputGroup className="justify-content-end">
+        <InputGroup.Text>Cash In Hand</InputGroup.Text>
+        <InputGroup.Text>$</InputGroup.Text>
+        <Form.Control defaultValue={props.cnt.item.balanceAmount} name='balanceAmount' onChange={handleUpdate} id={`liabilityitem-balanceAmount-${props.cnt.index}-${props.id}`} type="number" step={0.01} placeholder="00.00" />
+        </InputGroup>
+        </ListGroup.Item>
+        
+        
+ </div>
+      )
+    
+    }
 
-      
       </ListGroup>
 
 
