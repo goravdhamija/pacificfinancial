@@ -65,7 +65,7 @@ import { NumericFormat } from 'react-number-format';
           loans.forEach((loan) => {
             if(proposal.payoffLoans.includes(loan.loanid))
            { sumLoanCurrentPayments += loan.currentPayment }
-          });
+          });  
          // liabilities.forEach((liability) => {if(liability.liabilityType != 3 ){sumLiabilityMonthlyPayments += liability.monthlyPayment}});
           liabilities.forEach((liability) => {
             if(proposal.payoffLiabilities.includes(liability.liabilityid))
@@ -79,9 +79,6 @@ import { NumericFormat } from 'react-number-format';
 
           var totalNewInterest = CUMIPMT(rate, proposal.proposalTerm*12 ,totalPayOff, 1 , proposal.proposalTerm*12,0 )*-1
 
-         
-
-          
           var sumLoanRemainingInterest = 0;
           var sumLiabilityInterest = 0;
           loans.forEach(loan => sumLoanRemainingInterest += loan.remainingInterest);
