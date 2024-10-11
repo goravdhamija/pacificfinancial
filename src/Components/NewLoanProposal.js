@@ -61,9 +61,16 @@ import { NumericFormat } from 'react-number-format';
 
           var sumLoanCurrentPayments = 0;
           var sumLiabilityMonthlyPayments = 0;
-          loans.forEach(loan => sumLoanCurrentPayments += loan.currentPayment);
+
+          loans.forEach((loan) => {
+            if(proposal.payoffLoans.includes(loan.loanid))
+           { sumLoanCurrentPayments += loan.currentPayment }
+          });
          // liabilities.forEach((liability) => {if(liability.liabilityType != 3 ){sumLiabilityMonthlyPayments += liability.monthlyPayment}});
-          liabilities.forEach(liability => sumLiabilityMonthlyPayments += liability.monthlyPayment);
+          liabilities.forEach((liability) => {
+            if(proposal.payoffLiabilities.includes(liability.liabilityid))
+           {sumLiabilityMonthlyPayments += liability.monthlyPayment}
+         });
 
           var netSavingsPM = sumLoanCurrentPayments + sumLiabilityMonthlyPayments - newPayment;
 
