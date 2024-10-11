@@ -13,7 +13,7 @@ import { NumericFormat } from 'react-number-format';
 
   const calculateProposals = (loans,setLoans,liabilities,setLiabilities,proposals,setProposals) => {
      
-  
+    
     let newproposals = proposals.map((proposal) =>
          {
 
@@ -378,8 +378,7 @@ import { NumericFormat } from 'react-number-format';
         <ListGroup.Item style={{backgroundColor: "#8D6EC7"}}  >
         <InputGroup className="justify-content-end">
         <InputGroup.Text>Total Previous Balance (Loans & Liabilities)</InputGroup.Text>
-        <InputGroup.Text>$</InputGroup.Text>
-        <InputGroup.Text><div> {props.cnt.item.totalPreviousLoanBalance}</div></InputGroup.Text>
+        <InputGroup.Text><div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.totalPreviousLoanBalance)}</div></InputGroup.Text>
         </InputGroup>
         </ListGroup.Item>
 
@@ -390,9 +389,7 @@ import { NumericFormat } from 'react-number-format';
           <ListGroup.Item   style={{backgroundColor: "#B19CD9"}} >
           <InputGroup className="justify-content-end">
           <InputGroup.Text >Loan ({index+1}) Balance</InputGroup.Text>
-            
-            <InputGroup.Text>$</InputGroup.Text>
-            <InputGroup.Text><div> {loan.currentBalance}</div></InputGroup.Text>
+            <InputGroup.Text><div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(loan.currentBalance)}</div></InputGroup.Text>
             <InputGroup.Text><Form sm={3}>
             
                     <Form.Check // prettier-ignore
@@ -424,8 +421,7 @@ import { NumericFormat } from 'react-number-format';
         <InputGroup className="justify-content-end">
         <InputGroup.Text >Liability ({index+1}) Balance</InputGroup.Text>
           
-          <InputGroup.Text>$</InputGroup.Text>
-          <InputGroup.Text><div> {liabilty.balanceAmount}</div></InputGroup.Text>
+          <InputGroup.Text><div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(liabilty.balanceAmount)}</div></InputGroup.Text>
           
           <InputGroup.Text><Form sm={3}>
                   <Form.Check // prettier-ignore
@@ -450,8 +446,7 @@ import { NumericFormat } from 'react-number-format';
         <ListGroup.Item style={{backgroundColor: "#BF90EE"}}  >
         <InputGroup className="justify-content-end">
         <InputGroup.Text>Total Payoff Selected Balance</InputGroup.Text>
-        <InputGroup.Text>$</InputGroup.Text>
-        <InputGroup.Text><div> {props.cnt.item.totalPayOff}</div></InputGroup.Text>
+        <InputGroup.Text><div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.totalPayOff)}</div></InputGroup.Text>
         </InputGroup>
         </ListGroup.Item>
 
@@ -461,8 +456,7 @@ import { NumericFormat } from 'react-number-format';
         <InputGroup>
         <InputGroup.Text>Origination Fees %</InputGroup.Text>
           <Form.Control defaultValue={props.cnt.item.proposalOriginationFeesRate} name='proposalOriginationFeesRate' onChange={handleUpdate} id={`proposalitem-proposalOriginationFeesRate-${props.cnt.index}-${props.id}`} type="number" step={0.001} placeholder="000.000" />
-        <InputGroup.Text>$</InputGroup.Text>
-        <InputGroup.Text><div> {props.cnt.item.proposalOriginationFees}</div></InputGroup.Text>
+        <InputGroup.Text><div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.proposalOriginationFees)}</div></InputGroup.Text>
         </InputGroup>
       </ListGroup.Item>
 
@@ -470,8 +464,7 @@ import { NumericFormat } from 'react-number-format';
         <InputGroup>
         <InputGroup.Text>Discount Fees %</InputGroup.Text>
           <Form.Control defaultValue={props.cnt.item.proposalDiscountFeesRate} name='proposalDiscountFeesRate' onChange={handleUpdate} id={`proposalitem-proposalDiscountFeesRate-${props.cnt.index}-${props.id}`} type="number" step={0.001} placeholder="000.000" />
-        <InputGroup.Text>$</InputGroup.Text>
-        <InputGroup.Text><div> {props.cnt.item.proposalDiscountFees}</div></InputGroup.Text>
+        <InputGroup.Text><div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.proposalDiscountFees)}</div></InputGroup.Text>
         </InputGroup>
       </ListGroup.Item>
 
@@ -487,8 +480,7 @@ import { NumericFormat } from 'react-number-format';
         <InputGroup className="mb-3">
         <InputGroup.Text>Lender Credit %</InputGroup.Text>
           <Form.Control defaultValue={props.cnt.item.proposalLenderCreditRate} name='proposalLenderCreditRate' onChange={handleUpdate} id={`proposalitem-proposalLenderCreditRate-${props.cnt.index}-${props.id}`} type="number" step={0.001} placeholder="000.000" />
-        <InputGroup.Text>$</InputGroup.Text>
-        <InputGroup.Text><div> {props.cnt.item.proposalLenderCredit}</div></InputGroup.Text>
+        <InputGroup.Text><div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.proposalLenderCredit)}</div></InputGroup.Text>
         </InputGroup>
       </ListGroup.Item>
 
@@ -496,8 +488,7 @@ import { NumericFormat } from 'react-number-format';
       <ListGroup.Item  style={{backgroundColor: "#C7F6C7"}} >
         <InputGroup className="justify-content-end">
         <InputGroup.Text>Total Fees</InputGroup.Text>
-        <InputGroup.Text>$</InputGroup.Text>
-        <InputGroup.Text><div> {props.cnt.item.total}</div></InputGroup.Text>
+        <InputGroup.Text><div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.total)}</div></InputGroup.Text>
         </InputGroup>
       </ListGroup.Item>
 
@@ -527,8 +518,7 @@ import { NumericFormat } from 'react-number-format';
                 
             </Form>
             </InputGroup.Text>
-        <InputGroup.Text>$</InputGroup.Text>
-        <InputGroup.Text><div> {props.cnt.item.newProposalLoanAmount}</div></InputGroup.Text>
+        <InputGroup.Text><div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.newProposalLoanAmount)}</div></InputGroup.Text>
       </InputGroup>
       </ListGroup.Item>
 
@@ -536,8 +526,7 @@ import { NumericFormat } from 'react-number-format';
       <ListGroup.Item  style={{backgroundColor: "#008080"}} >
         <InputGroup className="justify-content-end">
         <InputGroup.Text>New Monthly Payment</InputGroup.Text>
-        <InputGroup.Text>$</InputGroup.Text>
-        <InputGroup.Text><div> {props.cnt.item.newPayment}</div></InputGroup.Text>
+        <InputGroup.Text><div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.newPayment)}</div></InputGroup.Text>
         </InputGroup>
       </ListGroup.Item>
 
@@ -554,8 +543,7 @@ import { NumericFormat } from 'react-number-format';
       <ListGroup.Item style={{backgroundColor: "#E6E6FA"}} >
         <InputGroup className="justify-content-end">
         <InputGroup.Text>Net Savings (Per Month)</InputGroup.Text>
-        <InputGroup.Text>$</InputGroup.Text>
-        <InputGroup.Text><div>{props.cnt.item.netSavingsPM}</div></InputGroup.Text>
+        <InputGroup.Text><div>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.netSavingsPM)}</div></InputGroup.Text>
         </InputGroup>
       </ListGroup.Item>
 
@@ -572,16 +560,14 @@ import { NumericFormat } from 'react-number-format';
       <ListGroup.Item style={{backgroundColor: "#E6E6FA"}} >
         <InputGroup className="justify-content-end">
         <InputGroup.Text>Total Interest On New Loan</InputGroup.Text>
-        <InputGroup.Text>$</InputGroup.Text>
-        <InputGroup.Text><div>{props.cnt.item.totalNewInterest}</div></InputGroup.Text>
+        <InputGroup.Text><div>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.totalNewInterest)}</div></InputGroup.Text>
         </InputGroup>
       </ListGroup.Item>
 
       <ListGroup.Item style={{backgroundColor: "#E6E6FA"}} >
         <InputGroup className="justify-content-end">
         <InputGroup.Text>Interest Saved/Lost</InputGroup.Text>
-        <InputGroup.Text>$</InputGroup.Text>
-        <InputGroup.Text><div>{props.cnt.item.interestSavedLost}</div></InputGroup.Text>
+        <InputGroup.Text><div>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.interestSavedLost)}</div></InputGroup.Text>
         </InputGroup>
       </ListGroup.Item>
 
@@ -597,16 +583,14 @@ import { NumericFormat } from 'react-number-format';
       <ListGroup.Item style={{backgroundColor: "#D8BFD8"}} >
         <InputGroup className="justify-content-end">
         <InputGroup.Text>Tax Benefit New</InputGroup.Text>
-        <InputGroup.Text>$</InputGroup.Text>
-        <InputGroup.Text>{props.cnt.item.taxBenefitNew}</InputGroup.Text>
+        <InputGroup.Text>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.taxBenefitNew)}</InputGroup.Text>
         </InputGroup>
       </ListGroup.Item>
 
       <ListGroup.Item style={{backgroundColor: "#D8BFD8"}} >
         <InputGroup variant="success"  className="justify-content-end">
         <InputGroup.Text >Tax Benefit Previous</InputGroup.Text>
-        <InputGroup.Text>$</InputGroup.Text>
-        <InputGroup.Text>{props.cnt.item.taxBenefitPrevious}</InputGroup.Text>
+        <InputGroup.Text>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.taxBenefitPrevious)}</InputGroup.Text>
         </InputGroup>
       </ListGroup.Item>
       
@@ -630,7 +614,7 @@ import { NumericFormat } from 'react-number-format';
                 />
                 
             </Form>
-            <Badge  bg="dark">$ {props.cnt.item.investCashoutAmount}</Badge>
+            <Badge  bg="dark">{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.investCashoutAmount)}</Badge>
         </Stack>
       </ListGroup.Item>
 
@@ -659,7 +643,7 @@ import { NumericFormat } from 'react-number-format';
         />
         
       </Form>
-      <Badge bg="dark">$ {props.cnt.item.investMonthlyAmount}</Badge>
+      <Badge bg="dark">{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.investMonthlyAmount)}</Badge>
       </Stack>
       </ListGroup.Item>
 
@@ -667,9 +651,9 @@ import { NumericFormat } from 'react-number-format';
       <ListGroup.Item style={{backgroundColor: "#87CEFA"}} >
       <Stack direction="vertical" gap={2}>
       <Badge bg="dark">Benefit After</Badge>
-      <Badge bg="secondary" >1 Year : ${props.cnt.item.benefitAfter1Year}</Badge>
-      <Badge bg="success">3 Year : ${props.cnt.item.benefitAfter3Year}</Badge>
-      <Badge bg="primary">5 Year : ${props.cnt.item.benefitAfter5Year}</Badge>
+      <Badge bg="secondary" >1 Year : {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.benefitAfter1Year)}</Badge>
+      <Badge bg="success">3 Year : {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.benefitAfter3Year)}</Badge>
+      <Badge bg="primary">5 Year : {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.benefitAfter5Year)}</Badge>
       </Stack>
       </ListGroup.Item>
       

@@ -11,6 +11,9 @@ import { NewLoanProposalComponent } from './NewLoanProposal';
 import { AlertHeaderLoans,AlertHeaderLiabilities,AlertHeaderProposals,AlertFooterPage } from './AlertComponents';
 import ReactPDF from '@react-pdf/renderer';
 import PDFReportView from './PDFReportView';
+import { NumericFormat } from 'react-number-format';
+        {/* <NumericFormat value={props.cnt.item.currentPayment} allowLeadingZeros thousandSeparator="," />; */}
+
   
   function AllLoanComponents() {
 
@@ -253,8 +256,10 @@ import PDFReportView from './PDFReportView';
       <ListGroup.Item>
         <InputGroup className="justify-content-end">
         <InputGroup.Text><strong> Payment Per Period : </strong></InputGroup.Text>
-        <InputGroup.Text>$</InputGroup.Text>
-        <InputGroup.Text><div> {props.cnt.item.currentPayment}</div></InputGroup.Text>
+        
+        <InputGroup.Text><div>
+         {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.currentPayment)}
+        </div></InputGroup.Text>
         </InputGroup>
       </ListGroup.Item>
 
@@ -262,8 +267,7 @@ import PDFReportView from './PDFReportView';
       <ListGroup.Item>
         <InputGroup className="justify-content-end">
         <InputGroup.Text><strong>Current Balance : </strong></InputGroup.Text>
-        <InputGroup.Text>$</InputGroup.Text>
-        <InputGroup.Text><div> {props.cnt.item.currentBalance}</div></InputGroup.Text>
+        <InputGroup.Text><div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.currentBalance)}</div></InputGroup.Text>
         </InputGroup>
       </ListGroup.Item>
 
@@ -272,8 +276,8 @@ import PDFReportView from './PDFReportView';
       <ListGroup.Item>
         <InputGroup className="justify-content-end">
         <InputGroup.Text><strong>Total Interest : </strong></InputGroup.Text>
-        <InputGroup.Text>$</InputGroup.Text>
-        <InputGroup.Text><div> {props.cnt.item.totalInterest}</div></InputGroup.Text>
+
+        <InputGroup.Text><div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.totalInterest)}</div></InputGroup.Text>
         </InputGroup>
       </ListGroup.Item>
 
@@ -281,8 +285,7 @@ import PDFReportView from './PDFReportView';
       <ListGroup.Item>
         <InputGroup className="justify-content-end">
         <InputGroup.Text><strong>Interest Paid : </strong></InputGroup.Text>
-        <InputGroup.Text>$</InputGroup.Text>
-        <InputGroup.Text><div> {props.cnt.item.interestPaid}</div></InputGroup.Text>
+        <InputGroup.Text><div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.interestPaid)}</div></InputGroup.Text>
         </InputGroup>
       </ListGroup.Item>
 
@@ -291,8 +294,7 @@ import PDFReportView from './PDFReportView';
       <ListGroup.Item>
         <InputGroup className="justify-content-end">
         <InputGroup.Text><strong>Remaining Interest : </strong></InputGroup.Text>
-        <InputGroup.Text>$</InputGroup.Text>
-        <InputGroup.Text><div> {props.cnt.item.remainingInterest}</div></InputGroup.Text>
+        <InputGroup.Text><div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.remainingInterest)}</div></InputGroup.Text>
         </InputGroup>
       </ListGroup.Item>
 
@@ -301,8 +303,7 @@ import PDFReportView from './PDFReportView';
       <ListGroup.Item>
         <InputGroup className="justify-content-end">
         <InputGroup.Text><strong>Remaining Principal : </strong></InputGroup.Text>
-        <InputGroup.Text>$</InputGroup.Text>
-        <InputGroup.Text><div> {props.cnt.item.remainingPrincipal}</div></InputGroup.Text>
+        <InputGroup.Text><div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.remainingPrincipal)}</div></InputGroup.Text>
         </InputGroup>
       </ListGroup.Item>
 
@@ -330,8 +331,7 @@ import PDFReportView from './PDFReportView';
       <ListGroup.Item>
         <InputGroup className="justify-content-end">
         <InputGroup.Text><strong>Deductible Cost : </strong></InputGroup.Text>
-        <InputGroup.Text>$</InputGroup.Text>
-        <InputGroup.Text><div> {props.cnt.item.deductibleCost}</div></InputGroup.Text>
+        <InputGroup.Text><div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.deductibleCost)}</div></InputGroup.Text>
        
         </InputGroup>
       </ListGroup.Item>

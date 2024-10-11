@@ -172,8 +172,7 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
       <ListGroup.Item>
         <InputGroup className="justify-content-end">
         <InputGroup.Text> <strong>Interest : </strong></InputGroup.Text>
-        <InputGroup.Text>$</InputGroup.Text>
-        <InputGroup.Text>{props.cnt.item.interest}</InputGroup.Text>
+        <InputGroup.Text>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.interest)}</InputGroup.Text>
         </InputGroup>
         </ListGroup.Item>
 
