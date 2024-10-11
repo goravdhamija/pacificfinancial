@@ -79,9 +79,6 @@ import { NumericFormat } from 'react-number-format';
 
           var totalNewInterest = CUMIPMT(rate, proposal.proposalTerm*12 ,totalPayOff, 1 , proposal.proposalTerm*12,0 )*-1
 
-         
-
-          
           var sumLoanRemainingInterest = 0;
           var sumLiabilityInterest = 0;
           loans.forEach(loan => sumLoanRemainingInterest += loan.remainingInterest);
