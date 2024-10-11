@@ -93,9 +93,9 @@ import { NumericFormat } from 'react-number-format';
 
           var investCashoutAmount = 0
           liabilities.forEach((liability) =>  { 
-                if(liability.liabilityType === 3) {
+                // if(liability.liabilityType === 3) {
                   investCashoutAmount += liability.balanceAmount;
-                }  
+                // }  
             
             })
           
@@ -113,13 +113,13 @@ import { NumericFormat } from 'react-number-format';
           if (proposal.investCashoutCheck) {
             
           }else{
-            
+            investCashoutAmount = 0;
           }
 
           if (proposal.investMonthlyCheck) {
            
           }else{
-            
+            investMonthlyAmount = 0;
           }
 
           var benefitAfter1Year = FV(proposal.rateOnInvest/100, 1,-investMonthlyAmount*12,-investCashoutAmount,1);
@@ -299,9 +299,9 @@ import { NumericFormat } from 'react-number-format';
 
       calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,setProposals)
 
-    }
+      }
 
-    if(!e.target.checked){
+      if(!e.target.checked){
 
       let new_proposal_data = proposals.map((proposal) => {
 
@@ -321,11 +321,116 @@ import { NumericFormat } from 'react-number-format';
 
       calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,setProposals)
 
-    }
+      }
 
 
      
     }
+
+
+
+    function handleInvestCashout(e) {
+
+      const { name, value, id } = e.target;
+      const idselected = id.split('-');
+      const proposalIdSelected = idselected[3];
+    
+
+
+      if(e.target.checked){
+
+        let new_proposal_data = proposals.map((proposal) => {
+
+                if (proposal.proposalid === parseInt(proposalIdSelected)) {
+                    return {
+                        ...proposal,
+                        investCashoutCheck: 1
+                        
+                    };
+                }
+                return proposal;
+            });
+
+      calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,setProposals)
+
+      }
+
+      if(!e.target.checked){
+
+        let new_proposal_data = proposals.map((proposal) => {
+
+          if (proposal.proposalid === parseInt(proposalIdSelected)) {
+              return {
+                  ...proposal,
+                  investCashoutCheck: 0
+                  
+              };
+          }
+          return proposal;
+      });
+
+calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,setProposals)
+
+      }
+
+
+     
+    }
+
+
+
+
+    function handleinvestMonthlyCheck(e) {
+
+      const { name, value, id } = e.target;
+      const idselected = id.split('-');
+      const proposalIdSelected = idselected[3];
+    
+
+
+      if(e.target.checked){
+
+        let new_proposal_data = proposals.map((proposal) => {
+
+                if (proposal.proposalid === parseInt(proposalIdSelected)) {
+                    return {
+                        ...proposal,
+                        investMonthlyCheck: 1
+                        
+                    };
+                }
+                return proposal;
+            });
+
+      calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,setProposals)
+
+      }
+
+      if(!e.target.checked){
+
+        let new_proposal_data = proposals.map((proposal) => {
+
+          if (proposal.proposalid === parseInt(proposalIdSelected)) {
+              return {
+                  ...proposal,
+                  investMonthlyCheck: 0
+                  
+              };
+          }
+          return proposal;
+      });
+
+calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,setProposals)
+
+      }
+
+
+     
+    }
+
+
+
+    
 
     
 
@@ -634,6 +739,7 @@ import { NumericFormat } from 'react-number-format';
                     value = {conditionInvestCheckOut}
                     type="switch"
                     label={`Invest CashOut`}
+                    onChange={handleInvestCashout}
                 />
                 
             </Form>
@@ -663,6 +769,8 @@ import { NumericFormat } from 'react-number-format';
             id={`proposalitem-investMonthlyCheck-${props.cnt.index}-${props.id}`}
             defaultChecked={conditionInvestMonthlyCheck}
             value = {conditionInvestMonthlyCheck}
+            onChange={handleinvestMonthlyCheck}
+            
         />
         
       </Form>
@@ -674,7 +782,7 @@ import { NumericFormat } from 'react-number-format';
       <ListGroup.Item style={{backgroundColor: "#87CEFA"}} >
       <Stack direction="vertical" gap={2}>
       <Badge bg="dark">Benefit After</Badge>
-      <Badge bg="secondary" >1 Year : {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.benefitAfter1Year)}</Badge>
+      <Badge bg="secondary">1 Year : {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.benefitAfter1Year)}</Badge>
       <Badge bg="success">3 Year : {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.benefitAfter3Year)}</Badge>
       <Badge bg="primary">5 Year : {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.benefitAfter5Year)}</Badge>
       </Stack>
