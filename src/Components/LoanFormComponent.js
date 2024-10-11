@@ -102,14 +102,14 @@ import { NumericFormat } from 'react-number-format';
           let nper = loan.termYears * 12; //30 years in months
           let per = loan.termYears * 12;
 
-          const pmtx = Math.ceil(pmt(rate, nper, loan.loanAmount)*-1)
-          const pvx = Math.ceil(pv(rate, nper-loan.numberOfpaymentsMade, pmtx)*-1)
-          const Pvx = Math.ceil(PV(rate, nper-loan.numberOfpaymentsMade, pmtx)*-1)
-          const cumipmt = Math.ceil(CUMIPMT(rate, nper ,loan.loanAmount, 1 , per,0 )*-1)
-          const cumipmtPaid = Math.ceil(CUMIPMT(rate, nper ,loan.loanAmount, 1 , loan.numberOfpaymentsMade,0 )*-1)
+          const pmtx = pmt(rate, nper, loan.loanAmount)*-1
+          const pvx = pv(rate, nper-loan.numberOfpaymentsMade, pmtx)*-1
+          const Pvx = PV(rate, nper-loan.numberOfpaymentsMade, pmtx)*-1
+          const cumipmt = CUMIPMT(rate, nper ,loan.loanAmount, 1 , per,0 )*-1
+          const cumipmtPaid = CUMIPMT(rate, nper ,loan.loanAmount, 1 , loan.numberOfpaymentsMade,0 )*-1
           const remainingInterest = cumipmt - cumipmtPaid
           const yearsLeft = loan.termYears - (loan.numberOfpaymentsMade)/12
-          const deductible = Math.ceil((pvx*loan.interestRate/100*loan.deductible/100)/12)
+          const deductible = (pvx*loan.interestRate/100*loan.deductible/100)/12
 
            return  {...loan,
             currentPayment: pmtx,

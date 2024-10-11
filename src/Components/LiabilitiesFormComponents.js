@@ -19,8 +19,8 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
 
           let rate = (liability.interestRate / 100) / 12; // 4% rate 
           
-          const nper = (NPER(rate,-liability.monthlyPayment,liability.balanceAmount)/12).toFixed(3)
-          const cumipmt = (CUMIPMT(rate, nper*12 ,liability.balanceAmount, 1 , nper*12,0 )*-1).toFixed(2)
+          const nper = (NPER(rate,-liability.monthlyPayment,liability.balanceAmount)/12)
+          const cumipmt = (CUMIPMT(rate, nper*12 ,liability.balanceAmount, 1 , nper*12,0 )*-1)
 
            return  {...liability,
 
