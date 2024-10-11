@@ -37,11 +37,11 @@ import { NumericFormat } from 'react-number-format';
             }
           });
 
-          const proposalOriginationFees = Math.ceil((proposal.proposalOriginationFeesRate / 100) * totalPayOff);
+          const proposalOriginationFees = ((proposal.proposalOriginationFeesRate / 100) * totalPayOff);
         
-          const proposalDiscountFees = Math.ceil((proposal.proposalDiscountFeesRate / 100) * totalPayOff);
+          const proposalDiscountFees = ((proposal.proposalDiscountFeesRate / 100) * totalPayOff);
 
-          const proposalLenderCredit = Math.ceil((proposal.proposalLenderCreditRate / 100) * totalPayOff) * -1;
+          const proposalLenderCredit = ((proposal.proposalLenderCreditRate / 100) * totalPayOff) * -1;
 
           const total = proposalOriginationFees + proposalDiscountFees + proposal.proposalMiscFees + proposalLenderCredit;
 
@@ -52,9 +52,9 @@ import { NumericFormat } from 'react-number-format';
             newProposalLoanAmount = totalPayOff;
           }
 
-          const newPayment = Math.ceil(pmt(rate, proposal.proposalTerm*12, newProposalLoanAmount)*-1);
+          const newPayment = (pmt(rate, proposal.proposalTerm*12, newProposalLoanAmount)*-1);
 
-          const apr = (RATE(proposal.proposalTerm*12,newPayment*-1,totalPayOff-total)*12).toFixed(4);
+          const apr = RATE(proposal.proposalTerm*12,newPayment*-1,totalPayOff-total)*12;
 
           var sumLoanCurrentPayments = 0;
           var sumLiabilityMonthlyPayments = 0;
@@ -63,19 +63,19 @@ import { NumericFormat } from 'react-number-format';
 
           var netSavingsPM = sumLoanCurrentPayments + sumLiabilityMonthlyPayments - newPayment;
 
-          var termReduction = Math.ceil(NPER(rate,newPayment+netSavingsPM,totalPayOff,0,0)/12)
+          var termReduction = NPER(rate,newPayment+netSavingsPM,totalPayOff,0,0)/12
 
-          var totalNewInterest = Math.ceil(CUMIPMT(rate, proposal.proposalTerm*12 ,totalPayOff, 1 , proposal.proposalTerm*12,0 )*-1)
+          var totalNewInterest = CUMIPMT(rate, proposal.proposalTerm*12 ,totalPayOff, 1 , proposal.proposalTerm*12,0 )*-1
 
           
           var sumLoanRemainingInterest = 0;
           var sumLiabilityInterest = 0;
-          loans.forEach(loan => sumLoanRemainingInterest += Math.ceil(loan.remainingInterest));
-          liabilities.forEach(liability => sumLiabilityInterest += Math.ceil(liability.interest));
-          var sumOverallInterest = Math.ceil(sumLoanRemainingInterest) + Math.ceil(sumLiabilityInterest)
-          var interestSavedLost = Math.ceil(sumOverallInterest) - Math.ceil(totalNewInterest)
+          loans.forEach(loan => sumLoanRemainingInterest += loan.remainingInterest);
+          liabilities.forEach(liability => sumLiabilityInterest += liability.interest);
+          var sumOverallInterest = sumLoanRemainingInterest + sumLiabilityInterest
+          var interestSavedLost = sumOverallInterest - totalNewInterest
 
-          var taxBenefitNew = Math.ceil(proposal.taxBenefitBracket * totalPayOff * proposal.proposalInterestRate / 120000);
+          var taxBenefitNew = proposal.taxBenefitBracket * totalPayOff * proposal.proposalInterestRate / 120000;
 
           var taxBenefitPrevious = 0
           loans.forEach(loan => taxBenefitPrevious += loan.deductibleCost)
@@ -111,9 +111,9 @@ import { NumericFormat } from 'react-number-format';
             
           }
 
-          var benefitAfter1Year = Math.ceil(FV(proposal.rateOnInvest/100, 1,-investMonthlyAmount*12,-investCashoutAmount,1));
-          var benefitAfter3Year = Math.ceil(FV(proposal.rateOnInvest/100, 3,-investMonthlyAmount*12,-investCashoutAmount,1));
-          var benefitAfter5Year = Math.ceil(FV(proposal.rateOnInvest/100, 5,-investMonthlyAmount*12,-investCashoutAmount,1));
+          var benefitAfter1Year = FV(proposal.rateOnInvest/100, 1,-investMonthlyAmount*12,-investCashoutAmount,1);
+          var benefitAfter3Year = FV(proposal.rateOnInvest/100, 3,-investMonthlyAmount*12,-investCashoutAmount,1);
+          var benefitAfter5Year = FV(proposal.rateOnInvest/100, 5,-investMonthlyAmount*12,-investCashoutAmount,1);
 
            return  {...proposal,
 
