@@ -2,7 +2,28 @@ import React,{useState,useEffect, useContext} from 'react';
 import logo from '../pacific-financial-logo.jpg';
 import '../App.css';
 import '../custom.scss';
-import { Form,Row,Col,InputGroup,ListGroup,FloatingLabel,Button , Container, Badge,Stack,Card,CloseButton,Table,Tab,Tabs,Toast} from 'react-bootstrap';
+import { Form,
+  Row,
+  Col,
+  InputGroup,
+  ListGroup,
+  FloatingLabel,
+  Button,
+  Container,
+  Badge,
+  Stack,
+  Card,
+  CloseButton,
+  Table,
+  Tab,
+  Tabs,
+  Toast,
+  SplitButton,
+  Dropdown,
+  ButtonGroup,
+  DropdownButton,
+  Popover,
+  OverlayTrigger} from 'react-bootstrap';
 import { PacificDataContext } from './PacificDataContext';
 import { pv,fv, pmt,rate } from 'financial'
 import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
@@ -224,11 +245,12 @@ import { NumericFormat } from 'react-number-format';
 
     function handleUpdateLoanPayoff(e) {
 
+    //  e.preventDefault();
       const { name, value, id } = e.target;
       const idselected = id.split('-');
       const proposalIdSelected = idselected[3];
       const loanIdSelected = idselected[5];
-     
+      
 
       if(e.target.checked){
 
@@ -461,8 +483,8 @@ calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,s
       conditionInvestMonthlyCheck = true
     }
 
-    
-   
+
+
   
 
 
@@ -503,8 +525,96 @@ calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,s
         </ListGroup.Item>
 
 
+       
 
-      {loans.map((loan, index) => (
+        <ListGroup.Item style={{backgroundColor: "#8D6EC7"}}  >
+        <InputGroup className="justify-content-end">
+        <Dropdown className="d-inline mx-2" autoClose={false}>
+        <Dropdown.Toggle id="dropdown-autoclose-inside">
+          Select Loans & Liabilities To Refinance
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu>
+          <div> 
+
+             {loans.map((loan, index) => (
+        
+        
+                      <ListGroup.Item   style={{backgroundColor: "#B19CD9"}} >
+                      <InputGroup className="justify-content-end">
+                      <InputGroup.Text >Loan ({index+1}) Balance</InputGroup.Text>
+                        <InputGroup.Text><div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(loan.currentBalance)}</div></InputGroup.Text>
+                        <InputGroup.Text><Form sm={3}>
+                        
+                                <Form.Check // prettier-ignore
+                                    reverse
+                                    type="switch"
+                                    id={`proposalitem-loanpayoff-${props.cnt.index}-${props.id}-${index}-${loan.loanid}`}
+                                    label={``}
+                                    defaultChecked={props.cnt.item.payoffLoans.includes(loan.loanid) ? true : false}
+                                    name ='payoffLoan' 
+                                    onChange={handleUpdateLoanPayoff}
+                                />
+                                
+                                </Form>
+
+                                    
+                              
+                          </InputGroup.Text>
+                        </InputGroup>
+                        </ListGroup.Item>
+
+                    ))}
+            
+            </div>
+          <Dropdown.Divider />
+          <div>
+            
+          { liabilities.map((liabilty, index) => (
+
+
+              //  (liabilty.liabilityType != 3) ?
+                      
+              //   (
+                      <div>
+                      <ListGroup.Item   style={{backgroundColor: "#CCCCFF"}} >
+                      <InputGroup className="justify-content-end">
+                      <InputGroup.Text >Liability ({index+1}) Balance</InputGroup.Text>
+                        
+                        <InputGroup.Text><div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(liabilty.balanceAmount)}</div></InputGroup.Text>
+                        
+                        <InputGroup.Text><Form sm={3}>
+                                <Form.Check // prettier-ignore
+                                reverse
+                                    type="switch"
+                                    id={`proposalitem-liabilitypayoff-${props.cnt.index}-${props.id}-${index}-${liabilty.liabilityid}`}
+                                    label={``}
+                                    defaultChecked={props.cnt.item.payoffLiabilities.includes(liabilty.liabilityid) ? true : false}
+                                    name ='payoffLiability' 
+                                    onChange={handleUpdateLiabilityPayoff}
+                                />
+                                
+                                </Form>
+                          </InputGroup.Text>
+                          </InputGroup>
+                        </ListGroup.Item>
+
+                        </div>
+                // ):(
+                //   <div>
+                //   </div>
+                // )
+
+              ))}
+
+
+          </div>
+        </Dropdown.Menu>
+      </Dropdown>
+      </InputGroup>
+      </ListGroup.Item>
+
+      {/* {loans.map((loan, index) => (
         
         
           <ListGroup.Item   style={{backgroundColor: "#B19CD9"}} >
@@ -573,7 +683,7 @@ calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,s
                 
           ))}
 
-
+ */}
 
         <ListGroup.Item style={{backgroundColor: "#BF90EE"}}  >
         <InputGroup className="justify-content-end">
