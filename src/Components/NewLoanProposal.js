@@ -97,9 +97,9 @@ import { NumericFormat } from 'react-number-format';
 
           var investCashoutAmount = 0
           liabilities.forEach((liability) =>  { 
-                // if(liability.liabilityType === 3) {
+                 if(liability.liabilityType === 3) {
                   investCashoutAmount += liability.balanceAmount;
-                // }  
+                 }  
             
             })
           
