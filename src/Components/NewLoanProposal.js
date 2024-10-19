@@ -577,13 +577,15 @@ calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,s
                       
               //   (
                       <div>
-                      <ListGroup.Item   style={{backgroundColor: "#CCCCFF"}} >
+                      <ListGroup.Item   style={{backgroundColor: liabilty.liabilityType == 3 ? "":"#CCCCFF"}} >
                       <InputGroup className="justify-content-end">
-                      <InputGroup.Text >Liability ({index+1}) Balance</InputGroup.Text>
+                      <InputGroup.Text style={{backgroundColor: liabilty.liabilityType == 3 ? "#00e6e6":""}} >Liability ({index+1}) Balance { liabilty.liabilityType == 3 ? "[Cashout]":""}</InputGroup.Text>
                         
-                        <InputGroup.Text><div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(liabilty.balanceAmount)}</div></InputGroup.Text>
+                        <InputGroup.Text  style={{backgroundColor: liabilty.liabilityType == 3 ? "#00e6e6":""}} >
+                        <div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(liabilty.balanceAmount)}</div>
+                        </InputGroup.Text>
                         
-                        <InputGroup.Text><Form sm={3}>
+                        <InputGroup.Text  style={{backgroundColor: liabilty.liabilityType == 3 ? "#00e6e6":""}} ><Form sm={3}>
                                 <Form.Check // prettier-ignore
                                 reverse
                                     type="switch"

@@ -173,7 +173,7 @@ function ReportDownloadable() {
 
 
     <Document>
-    <Page size="A4" style={styles.page}>
+    <Page size="A4" orientation="landscape" style={styles.page}>
     <View style={styles.section}>
         <DocTitle/>
         <View style={styles.insidePageContainer}>
@@ -193,6 +193,21 @@ function ReportDownloadable() {
         <Text>Section #2</Text>
       </View> */}
     </Page>
+
+
+    <Page size="A4" orientation="landscape" style={styles.page}>
+    <View style={styles.section}>
+        <DocTitle/>
+        <View style={styles.insidePageContainer}>
+        
+        <DocDescription/>
+        <LoanTableHead/>
+        <LiabilityTableHead/>
+       </View>
+    </View>
+    </Page>
+
+
   </Document>
 
 );

@@ -130,7 +130,7 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
       <Form.Select defaultValue={props.cnt.item.liabilityType} id={`liabilityitem-liabilityType-${props.cnt.index}-${props.id}`} name='liabilityType' onChange={handleUpdate}  aria-label="Default select example" className="mb-3">
       <option selected value="1">Card</option>
       <option value="2">Auto</option>
-      <option value="3">Cash Out</option>
+      <option value="3">Cashout</option>
       <option value="4">Other</option>
     </Form.Select>
     </ListGroup.Item>
@@ -191,7 +191,7 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
         <div>
         <ListGroup.Item>
         <InputGroup className="justify-content-end">
-        <InputGroup.Text>Cash In Hand</InputGroup.Text>
+        <InputGroup.Text>Cashout Amount</InputGroup.Text>
         <InputGroup.Text>$</InputGroup.Text>
         <Form.Control defaultValue={props.cnt.item.balanceAmount} name='balanceAmount' onChange={handleUpdate} id={`liabilityitem-balanceAmount-${props.cnt.index}-${props.id}`} type="number" step={0.01} placeholder="00.00" />
         </InputGroup>
