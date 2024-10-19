@@ -53,9 +53,14 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
     useEffect(() => {
         calculateLiabilityCurrentBalance(liabilities,setLiabilities)
     }, []);
+
+
+    const addCommas = (num) =>
+      num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    const removeNonNumeric = (num) => num.toString().replace(/[^0-9]/g, "");
   
     function handleUpdate(e) {
-     e.preventDefault();
+   //  e.preventDefault();
       const { name, value, id } = e.target;
       const idselected = id.split('-');
 
@@ -66,13 +71,17 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
                                           if (liability.liabilityid === parseInt(idselected[3])) {
                                               return {
                                                   ...liability,
-                                                  [name]: parseFloat(value),
+                                                  [name]: parseFloat(value.replace(',', '')),
                                               };
                                           }
                                           return liability;
                                       });
 
         calculateLiabilityCurrentBalance(new_liability_data,setLiabilities)
+
+        if(name === "balanceAmount"){
+          e.target.value = addCommas(removeNonNumeric(e.target.value))
+         }
 
       
     }
@@ -149,7 +158,8 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
         <InputGroup className="justify-content-end">
         <InputGroup.Text>Balance Amount</InputGroup.Text>
         <InputGroup.Text>$</InputGroup.Text>
-        <Form.Control defaultValue={props.cnt.item.balanceAmount} name='balanceAmount' onChange={handleUpdate} id={`liabilityitem-balanceAmount-${props.cnt.index}-${props.id}`} type="number" step={0.01} placeholder="00.00" />
+        <Form.Control defaultValue={new Intl.NumberFormat().format(props.cnt.item.balanceAmount)} name='balanceAmount' onChange={handleUpdate} id={`liabilityitem-balanceAmount-${props.cnt.index}-${props.id}`} type="text" />
+        {/* <Form.Control defaultValue={props.cnt.item.balanceAmount} name='balanceAmount' onChange={handleUpdate} id={`liabilityitem-balanceAmount-${props.cnt.index}-${props.id}`} type="number" step={0.01} placeholder="00.00" /> */}
         </InputGroup>
         </ListGroup.Item>
 
@@ -193,7 +203,8 @@ import {PV, CUMIPMT, NPER } from '@formulajs/formulajs'
         <InputGroup className="justify-content-end">
         <InputGroup.Text>Cashout Amount</InputGroup.Text>
         <InputGroup.Text>$</InputGroup.Text>
-        <Form.Control defaultValue={props.cnt.item.balanceAmount} name='balanceAmount' onChange={handleUpdate} id={`liabilityitem-balanceAmount-${props.cnt.index}-${props.id}`} type="number" step={0.01} placeholder="00.00" />
+        <Form.Control defaultValue={new Intl.NumberFormat().format(props.cnt.item.balanceAmount)} name='balanceAmount' onChange={handleUpdate} id={`liabilityitem-balanceAmount-${props.cnt.index}-${props.id}`} type="text" />
+        {/* <Form.Control defaultValue={props.cnt.item.balanceAmount} name='balanceAmount' onChange={handleUpdate} id={`liabilityitem-balanceAmount-${props.cnt.index}-${props.id}`} type="number" step={0.01} placeholder="00.00" /> */}
         </InputGroup>
         </ListGroup.Item>
         
