@@ -150,6 +150,7 @@ import { NumericFormat } from 'react-number-format';
           var benefitAfter1Year = FV(proposal.rateOnInvest/100, 1,-investMonthlyAmount*12,-investCashoutAmount,1);
           var benefitAfter3Year = FV(proposal.rateOnInvest/100, 3,-investMonthlyAmount*12,-investCashoutAmount,1);
           var benefitAfter5Year = FV(proposal.rateOnInvest/100, 5,-investMonthlyAmount*12,-investCashoutAmount,1);
+          var benefitAfterNYears = FV(proposal.rateOnInvest/100, parseFloat(proposal.benefitYears),-investMonthlyAmount*12,-investCashoutAmount,1);
 
            return  {...proposal,
 
@@ -170,6 +171,7 @@ import { NumericFormat } from 'react-number-format';
             taxBenefitPrevious:taxBenefitPrevious,
             investCashoutAmount:investCashoutAmount,
             investMonthlyAmount:investMonthlyAmount,
+            benefitAfterNYears:benefitAfterNYears,
             benefitAfter1Year: benefitAfter1Year,
             benefitAfter3Year: benefitAfter3Year,
             benefitAfter5Year: benefitAfter5Year
@@ -896,13 +898,23 @@ calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,s
 
 
       <ListGroup.Item style={{backgroundColor: "#87CEFA"}} >
+        <InputGroup className="justify-content-center">
+        <InputGroup.Text  style={{backgroundColor: "#000000", color:"#FFFFFF",borderColor: "#00FF00"}}  >Benefit After : (Year's)</InputGroup.Text>
+        <Form.Control style={{borderColor: "#00FF00"}} defaultValue={props.cnt.item.benefitYears} name='benefitYears' onChange={handleUpdate} id={`proposalitem-rateOnInvest-${props.cnt.index}-${props.id}`} type="number" step={0.1} placeholder="0.0" />
+        <InputGroup.Text  style={{backgroundColor: "#000000", color:"#FFFFFF", borderColor: "#00FF00"}} >{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.benefitAfterNYears)}</InputGroup.Text>
+        </InputGroup>
+      </ListGroup.Item>
+
+
+{/* 
+      <ListGroup.Item style={{backgroundColor: "#87CEFA"}} >
       <Stack direction="vertical" gap={2}>
       <Badge bg="dark">Benefit After</Badge>
       <Badge bg="secondary">1 Year : {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.benefitAfter1Year)}</Badge>
       <Badge bg="success">3 Year : {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.benefitAfter3Year)}</Badge>
       <Badge bg="primary">5 Year : {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.benefitAfter5Year)}</Badge>
       </Stack>
-      </ListGroup.Item>
+      </ListGroup.Item> */}
       
     </ListGroup>
 

@@ -170,6 +170,8 @@ function AlertHeaderProposals() {
     rateOnInvest:5,
     investMonthlyCheck:1,
     investMonthlyAmount:0,
+    benefitYears:1,
+    benefitAfterNYears:0,
     benefitAfter1Year:0,
     benefitAfter3Year:0,
     benefitAfter5Year:0,
