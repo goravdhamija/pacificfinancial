@@ -57,7 +57,7 @@ function ReportDownloadable(props) {
         
         reportTitle: {  fontSize: 16,fontStyle: 'bold', color: '#064bba',  textAlign: 'center', textDecoration: 'underline', textDecorationColor: 'green' },
 
-        tableTitle: { paddingLeft: 5,paddingTop: 5,width:'100%',marginTop: 20 ,fontSize: 16,fontStyle: 'bold',backgroundColor : '#000000', color: '#FFFFFF',  textAlign: 'left', textDecoration: 'underline'  },
+        tableTitle: { paddingLeft: 5,paddingTop: 5,width:'100%',marginTop: 30 ,fontSize: 12,fontStyle: 'bold',backgroundColor : '#36454F', color: '#FFFFFF',  textAlign: 'left', textDecoration: 'underline'  },
 
         addressTitle : {fontSize: 11,fontStyle: 'bold'}, 
         
@@ -78,10 +78,13 @@ function ReportDownloadable(props) {
         tbody2:{ flex:2, borderRightWidth:1, },
 
         planContainer:{  borderBottomWidth:4,paddingBottom: 15, },
-        planTitle:{ borderBottomWidth:1,paddingLeft: 5,paddingTop: 5,width:'100%',marginTop: 20 ,fontSize: 12,fontStyle: 'bold',  textAlign: 'left'   },
-        planBlock:{ flex:2, borderRightWidth:1, },
-        planHeader:{ flex:2, borderRightWidth:1, },
-        planContent:{ flex:2, borderRightWidth:1, }
+        planTitle:{ borderBottomWidth:1,paddingLeft: 5,paddingTop: 5,width:'100%',marginTop: 20 ,fontSize: 10,fontStyle: 'normal',  textAlign: 'left'   },
+        planDetail:{ borderWidth:0,borderColor : '#0000FF',width:'100%', flexDirection :'row' },
+        planBlock:{ borderWidth:0,borderColor : '#00FF00',flexDirection: 'column' },
+        planHeader:{ paddingLeft: 5,paddingTop: 5,backgroundColor : '#708090', color: '#FFFFFF',  textAlign: 'left',marginTop:5,fontSize: 10,fontStyle: 'normal' },
+        planContent:{ width:'100%', flexDirection :'row', margin:2 },
+        planField:{ flex:2, marginRight:5, textAlign: 'right',fontSize: 10,fontStyle: 'bold'},
+        planValue:{ flex:1, marginRight:10, textAlign: 'right',fontSize: 10,fontStyle: 'normal'}
 
           });
 
@@ -313,47 +316,285 @@ function ReportDownloadable(props) {
             <LiabilityTableBody liability={{liability, index}} />
         ))}
 
-        <Text style={styles.tableTitle}>Loan Proposed Plans</Text>
+       
+
+
+       {/* </View>
+    </View>
+    </Page>
+            
+    
+
+
+   <Page size="A4" orientation="landscape" style={styles.page}>
+    <View style={styles.section}>
+    <View style={styles.insidePageContainer}> */}
+        
+    <Text style={styles.tableTitle}>Loan Proposals</Text>
         {props.proposals.map((proposal, index) => (
         <View style={styles.planContainer}>
            
             <Text style={styles.planTitle}>
                 Plan No. {index+1} for term {proposal.proposalTerm} years with an interest rate of {proposal.proposalInterestRate}% per annum.
-                </Text>
-          
+            </Text>
+            
+            <View style={[styles.planDetail]}>
+                <View style={[styles.planBlock,{ marginLeft:20, width:'31%'}]}>
+                    <Text style={styles.planHeader}>
+                        Refinancing Liabilities
+                        </Text>
+
+                        
+                        {
+                            proposal.payoffLoans.map((proposalLoanID, index) => {
+                              var getMatchedLoan = props.loans.filter(loan => loan.loanid === proposalLoanID);
+                                
+                            return(
+                                    <View  style={styles.planContent}>
+                                        <Text style={styles.planField}>
+                                        Loan - ({index+1}) Balance:
+                                        </Text>
+                                        <Text style={styles.planValue}>
+                                        {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(getMatchedLoan[0].currentBalance)}
+                                        </Text>
+                                    </View>
+                                    );
+                                }
+                            )
+                        }
+
+
+                        {
+                            proposal.payoffLiabilities.map((proposalLiabilityID, index) => {
+                                var getMatchedLoan = props.liabilities.filter(liability => liability.liabilityid === proposalLiabilityID);
+                                
+                            return(
+                                    <View  style={styles.planContent}>
+                                        <Text style={styles.planField}>
+                                        Liability - ({index+1}) Balance:
+                                        </Text>
+                                        <Text style={styles.planValue}>
+                                        {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(getMatchedLoan[0].balanceAmount)}
+                                        </Text>
+                                    </View>
+                                    );
+                                }
+                            )
+                        }
+
+                                    <View  style={[styles.planContent,{borderTopWidth:1}]}>
+                                        <Text style={styles.planField}>
+                                        Total PayOff Selected Balance:
+                                        </Text>
+                                        <Text style={styles.planValue}>
+                                        {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(proposal.totalPayOff)}
+                                        </Text>
+                                    </View>
+
+
+                </View>
+                <View style={[styles.planBlock,{ marginLeft:20, width:'31%'}]}>
+                    <Text style={styles.planHeader}>
+                        Loan Amount Sought
+                        </Text>
+
+                                    <View  style={styles.planContent}>
+                                        <Text style={styles.planField}>
+                                        Origination Fees ({proposal.proposalOriginationFeesRate}%) :
+                                        </Text>
+                                        <Text style={styles.planValue}>
+                                        {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(proposal.proposalOriginationFees)}
+                                        </Text>
+                                    </View>
+
+                                    <View  style={styles.planContent}>
+                                        <Text style={styles.planField}>
+                                        Discount Fees ({proposal.proposalDiscountFeesRate}%) :
+                                        </Text>
+                                        <Text style={styles.planValue}>
+                                        {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(proposal.proposalDiscountFees)}
+                                        </Text>
+                                    </View>
+
+                                    <View  style={styles.planContent}>
+                                        <Text style={styles.planField}>
+                                        Escrow/Misc. Fees :
+                                        </Text>
+                                        <Text style={styles.planValue}>
+                                        {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(proposal.proposalMiscFees)}
+                                        </Text>
+                                    </View>
+
+                                    <View  style={styles.planContent}>
+                                        <Text style={styles.planField}>
+                                        Lender Credit ({proposal.proposalLenderCreditRate}%) :
+                                        </Text>
+                                        <Text style={styles.planValue}>
+                                        {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(proposal.proposalLenderCredit)}
+                                        </Text>
+                                    </View>
+
+                                    <View  style={[styles.planContent,{borderTopWidth:1}]}>
+                                        <Text style={[styles.planField,{ textDecoration: proposal.inCC == 1 ? '':'line-through'}]}>
+                                        Total Fees :
+                                        </Text>
+                                        <Text style={[styles.planValue,{textDecoration: proposal.inCC == 1 ? '':'line-through'}]}>
+                                        {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(proposal.total)}
+                                        </Text>
+                                    </View>
+
+                                    <View  style={[styles.planContent]}>
+                                        <Text style={styles.planField}>
+                                        Total PayOff Selected Balance:
+                                        </Text>
+                                        <Text style={styles.planValue}>
+                                        {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(proposal.totalPayOff)}
+                                        </Text>
+                                    </View>
+
+                                    <View  style={[styles.planContent,{borderTopWidth:1,fontWeight: '900'}]}>
+                                        <Text style={[styles.planField,{fontWeight: '900'}]}>
+                                        Proposed New Loan Amount:
+                                        </Text>
+                                        <Text style={styles.planValue}>
+                                        {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(proposal.newProposalLoanAmount)}
+                                        </Text>
+                                    </View>
+                </View>
+
+                <View style={[styles.planBlock,{ marginLeft:20, width:'31%'}]}>
+                    <Text style={styles.planHeader}>
+                        Financial Gains 
+                    </Text>
+
+                    <View  style={[styles.planContent]}>
+                        <Text style={[styles.planField]}>
+                            New Monthly Payment:
+                        </Text>
+                        <Text style={styles.planValue}>
+                            {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(proposal.newPayment)}
+                        </Text>
+                    </View>
+
+                    <View  style={[styles.planContent]}>
+                        <Text style={[styles.planField]}>
+                           APR:
+                        </Text>
+                        <Text style={styles.planValue}>
+                            {proposal.apr}%
+                        </Text>
+                    </View>
+
+                    <View  style={[styles.planContent]}>
+                        <Text style={[styles.planField]}>
+                        Net Savings (Per Month):
+                        </Text>
+                        <Text style={styles.planValue}>
+                            {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(proposal.netSavingsPM)}
+                        </Text>
+                    </View>
+
+                    <View  style={[styles.planContent]}>
+                        <Text style={[styles.planField]}>
+                        Term Reduction:
+                        </Text>
+                        <Text style={styles.planValue}>
+                            {proposal.termReduction}
+                        </Text>
+                    </View>
+
+                    <View  style={[styles.planContent]}>
+                        <Text style={[styles.planField]}>
+                        Total Interest On New Loan:
+                        </Text>
+                        <Text style={styles.planValue}>
+                            {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(proposal.totalNewInterest)}
+                        </Text>
+                    </View>
+
+                    <View  style={[styles.planContent]}>
+                        <Text style={[styles.planField]}>
+                        Interest Saved/Lost:
+                        </Text>
+                        <Text style={styles.planValue}>
+                            {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(proposal.interestSavedLost)}
+                        </Text>
+                    </View>
+
+                    <View  style={[styles.planContent]}>
+                        <Text style={[styles.planField]}>
+                        Tax Benefit - Bracket:
+                        </Text>
+                        <Text style={styles.planValue}>
+                            {proposal.taxBenefitBracket}%
+                        </Text>
+                    </View>
+
+                    <View  style={[styles.planContent]}>
+                        <Text style={[styles.planField]}>
+                        Tax Benefit New:
+                        </Text>
+                        <Text style={styles.planValue}>
+                            {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(proposal.taxBenefitNew)}
+                        </Text>
+                    </View>
+
+                    <View  style={[styles.planContent]}>
+                        <Text style={[styles.planField]}>
+                        Tax Benefit Previous:
+                        </Text>
+                        <Text style={styles.planValue}>
+                            {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(proposal.taxBenefitPrevious)}
+                        </Text>
+                    </View>
+
+                    <View  style={[styles.planContent]}>
+                        <Text style={[styles.planField,{textDecoration: proposal.investCashoutCheck == 1 ? '':'line-through'}]}>
+                        Invest Cashout:
+                        </Text>
+                        <Text style={[styles.planValue,{textDecoration: proposal.investCashoutCheck == 1 ? '':'line-through'}]}>
+                            {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(proposal.investCashoutAmount)}
+                        </Text>
+                    </View>
+
+                    <View  style={[styles.planContent]}>
+                        <Text style={[styles.planField]}>
+                        Rate Of Interest on Invest:
+                        </Text>
+                        <Text style={styles.planValue}>
+                            {proposal.rateOnInvest}%
+                        </Text>
+                    </View>
+
+                    <View  style={[styles.planContent]}>
+                        <Text style={[styles.planField,{textDecoration: proposal.investMonthlyCheck == 1 ? '':'line-through'}]}>
+                        Invest Monthly Savings:
+                        </Text>
+                        <Text style={[styles.planValue,{textDecoration: proposal.investMonthlyCheck == 1 ? '':'line-through'}]}>
+                            {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(proposal.investMonthlyAmount)}
+                        </Text>
+                    </View>
+
+                    <View  style={styles.planContent}>
+                        <Text style={styles.planField}>
+                            Benefit After {proposal.benefitYears} Year's:
+                        </Text>
+                        <Text style={styles.planValue}>
+                            {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(proposal.benefitAfterNYears)}
+                        </Text>
+                    </View>
+
+
+                </View>
+
+            </View>
         </View>
          ))}
 
 
-       </View>
+        </View>
     </View>
     </Page>
-            
-    {/* <View style={styles.section}>
-    <TableHead/>
-    </View> */}
-      {/* <View style={styles.section}>
-        <Text>Section #1</Text>
-      </View>
-      <View style={styles.section}>
-        <Text>Section #2</Text>
-      </View> */}
-    
-
-
-    {/* <Page size="A4" orientation="landscape" style={styles.page}>
-    <View style={styles.section}>
-        <DocTitle/>
-        <View style={styles.insidePageContainer}>
-        
-        <DocDescription/>
-        <LoanTableHead/>
-        {LoanTableBody}
-        
-        <LiabilityTableHead/>
-       </View>
-    </View>
-    </Page> */}
 
 
   </Document>
