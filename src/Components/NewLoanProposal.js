@@ -529,14 +529,14 @@ calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,s
 
        
 
-        <ListGroup.Item style={{backgroundColor: "#8D6EC7"}}  >
+        <ListGroup.Item   >
         <InputGroup className="justify-content-end">
         <Dropdown className="d-inline mx-2" autoClose={false}>
         <Dropdown.Toggle id="dropdown-autoclose-inside">
           Select Loans & Liabilities To Refinance
         </Dropdown.Toggle>
 
-        <Dropdown.Menu>
+        <Dropdown.Menu >
           <div> 
 
              {loans.map((loan, index) => (
