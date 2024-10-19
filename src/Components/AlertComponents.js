@@ -170,6 +170,8 @@ function AlertHeaderProposals() {
     rateOnInvest:5,
     investMonthlyCheck:1,
     investMonthlyAmount:0,
+    benefitYears:1,
+    benefitAfterNYears:0,
     benefitAfter1Year:0,
     benefitAfter3Year:0,
     benefitAfter5Year:0,
@@ -207,7 +209,7 @@ function AlertHeaderProposals() {
 }
 
 function AlertFooterPage() {
-
+  const {loans,setLoans,liabilities,setLiabilities,proposals,setProposals} = useContext(PacificDataContext);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -237,12 +239,12 @@ const handleShare = async (blob) => {
         <Container className="d-flex justify-content-end" >
 
           <Row>
-          <Col lg={3}> 
+          {/* <Col lg={3}> 
            <DownloadPDFXXX />
-           </Col>
+           </Col> */}
           
-           <Col lg={3}> 
-          <BlobProvider  document={<ReportDownloadable />}>
+           <Col lg={4}> 
+          <BlobProvider  document={<ReportDownloadable loans={loans} liabilities={liabilities} proposals={proposals} />}>
             {({ url, blob }) => (
               <Button onClick={() => handleShare(url, blob)} lg={12} className='m-3 btn text-nowrap' variant="dark">
              
@@ -253,8 +255,8 @@ const handleShare = async (blob) => {
           </Col>
           
 
-          <Col lg={3}> 
-            <PDFDownloadLink document={<ReportDownloadable />} fileName="PacificFinancialReport.pdf">
+          <Col lg={4}> 
+            <PDFDownloadLink document={<ReportDownloadable loans={loans} liabilities={liabilities} proposals={proposals} />} fileName="PacificFinancialReport.pdf">
               {({ blob, url, loading, error }) =>
                 <Button className='m-3 btn text-nowrap' variant="dark" >
                   {loading ? 'Loading document...' : 'Download PDF'}
@@ -263,8 +265,8 @@ const handleShare = async (blob) => {
             </PDFDownloadLink>
             </Col>
           
-            <Col lg={3}> 
-            <BlobProvider  document={<ReportDownloadable />}>
+            <Col lg={4}> 
+            <BlobProvider  document={<ReportDownloadable loans={loans} liabilities={liabilities} proposals={proposals} />}>
               {({ blob, url, loading, error }) => (
                 <a href={url} target="_blank" >
                   <Button className='m-3 btn text-nowrap' variant="dark">

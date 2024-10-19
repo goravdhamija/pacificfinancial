@@ -142,18 +142,24 @@ import { NumericFormat } from 'react-number-format';
     useEffect(() => {
       calculateLoanCurrentBalance(loans,setLoans)
     }, []);
+
+
+    const addCommas = (num) =>
+      num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    const removeNonNumeric = (num) => num.toString().replace(/[^0-9]/g, "");
   
     function handleUpdate(e) {
-    //  e.preventDefault();
+      //e.preventDefault();
       const { name, value, id } = e.target;
       const idselected = id.split('-');
-
+    
+      
       let new_loan_data = loans.map((loan) => {
 
                                           if (loan.loanid === parseInt(idselected[3])) {
                                               return {
                                                   ...loan,
-                                                  [name]: parseFloat(value),
+                                                  [name]: parseFloat(value.replace(',', '')),
                                               };
                                           }
                                           return loan;
@@ -161,6 +167,11 @@ import { NumericFormat } from 'react-number-format';
 
         calculateLoanCurrentBalance(new_loan_data,setLoans)
 
+        if(name === "loanAmount"){
+          e.target.value = addCommas(removeNonNumeric(e.target.value))
+         }
+
+       
     }
 
     function handleCloseLoan(e) {
@@ -217,9 +228,17 @@ import { NumericFormat } from 'react-number-format';
         <InputGroup className="justify-content-end">
         <InputGroup.Text>Loan Amount </InputGroup.Text>
         <InputGroup.Text>$</InputGroup.Text>
-        <Form.Control defaultValue={props.cnt.item.loanAmount} name='loanAmount' onChange={handleUpdate} id={`loanitem-loanamount-${props.cnt.index}-${props.id}`} type="number" step={0.01} placeholder="00.00" />
+        <Form.Control defaultValue={new Intl.NumberFormat().format(props.cnt.item.loanAmount)} name='loanAmount' onChange={handleUpdate} id={`loanitem-loanamount-${props.cnt.index}-${props.id}`} type="text"  />
         </InputGroup>
         </ListGroup.Item>
+
+        {/* <ListGroup.Item>
+        <InputGroup className="justify-content-end">
+        <InputGroup.Text>Loan Amount </InputGroup.Text>
+        <InputGroup.Text>$</InputGroup.Text>
+        <Form.Control defaultValue={props.cnt.item.loanAmount} name='loanAmount' onChange={handleUpdate} id={`loanitem-loanamount-${props.cnt.index}-${props.id}`} type="number" step={0} placeholder="00"   />
+        </InputGroup>
+        </ListGroup.Item> */}
 
 
         <ListGroup.Item>

@@ -2,7 +2,28 @@ import React,{useState,useEffect, useContext} from 'react';
 import logo from '../pacific-financial-logo.jpg';
 import '../App.css';
 import '../custom.scss';
-import { Form,Row,Col,InputGroup,ListGroup,FloatingLabel,Button , Container, Badge,Stack,Card,CloseButton,Table,Tab,Tabs,Toast} from 'react-bootstrap';
+import { Form,
+  Row,
+  Col,
+  InputGroup,
+  ListGroup,
+  FloatingLabel,
+  Button,
+  Container,
+  Badge,
+  Stack,
+  Card,
+  CloseButton,
+  Table,
+  Tab,
+  Tabs,
+  Toast,
+  SplitButton,
+  Dropdown,
+  ButtonGroup,
+  DropdownButton,
+  Popover,
+  OverlayTrigger} from 'react-bootstrap';
 import { PacificDataContext } from './PacificDataContext';
 import { pv,fv, pmt,rate } from 'financial'
 import {PV, CUMIPMT, NPER,RATE,FV } from '@formulajs/formulajs'
@@ -97,9 +118,9 @@ import { NumericFormat } from 'react-number-format';
 
           var investCashoutAmount = 0
           liabilities.forEach((liability) =>  { 
-                // if(liability.liabilityType === 3) {
+                 if(liability.liabilityType === 3) {
                   investCashoutAmount += liability.balanceAmount;
-                // }  
+                 }  
             
             })
           
@@ -129,6 +150,7 @@ import { NumericFormat } from 'react-number-format';
           var benefitAfter1Year = FV(proposal.rateOnInvest/100, 1,-investMonthlyAmount*12,-investCashoutAmount,1);
           var benefitAfter3Year = FV(proposal.rateOnInvest/100, 3,-investMonthlyAmount*12,-investCashoutAmount,1);
           var benefitAfter5Year = FV(proposal.rateOnInvest/100, 5,-investMonthlyAmount*12,-investCashoutAmount,1);
+          var benefitAfterNYears = FV(proposal.rateOnInvest/100, parseFloat(proposal.benefitYears),-investMonthlyAmount*12,-investCashoutAmount,1);
 
            return  {...proposal,
 
@@ -149,6 +171,7 @@ import { NumericFormat } from 'react-number-format';
             taxBenefitPrevious:taxBenefitPrevious,
             investCashoutAmount:investCashoutAmount,
             investMonthlyAmount:investMonthlyAmount,
+            benefitAfterNYears:benefitAfterNYears,
             benefitAfter1Year: benefitAfter1Year,
             benefitAfter3Year: benefitAfter3Year,
             benefitAfter5Year: benefitAfter5Year
@@ -224,11 +247,12 @@ import { NumericFormat } from 'react-number-format';
 
     function handleUpdateLoanPayoff(e) {
 
+    //  e.preventDefault();
       const { name, value, id } = e.target;
       const idselected = id.split('-');
       const proposalIdSelected = idselected[3];
       const loanIdSelected = idselected[5];
-     
+      
 
       if(e.target.checked){
 
@@ -461,8 +485,8 @@ calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,s
       conditionInvestMonthlyCheck = true
     }
 
-    
-   
+
+
   
 
 
@@ -503,8 +527,98 @@ calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,s
         </ListGroup.Item>
 
 
+       
 
-      {loans.map((loan, index) => (
+        <ListGroup.Item   >
+        <InputGroup className="justify-content-end">
+        <Dropdown className="d-inline mx-2" autoClose={false}>
+        <Dropdown.Toggle id="dropdown-autoclose-inside">
+          Select Loans & Liabilities To Refinance
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu >
+          <div> 
+
+             {loans.map((loan, index) => (
+        
+        
+                      <ListGroup.Item   style={{backgroundColor: "#B19CD9"}} >
+                      <InputGroup className="justify-content-end">
+                      <InputGroup.Text >Loan ({index+1}) Balance</InputGroup.Text>
+                        <InputGroup.Text><div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(loan.currentBalance)}</div></InputGroup.Text>
+                        <InputGroup.Text><Form sm={3}>
+                        
+                                <Form.Check // prettier-ignore
+                                    reverse
+                                    type="switch"
+                                    id={`proposalitem-loanpayoff-${props.cnt.index}-${props.id}-${index}-${loan.loanid}`}
+                                    label={``}
+                                    defaultChecked={props.cnt.item.payoffLoans.includes(loan.loanid) ? true : false}
+                                    name ='payoffLoan' 
+                                    onChange={handleUpdateLoanPayoff}
+                                />
+                                
+                                </Form>
+
+                                    
+                              
+                          </InputGroup.Text>
+                        </InputGroup>
+                        </ListGroup.Item>
+
+                    ))}
+            
+            </div>
+          <Dropdown.Divider />
+          <div>
+            
+          { liabilities.map((liabilty, index) => (
+
+
+              //  (liabilty.liabilityType != 3) ?
+                      
+              //   (
+                      <div>
+                      <ListGroup.Item   style={{backgroundColor: liabilty.liabilityType == 3 ? "":"#CCCCFF"}} >
+                      <InputGroup className="justify-content-end">
+                      <InputGroup.Text style={{backgroundColor: liabilty.liabilityType == 3 ? "#00e6e6":""}} >Liability ({index+1}) Balance { liabilty.liabilityType == 3 ? "[Cashout]":""}</InputGroup.Text>
+                        
+                        <InputGroup.Text  style={{backgroundColor: liabilty.liabilityType == 3 ? "#00e6e6":""}} >
+                        <div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(liabilty.balanceAmount)}</div>
+                        </InputGroup.Text>
+                        
+                        <InputGroup.Text  style={{backgroundColor: liabilty.liabilityType == 3 ? "#00e6e6":""}} ><Form sm={3}>
+                                <Form.Check // prettier-ignore
+                                reverse
+                                    type="switch"
+                                    id={`proposalitem-liabilitypayoff-${props.cnt.index}-${props.id}-${index}-${liabilty.liabilityid}`}
+                                    label={``}
+                                    defaultChecked={props.cnt.item.payoffLiabilities.includes(liabilty.liabilityid) ? true : false}
+                                    name ='payoffLiability' 
+                                    onChange={handleUpdateLiabilityPayoff}
+                                />
+                                
+                                </Form>
+                          </InputGroup.Text>
+                          </InputGroup>
+                        </ListGroup.Item>
+
+                        </div>
+                // ):(
+                //   <div>
+                //   </div>
+                // )
+
+              ))}
+
+
+          </div>
+        </Dropdown.Menu>
+      </Dropdown>
+      </InputGroup>
+      </ListGroup.Item>
+
+      {/* {loans.map((loan, index) => (
         
         
           <ListGroup.Item   style={{backgroundColor: "#B19CD9"}} >
@@ -573,7 +687,7 @@ calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,s
                 
           ))}
 
-
+ */}
 
         <ListGroup.Item style={{backgroundColor: "#BF90EE"}}  >
         <InputGroup className="justify-content-end">
@@ -784,13 +898,23 @@ calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,s
 
 
       <ListGroup.Item style={{backgroundColor: "#87CEFA"}} >
+        <InputGroup className="justify-content-center">
+        <InputGroup.Text  style={{backgroundColor: "#000000", color:"#FFFFFF",borderColor: "#00FF00"}}  >Benefit After : (Year's)</InputGroup.Text>
+        <Form.Control style={{borderColor: "#00FF00"}} defaultValue={props.cnt.item.benefitYears} name='benefitYears' onChange={handleUpdate} id={`proposalitem-rateOnInvest-${props.cnt.index}-${props.id}`} type="number" step={0.1} placeholder="0.0" />
+        <InputGroup.Text  style={{backgroundColor: "#000000", color:"#FFFFFF", borderColor: "#00FF00"}} >{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.benefitAfterNYears)}</InputGroup.Text>
+        </InputGroup>
+      </ListGroup.Item>
+
+
+{/* 
+      <ListGroup.Item style={{backgroundColor: "#87CEFA"}} >
       <Stack direction="vertical" gap={2}>
       <Badge bg="dark">Benefit After</Badge>
       <Badge bg="secondary">1 Year : {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.benefitAfter1Year)}</Badge>
       <Badge bg="success">3 Year : {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.benefitAfter3Year)}</Badge>
       <Badge bg="primary">5 Year : {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.benefitAfter5Year)}</Badge>
       </Stack>
-      </ListGroup.Item>
+      </ListGroup.Item> */}
       
     </ListGroup>
 
