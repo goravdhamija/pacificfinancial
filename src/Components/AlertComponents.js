@@ -227,8 +227,8 @@ function AlertFooterPage() {
 }
 
 const handleShare = async (blob) => {
-  await saveAs(blob, `../DownloadReports/invoice.pdf`);
-  window.location.href = `mailto:?subject=${encodeURIComponent(`Invoice`)}&body=${encodeURIComponent(`Kindly find attached invoice`)} target="_blank"`;
+  await saveAs(blob, `../DownloadReports/report.pdf`);
+  window.location.href = `mailto:?subject=${encodeURIComponent(`Report`)}&body=${encodeURIComponent(`Kindly find attached financial report`)} target="_blank"`;
 }
 
 
