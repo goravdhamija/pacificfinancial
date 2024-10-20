@@ -67,11 +67,14 @@ function ReportDownloadable(props) {
         
         address : { fontWeight: 400, fontSize: 10},
         
-        theader : {marginTop : 1,fontSize : 6,fontStyle: 'bold',paddingTop: 4 ,paddingLeft: 7 ,flex:1,height:20,backgroundColor : '#DEDEDE',borderColor : 'whitesmoke',borderRightWidth:1,borderBottomWidth:1},
+        theader : {marginTop : 1,fontSize : 9,paddingTop: 4 ,paddingLeft: 2 ,flex:1, textAlign: 'center',backgroundColor : '#DEDEDE',borderColor : 'whitesmoke',borderRightWidth:1,borderBottomWidth:1},
 
         theader2 : { flex:2, borderRightWidth:0, borderBottomWidth:1},
 
-        tbody:{ fontSize : 9, paddingTop: 4 , paddingLeft: 2 , flex:1, borderColor : 'whitesmoke', borderRightWidth:1, borderBottomWidth:1},
+        tbody : {marginTop : 1,fontSize : 9,paddingTop: 4 ,paddingLeft: 2 ,flex:1,paddingRight: 4, textAlign: 'right',borderColor : 'whitesmoke',borderRightWidth:1,borderBottomWidth:1},
+
+
+        // tbody:{ fontSize : 9, paddingTop: 4 , paddingLeft: 2 , flex:1, borderColor : 'whitesmoke', borderRightWidth:1, borderBottomWidth:1},
 
         total:{ fontSize : 9, paddingTop: 4 , paddingLeft: 7 , flex:1.5, borderColor : 'whitesmoke', borderBottomWidth:1},
 
@@ -102,8 +105,8 @@ function ReportDownloadable(props) {
             <View style={styles.generalContainerHorizontal}>
             <View style={styles.generalContainerVertical}>
                 
-                    <Text >Prepared By: Bill Moran</Text>
-                    <Text >Prepared For: Castillo</Text>
+                    <Text >Prepared By: {props.report.reportPreparedBy}</Text>
+                    <Text >Prepared For: {props.report.reportPreparedFor}</Text>
             </View>
 
             <Text >Date: {getDate()}</Text>
@@ -113,47 +116,47 @@ function ReportDownloadable(props) {
 
         const LoanTableHead = () => (
             <View style={{ width:'100%', flexDirection :'row', marginTop:2}}>
-                <View style={[styles.theader]}>
+                <View style={[styles.theader,{flex:.7}]}>
                     <Text >No.</Text>   
                 </View>
-                <View style={[styles.theader]}>
+                <View style={[styles.theader,{flex:1.3}]}>
                     <Text>Amount</Text>   
                 </View>
-                <View style={styles.theader}>
+                <View style={[styles.theader,{flex:.7}]}>
                     <Text>Term</Text>   
                 </View>
-                <View style={styles.theader}>
-                    <Text>Rate</Text>   
+                <View style={[styles.theader,{flex:.7}]}>
+                    <Text>Rate of interest</Text>   
                 </View>
-                <View style={styles.theader}>
-                    <Text>No. of Pay Made</Text>   
+                <View style={[styles.theader,{flex:.7}]}>
+                    <Text>No. of Payments Made</Text>   
                 </View>
-                <View style={styles.theader}>
-                    <Text>Per Month</Text>   
+                <View style={[styles.theader,{flex:1.3}]}>
+                    <Text>Payment Per Month</Text>   
                 </View>
-                <View style={styles.theader}>
+                <View style={[styles.theader,{flex:1.3}]}>
                     <Text>Balance</Text>   
                 </View>
-                <View style={styles.theader}>
+                <View style={[styles.theader,{flex:1.3}]}>
                     <Text>Interest</Text>   
                 </View>
-                <View style={styles.theader}>
-                    <Text>Paid (Int)</Text>   
+                <View style={[styles.theader,{flex:1.3}]}>
+                    <Text>Paid (Interest)</Text>   
                 </View>
-                <View style={styles.theader}>
-                    <Text>Remaining (Int)</Text>   
+                <View style={[styles.theader,{flex:1.3}]}>
+                    <Text>Remaining (Interest)</Text>   
                 </View>
-                <View style={styles.theader}>
+                <View style={[styles.theader,{flex:1.3}]}>
                     <Text>Principal Amount</Text>   
                 </View>
-                <View style={styles.theader}>
-                    <Text>YearsLeft</Text>   
+                <View style={[styles.theader,{flex:.7}]}>
+                    <Text>Years Left</Text>   
                 </View>
-                <View style={styles.theader}>
-                    <Text>Deduct</Text>   
+                <View style={[styles.theader,{flex:.7}]}>
+                    <Text>Deductible %</Text>   
                 </View>
-                <View style={styles.theader}>
-                    <Text>Ded- Amount</Text>   
+                <View style={[styles.theader,{flex:1}]}>
+                    <Text>Deductible Amount</Text>   
                 </View>
             </View>
         );
@@ -163,47 +166,47 @@ function ReportDownloadable(props) {
          const LoanTableBody = (internProperties) => (
             
             <View style={{ width:'100%', flexDirection :'row', marginTop:10}}>
-                 <View style={[styles.tbody]}>
+                 <View style={[styles.tbody,{flex:.7}]}>
                  <Text>{internProperties.loan.index+1}</Text>   
                     
                  </View>
-                 <View style={styles.tbody}>
+                 <View style={[styles.tbody,{flex:1.3}]}>
                  <Text >{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(internProperties.loan.loan.loanAmount)}</Text>   
                  </View>
-                 <View style={styles.tbody}>
+                 <View style={[styles.tbody,{flex:.7}]}>
                      <Text>{internProperties.loan.loan.termYears}</Text>   
                  </View>
-                 <View style={styles.tbody}>
+                 <View style={[styles.tbody,{flex:.7}]}>
                      <Text>{internProperties.loan.loan.interestRate}%</Text>   
                  </View>
-                 <View style={styles.tbody}>
+                 <View style={[styles.tbody,{flex:.7}]}>
                      <Text>{internProperties.loan.loan.numberOfpaymentsMade}</Text>   
                  </View>
-                 <View style={styles.tbody}>
+                 <View style={[styles.tbody,{flex:1.3}]}>
                      <Text>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(internProperties.loan.loan.currentPayment)}</Text>   
                  </View>
-                 <View style={styles.tbody}>
+                 <View style={[styles.tbody,{flex:1.3}]}>
                      <Text>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(internProperties.loan.loan.currentBalance)}</Text>   
                  </View>
-                 <View style={styles.tbody}>
+                 <View style={[styles.tbody,{flex:1.3}]}>
                      <Text>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(internProperties.loan.loan.totalInterest)}</Text>   
                  </View>
-                 <View style={styles.tbody}>
+                 <View style={[styles.tbody,{flex:1.3}]}>
                      <Text>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(internProperties.loan.loan.interestPaid)}</Text>   
                  </View>
-                 <View style={styles.tbody}>
+                 <View style={[styles.tbody,{flex:1.3}]}>
                      <Text>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(internProperties.loan.loan.remainingInterest)}</Text>   
                  </View>
-                 <View style={styles.tbody}>
+                 <View style={[styles.tbody,{flex:1.3}]}>
                      <Text>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(internProperties.loan.loan.remainingPrincipal)}</Text>   
                  </View>
-                 <View style={styles.tbody}>
+                 <View style={[styles.tbody,{flex:.7}]}>
                      <Text>{internProperties.loan.loan.yearsLeft}</Text>   
                  </View>
-                 <View style={styles.tbody}>
+                 <View style={[styles.tbody,{flex:.7}]}>
                      <Text>{internProperties.loan.loan.deductible}%</Text>   
                  </View>
-                 <View style={styles.tbody}>
+                 <View style={[styles.tbody,{flex:1}]}>
                      <Text>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(internProperties.loan.loan.deductibleCost)}</Text>   
                  </View>
              </View>

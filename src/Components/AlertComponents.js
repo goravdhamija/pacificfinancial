@@ -211,6 +211,8 @@ function AlertHeaderProposals() {
 function AlertFooterPage() {
   const {loans,setLoans,liabilities,setLiabilities,proposals,setProposals} = useContext(PacificDataContext);
   const [show, setShow] = useState(false);
+  const [reportPreparedBy, setReportPreparedBy] = useState("Bill Moran");
+  const [reportPreparedFor, setReportPreparedFor] = useState("Castillo");
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -229,48 +231,81 @@ const handleShare = async (blob) => {
   window.location.href = `mailto:?subject=${encodeURIComponent(`Invoice`)}&body=${encodeURIComponent(`Kindly find attached invoice`)} target="_blank"`;
 }
 
+
+
+function handleUpdate(e) {
+ 
+     const { name, value, id } = e.target;
+     
+     if(name === "reportPreparedBy"){
+      setReportPreparedBy(value);
+     }else{
+      setReportPreparedFor(value);
+     }
+
+     
+   }
+
     return (
         
         <Alert show={true} variant="dark">
-        <Alert.Heading>Pacific Financial</Alert.Heading>
-        <p>
-          Mortgage Calculator !
-        </p>
+        <Alert.Heading>Pacific Financial Mortgage Report Generator Utility !</Alert.Heading>
+
         <Container className="d-flex justify-content-end" >
 
-          <Row>
-          {/* <Col lg={3}> 
-           <DownloadPDFXXX />
-           </Col> */}
+        <Row>
+        <Col lg={8}> 
+       
+        
+         
+
+          <Form >
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Report Prepared By</Form.Label>
+              <Form.Control name='reportPreparedBy' onChange={handleUpdate} id={`reportPreparedBy`} type="text" placeholder="Bill Moran" />
+              <Form.Text className="text-muted">
+                Enter name of the person who is preparing report !
+              </Form.Text>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Report Prepared For</Form.Label>
+              <Form.Control name='reportPreparedFor' onChange={handleUpdate} id={`reportPreparedFor`}  type="text" placeholder="Castillo" />
+              <Form.Text className="text-muted">
+                Enter name of the person for whome the report is prepaired !
+              </Form.Text>
+            </Form.Group>
+           
+           
+          </Form>
+
+          </Col>
+          
+          
           
            <Col lg={4}> 
-          <BlobProvider  document={<ReportDownloadable loans={loans} liabilities={liabilities} proposals={proposals} />}>
+          <BlobProvider   document={<ReportDownloadable loans={loans} liabilities={liabilities} proposals={proposals} report={{reportPreparedBy,reportPreparedFor}} />}>
             {({ url, blob }) => (
-              <Button onClick={() => handleShare(url, blob)} lg={12} className='m-3 btn text-nowrap' variant="dark">
+              <Button onClick={() => handleShare(url, blob)} className='m-3 btn text-nowrap' variant="dark">
              
                   <span>Share / Email</span>
                   </Button>
             )}
           </BlobProvider>
-          </Col>
           
-
-          <Col lg={4}> 
-            <PDFDownloadLink document={<ReportDownloadable loans={loans} liabilities={liabilities} proposals={proposals} />} fileName="PacificFinancialReport.pdf">
+            <PDFDownloadLink document={<ReportDownloadable loans={loans} liabilities={liabilities} proposals={proposals} report={{reportPreparedBy,reportPreparedFor}}  />} fileName="PacificFinancialReport.pdf">
               {({ blob, url, loading, error }) =>
                 <Button className='m-3 btn text-nowrap' variant="dark" >
                   {loading ? 'Loading document...' : 'Download PDF'}
                   </Button>
               }
             </PDFDownloadLink>
-            </Col>
-          
-            <Col lg={4}> 
-            <BlobProvider  document={<ReportDownloadable loans={loans} liabilities={liabilities} proposals={proposals} />}>
+           
+            <BlobProvider  document={<ReportDownloadable loans={loans} liabilities={liabilities} proposals={proposals} report={{reportPreparedBy,reportPreparedFor}}  />}>
               {({ blob, url, loading, error }) => (
                 <a href={url} target="_blank" >
                   <Button className='m-3 btn text-nowrap' variant="dark">
-                      <span>Print Report</span>
+                      <span>View / Print Report</span>
                       </Button>
                 </a>
               )}
