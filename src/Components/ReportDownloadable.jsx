@@ -102,8 +102,8 @@ function ReportDownloadable(props) {
             <View style={styles.generalContainerHorizontal}>
             <View style={styles.generalContainerVertical}>
                 
-                    <Text >Prepared By: Bill Moran</Text>
-                    <Text >Prepared For: Castillo</Text>
+                    <Text >Prepared By: {props.report.reportPreparedBy}</Text>
+                    <Text >Prepared For: {props.report.reportPreparedFor}</Text>
             </View>
 
             <Text >Date: {getDate()}</Text>
