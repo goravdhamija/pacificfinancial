@@ -249,7 +249,7 @@ function handleUpdate(e) {
     return (
         
         <Alert show={true} variant="dark">
-        <Alert.Heading>Pacific Financial</Alert.Heading>
+        <Alert.Heading>Pacific Financial Mortgage Report Generator Utility !</Alert.Heading>
 
         <Container className="d-flex justify-content-end" >
 
@@ -305,7 +305,7 @@ function handleUpdate(e) {
               {({ blob, url, loading, error }) => (
                 <a href={url} target="_blank" >
                   <Button className='m-3 btn text-nowrap' variant="dark">
-                      <span>Print Report</span>
+                      <span>View / Print Report</span>
                       </Button>
                 </a>
               )}
