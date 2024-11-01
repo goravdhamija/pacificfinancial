@@ -63,9 +63,9 @@ function AlertHeaderLoans() {
         
         <Alert show={true} variant="success">
         <Alert.Heading>Loans</Alert.Heading>
-        {/* <p>
-          Blocks Contains Multiple Loans Details of a User !
-        </p> */}
+        <p>
+          Existing Loans !
+        </p>
         <hr />
         <div className="d-flex justify-content-end">
           <Button onClick={addNewLoan} variant="outline-dark">

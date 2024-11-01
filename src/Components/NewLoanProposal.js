@@ -559,9 +559,10 @@ calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,s
           <Col xxl={6}>
             <InputGroup>
               <DropdownButton
-                variant="outline-secondary"
+                variant="primary"
                 title="New Loan Years"
                 id="input-group-dropdown-3"
+                
               >
                 {/* <Dropdown.Item href="#">New Loan Years</Dropdown.Item>
                   <Dropdown.Divider /> */}
@@ -587,7 +588,7 @@ calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,s
         <Row className="justify-content-end">
             <Col xxl={7}>
               <InputGroup>
-              <InputGroup.Text>Proposed Interest Rate</InputGroup.Text>
+              <InputGroup.Text >Proposed Interest Rate</InputGroup.Text>
                 <Form.Control defaultValue={props.cnt.item.proposalInterestRate} name='proposalInterestRate' onChange={handleUpdate} id={`proposalitem-proposalInterestRate-${props.cnt.index}-${props.id}`} type="number" step={0.01} placeholder="00.00" />
                 <InputGroup.Text>%</InputGroup.Text>
               </InputGroup>
@@ -795,6 +796,7 @@ calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,s
         <InputGroup.Text>Escrow/Title and Other Closing Fees</InputGroup.Text>
         <InputGroup.Text>$</InputGroup.Text>
         <Form.Control defaultValue={props.cnt.item.proposalMiscFees} name='proposalMiscFees' onChange={handleUpdate} id={`proposalitem-proposalMiscFeesRate-${props.cnt.index}-${props.id}`} type="number" step={0.001} placeholder="000.000" />
+        <InputGroup.Text><div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.proposalMiscFees)}</div></InputGroup.Text>
         </InputGroup>
       </ListGroup.Item>
 
