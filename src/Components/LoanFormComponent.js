@@ -217,7 +217,7 @@ import { NumericFormat } from 'react-number-format';
       
       <Modal.Dialog>
         <Modal.Header size="lg" style={{ background: '#f0f8ff' }}  >
-          <Modal.Title>Loan Details - {props.cnt.index + 1}</Modal.Title>
+          <Modal.Title>Existing Loan {props.cnt.index + 1}</Modal.Title>
           <CloseButton id={`loanitem-${props.cnt.index}-${props.id}`} onClick={handleCloseLoan} />
         </Modal.Header>
         <Modal.Body style={{ background:  '#f0f8ff' }} >

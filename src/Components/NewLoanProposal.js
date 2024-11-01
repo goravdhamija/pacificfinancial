@@ -95,10 +95,14 @@ import { NumericFormat } from 'react-number-format';
 
           var netSavingsPM = sumLoanCurrentPayments + sumLiabilityMonthlyPayments - newPayment;
 
-          var termReduction = NPER(rate,-(newPayment+netSavingsPM),totalPayOff,0,0)/12
+          var termReduction = 0
+          if (netSavingsPM > 0){
+              termReduction = NPER(rate,-(newPayment+netSavingsPM),newProposalLoanAmount,0,0)/12
+            }
           var termReductionPrint = parseFloat((termReduction).toFixed(1));
 
-          var totalNewInterest = CUMIPMT(rate, proposal.proposalTerm*12 ,totalPayOff, 1 , proposal.proposalTerm*12,0 )*-1
+
+          var totalNewInterest = CUMIPMT(rate, proposal.proposalTerm*12 ,newProposalLoanAmount, 1 , proposal.proposalTerm*12,0 )*-1
 
           var sumLoanRemainingInterest = 0;
           var sumLiabilityInterest = 0;
@@ -716,7 +720,7 @@ calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,s
 
       <ListGroup.Item  style={{backgroundColor: "#C7F6C7"}} >
         <InputGroup >
-        <InputGroup.Text>Escrow/Misc. Fees</InputGroup.Text>
+        <InputGroup.Text>Escrow/Title and Other Closing Fees</InputGroup.Text>
         <InputGroup.Text>$</InputGroup.Text>
         <Form.Control defaultValue={props.cnt.item.proposalMiscFees} name='proposalMiscFees' onChange={handleUpdate} id={`proposalitem-proposalMiscFeesRate-${props.cnt.index}-${props.id}`} type="number" step={0.001} placeholder="000.000" />
         </InputGroup>
@@ -794,7 +798,8 @@ calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,s
       </ListGroup.Item>
 
 
-      <ListGroup.Item style={{backgroundColor: "#E6E6FA"}} >
+      <ListGroup.Item style={{backgroundColor: "#e3cafb"}} >
+      <Form.Label htmlFor="basic-url">If Apply the monthly savings towards your new loan as a principal reduction and loan will paid off  in the indicated amount of years.</Form.Label>
         <InputGroup className="justify-content-end">
         <InputGroup.Text>Term Reduction</InputGroup.Text>
         {/* <InputGroup.Text>$</InputGroup.Text> */}
@@ -868,11 +873,15 @@ calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,s
 
 
       <ListGroup.Item style={{backgroundColor: "#87CEFA"}} >
-        <InputGroup className="justify-content-center">
-        <InputGroup.Text>Rate Of Interest On Invest</InputGroup.Text>
-        <Form.Control defaultValue={props.cnt.item.rateOnInvest} name='rateOnInvest' onChange={handleUpdate} id={`proposalitem-rateOnInvest-${props.cnt.index}-${props.id}`} type="number" step={0.001} placeholder="000.000" />
-        <InputGroup.Text>%</InputGroup.Text>
-        </InputGroup>
+        <Row className="justify-content-center">
+          <Col xxl={8}>
+              <InputGroup className="justify-content-center">
+              <InputGroup.Text>Rate Of Interest On Investment</InputGroup.Text>
+              <Form.Control style={{ width:'100' }} defaultValue={props.cnt.item.rateOnInvest} name='rateOnInvest' onChange={handleUpdate} id={`proposalitem-rateOnInvest-${props.cnt.index}-${props.id}`} type="number" step={0.001} placeholder="000.000" />
+              <InputGroup.Text>%</InputGroup.Text>
+              </InputGroup>
+          </Col>
+        </Row>
       </ListGroup.Item>
 
 
