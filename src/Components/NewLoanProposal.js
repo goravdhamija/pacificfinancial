@@ -95,10 +95,14 @@ import { NumericFormat } from 'react-number-format';
 
           var netSavingsPM = sumLoanCurrentPayments + sumLiabilityMonthlyPayments - newPayment;
 
-          var termReduction = NPER(rate,-(newPayment+netSavingsPM),totalPayOff,0,0)/12
+          var termReduction = 0
+          if (netSavingsPM > 0){
+              termReduction = NPER(rate,-(newPayment+netSavingsPM),newProposalLoanAmount,0,0)/12
+            }
           var termReductionPrint = parseFloat((termReduction).toFixed(1));
 
-          var totalNewInterest = CUMIPMT(rate, proposal.proposalTerm*12 ,totalPayOff, 1 , proposal.proposalTerm*12,0 )*-1
+
+          var totalNewInterest = CUMIPMT(rate, proposal.proposalTerm*12 ,newProposalLoanAmount, 1 , proposal.proposalTerm*12,0 )*-1
 
           var sumLoanRemainingInterest = 0;
           var sumLiabilityInterest = 0;
@@ -245,6 +249,39 @@ import { NumericFormat } from 'react-number-format';
      
     }
 
+
+    function proposalTermSelected(e) {
+      const { name,value,id } = e.target;
+      const namex = 'proposalTerm';
+      const idselected = id.split('-');
+      // e.preventDefault();
+      
+        console.log(parseFloat(idselected[4]));
+
+        var el = document.getElementById(`${idselected[0]}-${idselected[1]}-${idselected[2]}-${idselected[3]}`);
+      el.value = parseInt(idselected[4]);
+
+      let new_proposal_data = proposals.map((proposal) => {
+
+                        if (proposal.proposalid === parseInt(idselected[3])) {
+                            return {
+                                ...proposal,
+                                [namex]: parseFloat(idselected[4]),
+                            };
+                        }
+                        return proposal;
+
+                    });
+                    console.log(new_proposal_data);
+   
+     calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,setProposals);
+
+    }
+
+
+
+
+
     function handleUpdateLoanPayoff(e) {
 
     //  e.preventDefault();
@@ -299,8 +336,8 @@ import { NumericFormat } from 'react-number-format';
 
      
     }
-
-
+    
+    
     function handleUpdateLiabilityPayoff(e) {
 
       const { name, value, id } = e.target;
@@ -499,24 +536,63 @@ calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,s
         <strong>New Loan Proposal - {props.cnt.index + 1} </strong>
         <CloseButton style={{position: 'absolute', top: 5, right: 5}} id={`proposalitem-${props.cnt.index}-${props.id}`} onClick={handleCloseProposal} />
       </ListGroup.Item>
-      <ListGroup.Item style={{backgroundColor: "#3399FF"}} >
-      <Form.Select defaultValue={props.cnt.item.proposalTerm} id={`proposalitem-proposalTerm-${props.cnt.index}-${props.id}`} name='proposalTerm' onChange={handleUpdate} aria-label="Default select example" className="mb-3">
-      <option value="5">5 Years</option>
-      <option value="10">10 Years</option>
-      <option value="15">15 Years</option>
-      <option value="20">20 Years</option>
-      <option value="25">25 Years</option>
-      <option value="30">30 Years</option>
-      </Form.Select>
+
+      {/* <ListGroup.Item style={{backgroundColor: "#3399FF"}} >
+      <Row className="justify-content-center">
+        <Col xxl={6}>
+
+          <Form.Select defaultValue={props.cnt.item.proposalTerm} id={`proposalitem-proposalTerm-${props.cnt.index}-${props.id}`} name='proposalTerm' onChange={handleUpdate} aria-label="Default select example" className="mb-3">
+          <option value="5">5 Years</option>
+          <option value="10">10 Years</option>
+          <option value="15">15 Years</option>
+          <option value="20">20 Years</option>
+          <option value="25">25 Years</option>
+          <option value="30">30 Years</option>
+          </Form.Select>
+
+        </Col>
+      </Row>
+      </ListGroup.Item> */}
+
+      <ListGroup.Item style={{backgroundColor: "#FFFFFF"}} >
+        <Row className="justify-content-end">
+          <Col xxl={6}>
+            <InputGroup>
+              <DropdownButton
+                variant="outline-secondary"
+                title="New Loan Years"
+                id="input-group-dropdown-3"
+              >
+                {/* <Dropdown.Item href="#">New Loan Years</Dropdown.Item>
+                  <Dropdown.Divider /> */}
+                <Dropdown.Item value="5" onClick={proposalTermSelected} id={`proposalitem-proposalTerm-${props.cnt.index}-${props.id}-5`} >5 Years</Dropdown.Item>
+                <Dropdown.Item value="10" onClick={proposalTermSelected} id={`proposalitem-proposalTerm-${props.cnt.index}-${props.id}-10`} >10 Years</Dropdown.Item>
+                <Dropdown.Item value="15" onClick={proposalTermSelected} id={`proposalitem-proposalTerm-${props.cnt.index}-${props.id}-15`} >15 Years</Dropdown.Item>
+                <Dropdown.Item value="20" onClick={proposalTermSelected} id={`proposalitem-proposalTerm-${props.cnt.index}-${props.id}-20`} >20 Years</Dropdown.Item>
+                <Dropdown.Item value="25" onClick={proposalTermSelected} id={`proposalitem-proposalTerm-${props.cnt.index}-${props.id}-25`} >25 Years</Dropdown.Item>
+                <Dropdown.Item value="30" onClick={proposalTermSelected} id={`proposalitem-proposalTerm-${props.cnt.index}-${props.id}-30`} >30 Years</Dropdown.Item>
+                  {/* <Dropdown.Divider />
+                <Dropdown.Item href="#">Custom</Dropdown.Item> */}
+              </DropdownButton>
+              <Form.Control  defaultValue={props.cnt.item.proposalTerm}  id={`proposalitem-proposalTerm-${props.cnt.index}-${props.id}`} name='proposalTerm' onChange={handleUpdate} />
+              {/* <InputGroup.Text>Years</InputGroup.Text> */}
+            </InputGroup>
+          </Col>
+        </Row>
       </ListGroup.Item>
 
-      <ListGroup.Item style={{backgroundColor: "#3399FF"}} >
-        
-        <InputGroup>
-        <InputGroup.Text>Proposed Interest Rate</InputGroup.Text>
-          <Form.Control defaultValue={props.cnt.item.proposalInterestRate} name='proposalInterestRate' onChange={handleUpdate} id={`proposalitem-proposalInterestRate-${props.cnt.index}-${props.id}`} type="number" step={0.01} placeholder="00.00" />
-          <InputGroup.Text>%</InputGroup.Text>
-          </InputGroup>
+
+
+      <ListGroup.Item style={{backgroundColor: "#FFFFFF"}} >
+        <Row className="justify-content-end">
+            <Col xxl={7}>
+              <InputGroup>
+              <InputGroup.Text>Proposed Interest Rate</InputGroup.Text>
+                <Form.Control defaultValue={props.cnt.item.proposalInterestRate} name='proposalInterestRate' onChange={handleUpdate} id={`proposalitem-proposalInterestRate-${props.cnt.index}-${props.id}`} type="number" step={0.01} placeholder="00.00" />
+                <InputGroup.Text>%</InputGroup.Text>
+              </InputGroup>
+            </Col>
+        </Row>
         </ListGroup.Item>
 
         {/* <ListGroup.Item style={{backgroundColor: "#8D6EC7"}}  >
@@ -716,7 +792,7 @@ calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,s
 
       <ListGroup.Item  style={{backgroundColor: "#C7F6C7"}} >
         <InputGroup >
-        <InputGroup.Text>Escrow/Misc. Fees</InputGroup.Text>
+        <InputGroup.Text>Escrow/Title and Other Closing Fees</InputGroup.Text>
         <InputGroup.Text>$</InputGroup.Text>
         <Form.Control defaultValue={props.cnt.item.proposalMiscFees} name='proposalMiscFees' onChange={handleUpdate} id={`proposalitem-proposalMiscFeesRate-${props.cnt.index}-${props.id}`} type="number" step={0.001} placeholder="000.000" />
         </InputGroup>
@@ -794,7 +870,8 @@ calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,s
       </ListGroup.Item>
 
 
-      <ListGroup.Item style={{backgroundColor: "#E6E6FA"}} >
+      <ListGroup.Item style={{backgroundColor: "#e3cafb"}} >
+      <Form.Label htmlFor="basic-url">If Apply the monthly savings towards your new loan as a principal reduction and loan will paid off  in the indicated amount of years.</Form.Label>
         <InputGroup className="justify-content-end">
         <InputGroup.Text>Term Reduction</InputGroup.Text>
         {/* <InputGroup.Text>$</InputGroup.Text> */}
@@ -868,11 +945,15 @@ calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,s
 
 
       <ListGroup.Item style={{backgroundColor: "#87CEFA"}} >
-        <InputGroup className="justify-content-center">
-        <InputGroup.Text>Rate Of Interest On Invest</InputGroup.Text>
-        <Form.Control defaultValue={props.cnt.item.rateOnInvest} name='rateOnInvest' onChange={handleUpdate} id={`proposalitem-rateOnInvest-${props.cnt.index}-${props.id}`} type="number" step={0.001} placeholder="000.000" />
-        <InputGroup.Text>%</InputGroup.Text>
-        </InputGroup>
+        <Row className="justify-content-center">
+          <Col xxl={8}>
+              <InputGroup className="justify-content-center">
+              <InputGroup.Text>Rate Of Interest On Investment</InputGroup.Text>
+              <Form.Control style={{ width:'100' }} defaultValue={props.cnt.item.rateOnInvest} name='rateOnInvest' onChange={handleUpdate} id={`proposalitem-rateOnInvest-${props.cnt.index}-${props.id}`} type="number" step={0.001} placeholder="000.000" />
+              <InputGroup.Text>%</InputGroup.Text>
+              </InputGroup>
+          </Col>
+        </Row>
       </ListGroup.Item>
 
 

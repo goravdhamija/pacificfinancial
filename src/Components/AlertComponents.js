@@ -63,9 +63,9 @@ function AlertHeaderLoans() {
         
         <Alert show={true} variant="success">
         <Alert.Heading>Loans</Alert.Heading>
-        <p>
+        {/* <p>
           Blocks Contains Multiple Loans Details of a User !
-        </p>
+        </p> */}
         <hr />
         <div className="d-flex justify-content-end">
           <Button onClick={addNewLoan} variant="outline-dark">
@@ -118,7 +118,7 @@ function AlertHeaderLiabilities() {
         <Alert show={true} variant="warning">
         <Alert.Heading>Liabilities</Alert.Heading>
         <p>
-          Blocks Contains Multiple Liabilities Details of a User !
+        Add Other Debts Such as Credit Card, and Auto Loans You Would Like To Consider Paying off with Your New Loan
         </p>
         <hr />
         <div className="d-flex justify-content-end">
@@ -193,10 +193,10 @@ function AlertHeaderProposals() {
     return (
         
         <Alert show={true} variant="primary">
-        <Alert.Heading>Loan Proposed Plans</Alert.Heading>
-        <p>
-          Blocks Contains Multiple Loan Proposed Plans Calculated According to the Data Provided !
-        </p>
+        <Alert.Heading>View Multiple Loan Plans Side by Side To Compare</Alert.Heading>
+        {/* <p>
+        View Multiple Loan Plans Side by Side To Compare
+        </p> */}
         <hr />
         <div className="d-flex justify-content-end">
           <Button onClick={addNewProposal} variant="outline-primary">
