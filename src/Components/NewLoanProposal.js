@@ -519,12 +519,12 @@ calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,s
           </InputGroup>
         </ListGroup.Item>
 
-        <ListGroup.Item style={{backgroundColor: "#8D6EC7"}}  >
+        {/* <ListGroup.Item style={{backgroundColor: "#8D6EC7"}}  >
         <InputGroup className="justify-content-end">
         <InputGroup.Text>Total Previous Balance (Loans & Liabilities)</InputGroup.Text>
         <InputGroup.Text><div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.totalPreviousLoanBalance)}</div></InputGroup.Text>
         </InputGroup>
-        </ListGroup.Item>
+        </ListGroup.Item> */}
 
 
        
@@ -691,7 +691,7 @@ calculateProposals(loans,setLoans,liabilities,setLiabilities,new_proposal_data,s
 
         <ListGroup.Item style={{backgroundColor: "#BF90EE"}}  >
         <InputGroup className="justify-content-end">
-        <InputGroup.Text>Total Payoff Selected Balance</InputGroup.Text>
+        <InputGroup.Text>Total Previous Balance (Loans & Liabilities)</InputGroup.Text>
         <InputGroup.Text><div> {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(props.cnt.item.totalPayOff)}</div></InputGroup.Text>
         </InputGroup>
         </ListGroup.Item>
